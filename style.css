@@ -86,7 +86,7 @@ section{
   padding: 110px 16% 90px;
 }
 .hero{
-  height:100vh
+  height:100vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
