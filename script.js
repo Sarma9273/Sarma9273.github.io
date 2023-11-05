@@ -4,8 +4,8 @@ window.addEventListener("scroll",function(){
   header.classList.toggle("sticky",window.scrollY > 60);
 });
 
-let menu = document.querySelecter('#menu-icon');
-let navlist = document.querySelecter('.navlist'); 
+let menu = document.querySelector('#menu-icon');
+let navlist = document.querySelector('.navlist');
 
 menu.onclick = () => {
   menu.classList.toggle('bx-x');
