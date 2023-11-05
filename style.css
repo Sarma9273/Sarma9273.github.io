@@ -306,6 +306,7 @@ box i{
   padding: 20px;
   transition:all .50s ease;
   cursor: pointer;
+  align-self: center;
 }
 .main-row{
   display: flex;
