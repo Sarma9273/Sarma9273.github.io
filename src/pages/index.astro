@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import heroImage from '../assets/images/guru-charan-hero.webp';
+import { site } from '../data/site';
+import { focusAreas, education, experience } from '../data/profile';
+
+const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0,6);
+const blogs = (await getCollection('blogs', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const featuredBlogs = blogs.filter((post) => post.data.featured).slice(0,3);
+---
+<BaseLayout>
+  <section class="hero section-shell">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="availability"><span></span> Open to SOC, cybersecurity and AI-for-security opportunities</span>
+        <p class="hero-kicker">M.Tech AI&DSE @ IIT Patna · B.Tech EEE · Educator</p>
+        <h1>{site.heroStatement}</h1>
+        <p class="hero-description">I am Guru Charan Mavuduru—an M.Tech Artificial Intelligence and Data Science Engineering student at IIT Patna, cybersecurity practitioner and educator documenting real builds across SOC operations, AI-assisted incident response, automation and applied research.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/projects/">Explore projects <Icon name="arrow" size={18} /></a>
+          <a class="button button-secondary" href="/blogs/">Read technical blogs</a>
+          <a class="button button-quiet" href="/resume/Guru_Charan_Mavuduru_ATS_Resume_2026.pdf" download><Icon name="download" size={18} /> Resume</a>
+        </div>
+        <SocialLinks compact={false} />
+      </div>
+      <div class="hero-visual">
+        <div class="portrait-frame">
+          <Image src={heroImage} alt="Guru Charan Mavuduru wearing a navy blazer" widths={[480, 720, 960]} sizes="(max-width: 900px) 78vw, 38vw" loading="eager" fetchpriority="high" />
+          <div class="portrait-glow"></div>
+        </div>
+        <div class="floating-card floating-card-a"><strong>CyberGPT</strong><span>AI incident-response copilot</span></div>
+        <div class="floating-card floating-card-b"><strong>SOC Lab</strong><span>Detection · telemetry · analysis</span></div>
+      </div>
+    </div>
+    <div class="container proof-strip" aria-label="Selected project evidence">
+      <div><strong>~30</strong><span>attack categories in CyberGPT</span></div>
+      <div><strong>4</strong><span>systems in the SOC home lab</span></div>
+      <div><strong>10</strong><span>documented technical blogs</span></div>
+      <div><strong>~97%</strong><span>reported Osprey MPPT efficiency</span></div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <SectionHeading eyebrow="What I build" title="Practical work across four connected disciplines" description="My projects combine defensive security, applied AI, operational automation and technical education instead of treating them as isolated subjects." />
+      <div class="focus-grid">
+        {focusAreas.map((area) => <article class="focus-card"><div class="focus-icon"><Icon name={area.icon} size={30} /></div><h3>{area.title}</h3><p>{area.description}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-row">
+        <SectionHeading eyebrow="Selected work" title="Flagship projects with documented decisions" description="Each case study explains the problem, architecture, implementation, evidence, limitations and next steps." />
+        <a class="text-link section-link" href="/projects/">View all projects <Icon name="arrow" size={17} /></a>
+      </div>
+      <div class="project-grid">{featuredProjects.map((project) => <ProjectCard project={project} />)}</div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container journey-grid">
+      <div>
+        <SectionHeading eyebrow="Current direction" title="From electrical engineering to AI-driven security" description="My work is shaped by systems thinking: understand the environment, capture evidence, automate repeatable decisions and communicate the result clearly." />
+        <div class="journey-note"><Icon name="research" size={24} /><p>Current research interests include AI-driven cybersecurity, SOC automation, threat detection, incident response, explainable AI, generative AI and security engineering.</p></div>
+        <a class="button button-light" href="/about/">Read my full journey <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="mini-timeline">
+        <div><span>Now</span><strong>{education[0].qualification}</strong><small>{education[0].institution}</small></div>
+        <div><span>2025</span><strong>{experience[0].role}</strong><small>{experience[0].organisation}</small></div>
+        <div><span>2024–25</span><strong>{education[1].qualification}</strong><small>{education[1].institution}</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-row">
+        <SectionHeading eyebrow="Writing" title="Build logs, research notes and practical guides" description="Long-form articles document how the projects were designed, what failed, what changed and what comes next." />
+        <a class="text-link section-link" href="/blogs/">Browse all blogs <Icon name="arrow" size={17} /></a>
+      </div>
+      <div class="blog-grid home-blog-grid">{featuredBlogs.map((post) => <BlogCard post={post} />)}</div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container cta-panel">
+      <div><span class="eyebrow">Let’s connect</span><h2>Looking for a curious builder who documents the work?</h2><p>I am interested in SOC Analyst, Cybersecurity Analyst, Security Operations, Threat Detection and AI-for-Cybersecurity opportunities.</p></div>
+      <div class="cta-actions"><a class="button button-primary" href="/contact/">Start a conversation <Icon name="arrow" size={18} /></a><a class="button button-secondary" href="/resume/">Review resume</a></div>
+    </div>
+  </section>
+</BaseLayout>

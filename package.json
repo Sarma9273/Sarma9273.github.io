@@ -1,0 +1,30 @@
+{
+  "name": "sarma9273-github-io",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "verify": "node scripts/verify-repository.mjs",
+    "check": "astro check",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "sync:drive": "node scripts/sync-drive-manifest.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.2",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.2"
+  },
+  "description": "Personal portfolio of Guru Charan Mavuduru \u2014 cybersecurity, AI, data science, SOC projects, research, and technical blogs.",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import aboutImage from '../assets/images/guru-charan-about.webp';
+import { education, skills, certifications } from '../data/profile';
+---
+<BaseLayout title="About" description="The education, transition, interests and working principles behind Guru Charan Mavuduru's cybersecurity, AI and research portfolio.">
+  <section class="page-hero"><div class="container narrow"><span class="eyebrow">About me</span><h1>Systems thinking, practical experimentation and documented learning.</h1><p>I began in Electrical and Electronics Engineering, moved deeper into cybersecurity and applied AI, and now pursue M.Tech AI&DSE at IIT Patna while teaching and building hands-on projects.</p></div></section>
+  <section class="section"><div class="container about-grid">
+    <div class="about-image"><Image src={aboutImage} alt="Portrait of Guru Charan Mavuduru" widths={[480,720,960]} sizes="(max-width: 850px) 90vw, 38vw" /></div>
+    <div class="about-copy"><span class="eyebrow">My direction</span><h2>Bridging engineering, security, intelligence and education</h2><p>I am most engaged when a project connects technical depth with a real operational problem. That may mean helping a SOC analyst interpret an alert, organising a school lab, automating an institution's support workflow or testing an optimisation algorithm in Simulink.</p><p>My EEE background developed systems thinking and mathematical discipline. Cybersecurity added adversarial reasoning, evidence and incident workflow. AI&DSE adds data, retrieval, modelling and automation. Teaching keeps the work understandable and grounded.</p><div class="principles"><div><Icon name="check" size={20} /><span>Build in phases and keep every phase demonstrable.</span></div><div><Icon name="check" size={20} /><span>Document failures, not only successful screenshots.</span></div><div><Icon name="check" size={20} /><span>Use AI to assist human judgement, not hide uncertainty.</span></div><div><Icon name="check" size={20} /><span>Prefer maintainable, low-cost tools before unnecessary complexity.</span></div></div></div>
+  </div></section>
+  <section class="section section-muted"><div class="container"><SectionHeading eyebrow="Education" title="Academic foundation and current study" /><div class="timeline">{education.map((item) => <article><div class="timeline-marker"></div><span>{item.period}</span><h3>{item.qualification}</h3><strong>{item.institution}</strong><p>{item.detail}</p></article>)}</div></div></section>
+  <section class="section"><div class="container"><SectionHeading eyebrow="Capability map" title="Tools are grouped around workflows, not collected as badges" /><div class="skills-grid">{skills.map((group) => <article><h3>{group.group}</h3><ul class="tag-list large">{group.items.map((item) => <li>{item}</li>)}</ul></article>)}</div></div></section>
+  <section class="section section-muted"><div class="container"><SectionHeading eyebrow="Training" title="Selected certifications and professional learning" /><div class="certificate-grid">{certifications.map((item) => <div><Icon name="check" size={20} /><span>{item}</span></div>)}</div></div></section>
+</BaseLayout>

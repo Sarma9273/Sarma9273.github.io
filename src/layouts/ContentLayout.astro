@@ -1,0 +1,61 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  meta: string[];
+  breadcrumbs: Array<{label:string;href?:string}>;
+  tags?: string[];
+}
+const { title, description, eyebrow, meta, breadcrumbs, tags = [] } = Astro.props;
+---
+<BaseLayout title={title} description={description} type="article">
+  <section class="content-hero">
+    <div class="container content-hero-inner">
+      <Breadcrumbs items={breadcrumbs} />
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      <p class="content-lead">{description}</p>
+      <div class="content-meta">{meta.map((item) => <span>{item}</span>)}</div>
+      {tags.length > 0 && <ul class="tag-list content-tags">{tags.map((tag) => <li>{tag}</li>)}</ul>}
+      <slot name="actions" />
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container article-grid">
+      <article class="prose"><slot /></article>
+      <aside class="article-aside">
+        <div class="aside-card">
+          <strong>On this page</strong>
+          <nav data-toc aria-label="Table of contents"></nav>
+        </div>
+        <slot name="aside" />
+      </aside>
+    </div>
+  </section>
+  <script is:inline>
+    (() => {
+      const article = document.querySelector('.prose');
+      const toc = document.querySelector('[data-toc]');
+      if (!article || !toc) return;
+      const headings = [...article.querySelectorAll('h2, h3')];
+      if (!headings.length) {
+        toc.closest('.aside-card')?.remove();
+        return;
+      }
+      const list = document.createElement('ol');
+      headings.forEach((heading) => {
+        const item = document.createElement('li');
+        if (heading.tagName === 'H3') item.className = 'toc-child';
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent || '';
+        item.append(link);
+        list.append(item);
+      });
+      toc.append(list);
+    })();
+  </script>
+</BaseLayout>

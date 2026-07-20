@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+interface Props { project: any; }
+const { project } = Astro.props;
+---
+<article class:list={['project-card', { legacy: project.data.legacy }]}> 
+  <a class="card-link" href={`/projects/${project.id}/`} aria-label={`View ${project.data.title} case study`}>
+    <div class="project-visual" data-icon={project.data.coverIcon}>
+      <Icon name={project.data.coverIcon} size={42} />
+      <span>{project.data.domain}</span>
+    </div>
+    <div class="project-body">
+      <div class="card-meta"><span class="status-dot"></span>{project.data.status}<span aria-hidden="true">·</span>{project.data.period}</div>
+      <h3>{project.data.shortTitle}</h3>
+      <p>{project.data.description}</p>
+      <ul class="tag-list" aria-label="Technologies">
+        {project.data.technologies.slice(0, 5).map((item: string) => <li>{item}</li>)}
+      </ul>
+      <span class="text-link">View case study <Icon name="arrow" size={17} /></span>
+    </div>
+  </a>
+</article>

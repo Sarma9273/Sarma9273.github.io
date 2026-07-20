@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Projects" description="Detailed case studies across cybersecurity, AI, security operations, automation, renewable energy, web development and education technology.">
+  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Project portfolio</span><h1>Case studies built around problems, evidence and next decisions.</h1><p>Flagship work appears first. Early learning projects remain available as evidence of progression rather than being presented at the same level.</p></div></section>
+  <section class="section"><div class="container">
+    <div class="filter-bar" data-project-filters><button class="filter-chip active" type="button" data-filter="all">All</button><button class="filter-chip" type="button" data-filter="featured">Flagship</button><button class="filter-chip" type="button" data-filter="supporting">Supporting</button><button class="filter-chip" type="button" data-filter="legacy">Legacy learning</button></div>
+    <p class="results-count"><span data-project-count>{projects.length}</span> projects</p>
+    <div class="project-grid" data-project-grid>{projects.map((project) => <div data-project-wrapper data-featured={String(project.data.featured)} data-legacy={String(project.data.legacy)}><ProjectCard project={project} /></div>)}</div>
+    <div class="project-link-note"><strong>Evidence links</strong><p>Repository, live-demo and report buttons appear only after a project is intentionally made public. Empty or unverified links are never shown.</p></div>
+  </div></section>
+  <script is:inline>
+    (() => {
+      const buttons = document.querySelectorAll('[data-filter]');
+      const items = [...document.querySelectorAll('[data-project-wrapper]')];
+      const count = document.querySelector('[data-project-count]');
+      buttons.forEach((button) => button.addEventListener('click', () => {
+        buttons.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.dataset.filter;
+        let visible = 0;
+        items.forEach((item) => {
+          const featured = item.dataset.featured === 'true';
+          const legacy = item.dataset.legacy === 'true';
+          const show = filter === 'all' || (filter === 'featured' && featured) || (filter === 'legacy' && legacy) || (filter === 'supporting' && !featured && !legacy);
+          item.hidden = !show;
+          if (show) visible++;
+        });
+        if (count) count.textContent = String(visible);
+      }));
+    })();
+  </script>
+</BaseLayout>

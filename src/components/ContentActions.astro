@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+interface Props { repositoryUrl?: string; demoUrl?: string; reportUrl?: string; googleDocUrl?: string; blogSlug?: string; }
+const { repositoryUrl, demoUrl, reportUrl, googleDocUrl, blogSlug } = Astro.props;
+const actions = [
+  repositoryUrl && {label:'View repository',href:repositoryUrl,icon:'github'},
+  demoUrl && {label:'Open live demo',href:demoUrl,icon:'external'},
+  reportUrl && {label:'Read report',href:reportUrl,icon:'article'},
+  googleDocUrl && {label:'Open Google Doc',href:googleDocUrl,icon:'external'},
+  blogSlug && {label:'Read technical blog',href:`/blogs/${blogSlug}/`,icon:'article'},
+].filter(Boolean) as Array<{label:string;href:string;icon:string}>;
+---
+{actions.length > 0 && <div class="content-actions">
+  {actions.map((action) => <a class="button button-secondary" href={action.href} target={action.href.startsWith('http') ? '_blank' : undefined} rel={action.href.startsWith('http') ? 'noreferrer' : undefined}><Icon name={action.icon} size={18} />{action.label}</a>)}
+</div>}

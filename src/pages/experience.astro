@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { experience } from '../data/profile';
+---
+<BaseLayout title="Experience" description="Professional experience across computer education, cybersecurity training, engineering design and electrical infrastructure.">
+  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Experience</span><h1>Teaching, security training and engineering work that shaped how I build.</h1><p>My experience combines technical delivery, learner support, documentation, structured operations and practical troubleshooting.</p></div></section>
+  <section class="section"><div class="container"><div class="experience-list">{experience.map((item,index) => <article class="experience-item"><div class="experience-index">{String(index+1).padStart(2,'0')}</div><div class="experience-main"><div class="experience-header"><div><span class="eyebrow">{item.period}</span><h2>{item.role}</h2><strong>{item.organisation}</strong></div><span class="location"><Icon name="location" size={17} />{item.location}</span></div><ul>{item.highlights.map((highlight) => <li>{highlight}</li>)}</ul></div></article>)}</div></div></section>
+  <section class="section section-muted"><div class="container cta-panel"><div><span class="eyebrow">Professional focus</span><h2>Ready to grow in a security operations environment</h2><p>My immediate target is an entry-level SOC or cybersecurity role where I can investigate alerts, improve detection knowledge and contribute through disciplined documentation.</p></div><a class="button button-primary" href="/resume/">Open full resume <Icon name="arrow" size={18} /></a></div></section>
+</BaseLayout>

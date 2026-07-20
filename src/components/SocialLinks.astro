@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<div class:list={['social-links', { compact }]}> 
+  {site.socials.map((social) => (
+    <a href={social.href} target={social.href.startsWith('http') ? '_blank' : undefined} rel={social.href.startsWith('http') ? 'noreferrer' : undefined} aria-label={social.label}>
+      <Icon name={social.icon} size={compact ? 18 : 20} />
+      {!compact && <span>{social.label}</span>}
+    </a>
+  ))}
+</div>

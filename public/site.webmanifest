@@ -1,0 +1,12 @@
+{
+  "name": "Guru Charan Mavuduru — Portfolio",
+  "short_name": "Guru Charan",
+  "description": "Cybersecurity, AI, data science, automation, research and technical writing portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {"src": "/apple-touch-icon.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

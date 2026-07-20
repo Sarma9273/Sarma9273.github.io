@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import ContentActions from '../../components/ContentActions.astro';
+import Icon from '../../components/Icon.astro';
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, entry.data.period, entry.data.role]} breadcrumbs={[{label:'Home',href:'/'},{label:'Projects',href:'/projects/'},{label:entry.data.shortTitle}]} tags={entry.data.technologies}>
+  <ContentActions slot="actions" repositoryUrl={entry.data.repositoryUrl} demoUrl={entry.data.demoUrl} reportUrl={entry.data.reportUrl} blogSlug={entry.data.blogSlug} />
+  {entry.data.outcomes.length > 0 && <div class="outcome-box"><h2>Selected outcomes</h2><ul>{entry.data.outcomes.map((outcome) => <li><Icon name="check" size={19} />{outcome}</li>)}</ul></div>}
+  <Content />
+  <div slot="aside" class="aside-card evidence-card"><strong>Evidence status</strong><p>Public repository, report and demo links are added only after privacy and quality review.</p></div>
+</ContentLayout>

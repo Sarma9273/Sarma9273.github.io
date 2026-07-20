@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+const posts = (await getCollection('blogs', ({data}) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const domains = [...new Set(posts.map((post) => post.data.domain))].sort();
+---
+<BaseLayout title="Technical Blogs" description="Project build logs, cybersecurity learning, applied AI notes, research explanations and practical technology articles by Guru Charan Mavuduru.">
+  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Technical writing</span><h1>Blogs that explain the build—not only the final screenshot.</h1><p>Search project journeys, SOC learning, AI experiments, automation work, web development, education technology and renewable-energy research.</p></div></section>
+  <section class="section"><div class="container">
+    <div class="blog-tools"><label class="search-field"><span>Search blogs</span><input type="search" placeholder="Search by title, topic or technology" data-blog-search /></label><label><span>Filter by domain</span><select data-blog-domain><option value="all">All domains</option>{domains.map((domain) => <option value={domain.toLowerCase()}>{domain}</option>)}</select></label></div>
+    <p class="results-count"><span data-blog-count>{posts.length}</span> articles</p>
+    <div class="blog-grid" data-blog-grid>{posts.map((post) => <BlogCard post={post} />)}</div>
+    <div class="empty-state" data-empty-state hidden><h2>No matching articles</h2><p>Try a broader topic or clear the current filters.</p></div>
+  </div></section>
+  <script is:inline>
+    (() => {
+      const search = document.querySelector('[data-blog-search]');
+      const domain = document.querySelector('[data-blog-domain]');
+      const cards = [...document.querySelectorAll('[data-blog-card]')];
+      const count = document.querySelector('[data-blog-count]');
+      const empty = document.querySelector('[data-empty-state]');
+      const update = () => {
+        const query = (search?.value || '').trim().toLowerCase();
+        const selected = domain?.value || 'all';
+        let visible = 0;
+        cards.forEach((card) => {
+          const matchesSearch = !query || card.dataset.search.includes(query);
+          const matchesDomain = selected === 'all' || card.dataset.domain === selected;
+          const show = matchesSearch && matchesDomain;
+          card.hidden = !show;
+          if (show) visible++;
+        });
+        if (count) count.textContent = String(visible);
+        if (empty) empty.hidden = visible !== 0;
+      };
+      search?.addEventListener('input', update);
+      domain?.addEventListener('change', update);
+    })();
+  </script>
+</BaseLayout>

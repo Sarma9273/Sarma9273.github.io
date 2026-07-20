@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import ContentActions from '../../components/ContentActions.astro';
+export async function getStaticPaths() {
+  const posts = await getCollection('blogs', ({data}) => !data.draft);
+  return posts.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const words = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(3, Math.ceil(words / 220));
+---
+<ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, `${minutes} min read`, entry.data.publishedAt.toLocaleDateString('en-IN', {year:'numeric',month:'long',day:'numeric'})]} breadcrumbs={[{label:'Home',href:'/'},{label:'Blogs',href:'/blogs/'},{label:entry.data.title}]} tags={entry.data.tags}>
+  <ContentActions slot="actions" googleDocUrl={entry.data.googleDocUrl} blogSlug={undefined} />
+  <Content />
+  <div class="author-box"><strong>About the author</strong><p>Guru Charan Mavuduru is a B.Tech EEE graduate and M.Tech AI&DSE student at IIT Patna. His interests include cybersecurity, security operations, applied AI, automation, renewable-energy optimisation and practical technology education.</p><div><a href="https://www.linkedin.com/in/gurucharanmavuduru" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Sarma9273" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:charanmavuduru9273@gmail.com">Email</a></div></div>
+</ContentLayout>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="Contact" description="Connect with Guru Charan Mavuduru about SOC, cybersecurity, AI-for-security, projects, research or technical collaboration.">
+  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Contact</span><h1>Start with the problem, role or collaboration you have in mind.</h1><p>The form opens your default email application with the details filled in. You can also contact me directly through email, LinkedIn or GitHub.</p></div></section>
+  <section class="section"><div class="container contact-grid">
+    <div class="contact-panel"><span class="eyebrow">Direct channels</span><h2>Let’s build a useful conversation</h2><p>I am particularly interested in SOC Analyst, cybersecurity, threat detection, AI-for-security, project collaboration and technical education opportunities.</p><div class="contact-email"><Icon name="mail" size={22} /><div><small>Email</small><a href={`mailto:${site.email}`}>{site.email}</a></div><button class="icon-button" type="button" aria-label="Copy email address" data-copy-email><Icon name="copy" size={18} /></button></div><SocialLinks compact={false} /><p class="privacy-note">My phone number is intentionally not published on the public portfolio. Professional contact begins through the channels above.</p></div>
+    <form class="contact-form" data-contact-form><div class="form-row"><label><span>Your name</span><input name="name" autocomplete="name" required /></label><label><span>Your email</span><input name="email" type="email" autocomplete="email" required /></label></div><label><span>Subject</span><input name="subject" required placeholder="SOC opportunity, project discussion, collaboration…" /></label><label><span>Message</span><textarea name="message" rows="8" required placeholder="Share the context, expected outcome and useful links."></textarea></label><button class="button button-primary" type="submit">Prepare email <Icon name="arrow" size={18} /></button><p class="form-help">No message is stored by this website. Your email client will open for review before sending.</p></form>
+  </div></section>
+  <div class="toast" role="status" aria-live="polite" data-toast>Email copied</div>
+  <script is:inline>
+    (() => {
+      const email = 'charanmavuduru9273@gmail.com';
+      const toast = document.querySelector('[data-toast]');
+      document.querySelector('[data-copy-email]')?.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(email); toast?.classList.add('visible'); setTimeout(() => toast?.classList.remove('visible'), 1800); } catch { window.location.href = `mailto:${email}`; }
+      });
+      document.querySelector('[data-contact-form]')?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const subject = encodeURIComponent(String(data.get('subject') || 'Portfolio enquiry'));
+        const body = encodeURIComponent(`Hello Guru Charan,
+
+${data.get('message')}
+
+From: ${data.get('name')}
+Email: ${data.get('email')}`);
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      });
+    })();
+  </script>
+</BaseLayout>

@@ -1,0 +1,18 @@
+---
+import Icon from './Icon.astro';
+interface Props { post: any; }
+const { post } = Astro.props;
+const words = post.body?.trim().split(/\s+/).length ?? 0;
+const minutes = Math.max(3, Math.ceil(words / 220));
+---
+<article class="blog-card" data-blog-card data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')} ${post.data.domain}`.toLowerCase()} data-domain={post.data.domain.toLowerCase()}>
+  <a class="card-link" href={`/blogs/${post.id}/`} aria-label={`Read ${post.data.title}`}>
+    <div class="blog-icon"><Icon name={post.data.coverIcon} size={32} /></div>
+    <div class="blog-card-content">
+      <div class="card-meta"><span>{post.data.domain}</span><span aria-hidden="true">·</span><time datetime={post.data.publishedAt.toISOString()}>{post.data.publishedAt.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}</time></div>
+      <h3>{post.data.title}</h3>
+      <p>{post.data.description}</p>
+      <div class="blog-card-footer"><span>{minutes} min read</span><span class="text-link">Open blog <Icon name="arrow" size={17} /></span></div>
+    </div>
+  </a>
+</article>

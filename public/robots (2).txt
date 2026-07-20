@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sarma9273.github.io/sitemap-index.xml

@@ -1,0 +1,29 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand footer-brand" href="/"><span class="brand-mark">GC</span><span class="brand-copy"><strong>{site.name}</strong><small>{site.headline}</small></span></a>
+      <p>Building practical, documented systems across cybersecurity, AI, automation, engineering and education.</p>
+    </div>
+    <div class="footer-links">
+      <strong>Explore</strong>
+      <a href="/projects/">Projects</a>
+      <a href="/blogs/">Technical blogs</a>
+      <a href="/experience/">Experience</a>
+      <a href="/resume/">Resume</a>
+    </div>
+    <div class="footer-connect">
+      <strong>Connect</strong>
+      <SocialLinks compact={true} />
+      <a class="email-link" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {year} Guru Charan Mavuduru.</span>
+    <span>Designed and deployed with Astro + GitHub Pages.</span>
+  </div>
+</footer>

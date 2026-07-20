@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+const pathname = Astro.url.pathname;
+---
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Guru Charan Mavuduru home">
+      <span class="brand-mark">GC</span>
+      <span class="brand-copy"><strong>Guru Charan</strong><small>Cybersecurity · AI · Research</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {site.navigation.map((item) => (
+        <a href={item.href} aria-current={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button theme-toggle" type="button" aria-label="Toggle colour theme" data-theme-toggle>
+        <span class="theme-icon theme-icon-sun"><Icon name="sunSimple" size={19} /></span>
+        <span class="theme-icon theme-icon-moon"><Icon name="moon" size={19} /></span>
+      </button>
+      <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav" data-menu-button>
+        <span class="menu-open"><Icon name="menu" size={22} /></span>
+        <span class="menu-close"><Icon name="close" size={22} /></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" data-mobile-nav hidden>
+    <div class="container">
+      {site.navigation.map((item) => (
+        <a href={item.href} aria-current={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </div>
+  </nav>
+</header>
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    root.dataset.theme = saved || preferred;
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('theme', next);
+    });
+    const button = document.querySelector('[data-menu-button]');
+    const nav = document.querySelector('[data-mobile-nav]');
+    button?.addEventListener('click', () => {
+      const open = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!open));
+      if (nav) nav.hidden = open;
+      document.body.classList.toggle('menu-open', !open);
+    });
+    nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      button?.setAttribute('aria-expanded', 'false');
+      if (nav) nav.hidden = true;
+      document.body.classList.remove('menu-open');
+    }));
+  })();
+</script>
