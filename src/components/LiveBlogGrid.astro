@@ -1,0 +1,223 @@
+---
+import BlogCard from './BlogCard.astro';
+import Icon from './Icon.astro';
+import { integrations, hasPortfolioApi } from '../data/integrations';
+
+interface Props {
+  posts: any[];
+  limit?: number;
+  filters?: boolean;
+  heading?: string;
+}
+
+const {
+  posts,
+  limit = 0,
+  filters = false,
+  heading = 'Live articles from Google Drive',
+} = Astro.props;
+
+const fallbackPosts = limit > 0 ? posts.slice(0, limit) : posts;
+const instanceId = `live-drive-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section
+  class:list={['live-drive-blogs', { 'live-drive-blogs-home': limit > 0 }]}
+  data-live-drive-blogs
+  data-instance={instanceId}
+  data-endpoint={hasPortfolioApi && integrations.liveDriveBlogs ? integrations.portfolioApiUrl : ''}
+  data-limit={String(limit)}
+>
+  {filters && (
+    <div class="blog-tools personal-blog-tools">
+      <label class="search-field">
+        <span>Search my notes</span>
+        <input type="search" placeholder="Try SOC, AI, Python or research" data-live-search />
+      </label>
+      <label>
+        <span>Choose a topic</span>
+        <select data-live-domain>
+          <option value="all">Everything I write</option>
+        </select>
+      </label>
+    </div>
+  )}
+
+  <div class="live-blog-status" data-live-status>
+    <span class="live-dot" aria-hidden="true"></span>
+    <span>{hasPortfolioApi ? 'Checking Google Drive for my latest writing…' : 'Showing the built-in article collection'}</span>
+  </div>
+
+  <div class="blog-grid" data-live-grid hidden aria-label={heading}></div>
+
+  <div class:list={['blog-grid', { 'home-blog-grid': limit > 0 }]} data-fallback-grid>
+    {fallbackPosts.map((post) => <BlogCard post={post} />)}
+  </div>
+
+  <div class="empty-state" data-live-empty hidden>
+    <h2>No matching notes yet</h2>
+    <p>Try another topic or clear the filters.</p>
+  </div>
+
+  {!hasPortfolioApi && filters && (
+    <p class="integration-note">
+      Drive sync is ready in the codebase. Paste the deployed Apps Script URL in
+      <code>src/data/integrations.ts</code> to make newly uploaded blog documents
+      appear automatically.
+    </p>
+  )}
+
+  <template data-live-card-template>
+    <article class="blog-card drive-blog-card" data-live-card>
+      <a class="card-link" href="#" data-live-link>
+        <div class="blog-icon live-blog-icon"><span data-live-initial>GC</span></div>
+        <div class="blog-card-content">
+          <div class="card-meta">
+            <span data-live-domain-label>Technical note</span>
+            <span aria-hidden="true">·</span>
+            <time data-live-date>Recently updated</time>
+          </div>
+          <h3 data-live-title></h3>
+          <p data-live-description></p>
+          <ul class="tag-list live-tag-list" data-live-tags></ul>
+          <div class="blog-card-footer">
+            <span class="drive-source"><Icon name="article" size={15} /> Live from Drive</span>
+            <span class="text-link">Open blog <Icon name="arrow" size={17} /></span>
+          </div>
+        </div>
+      </a>
+    </article>
+  </template>
+</section>
+
+<script is:inline>
+  (() => {
+    const roots = [...document.querySelectorAll('[data-live-drive-blogs]')];
+    roots.forEach((root, rootIndex) => {
+      const endpoint = root.dataset.endpoint || '';
+      if (!endpoint) return;
+
+      const callbackName = `__guruCharanDriveBlogs_${Date.now()}_${rootIndex}`;
+      const script = document.createElement('script');
+      const status = root.querySelector('[data-live-status]');
+      const liveGrid = root.querySelector('[data-live-grid]');
+      const fallbackGrid = root.querySelector('[data-fallback-grid]');
+      const empty = root.querySelector('[data-live-empty]');
+      const template = root.querySelector('[data-live-card-template]');
+      const search = root.querySelector('[data-live-search]');
+      const domain = root.querySelector('[data-live-domain]');
+      const limit = Number(root.dataset.limit || 0);
+      let cards = [];
+
+      const clean = (value) => String(value || '').trim();
+      const normalise = (value) => clean(value).toLowerCase();
+      const formatDate = (value) => {
+        const date = new Date(value);
+        if (Number.isNaN(date.valueOf())) return 'Recently updated';
+        return date.toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+      };
+
+      const updateFilters = () => {
+        const query = normalise(search?.value);
+        const selected = normalise(domain?.value || 'all');
+        let visible = 0;
+        cards.forEach((card) => {
+          const matchesSearch = !query || card.dataset.search.includes(query);
+          const matchesDomain = selected === 'all' || card.dataset.domain === selected;
+          const show = matchesSearch && matchesDomain;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        if (empty) empty.hidden = visible !== 0;
+      };
+
+      window[callbackName] = (payload) => {
+        try {
+          const allBlogs = Array.isArray(payload?.blogs) ? payload.blogs : [];
+          const blogs = limit > 0 ? allBlogs.slice(0, limit) : allBlogs;
+          if (!blogs.length || !template || !liveGrid) {
+            if (status) status.innerHTML = '<span class="live-dot is-fallback"></span><span>Drive is connected, but no publishable Google Docs were found. Showing local articles.</span>';
+            return;
+          }
+
+          const domainValues = [...new Set(allBlogs.map((item) => clean(item.domain)).filter(Boolean))].sort();
+          if (domain) {
+            domainValues.forEach((value) => {
+              const option = document.createElement('option');
+              option.value = normalise(value);
+              option.textContent = value;
+              domain.append(option);
+            });
+          }
+
+          blogs.forEach((blog, index) => {
+            const fragment = template.content.cloneNode(true);
+            const card = fragment.querySelector('[data-live-card]');
+            const link = fragment.querySelector('[data-live-link]');
+            const title = clean(blog.title) || 'Untitled learning note';
+            const description = clean(blog.description) || 'A new note from my learning and project-building journey.';
+            const domainLabel = clean(blog.domain) || 'Technical note';
+            const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean).slice(0, 5) : [];
+            const firstLetter = title.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase() || 'GC';
+
+            card.dataset.search = normalise([title, description, domainLabel, tags.join(' ')].join(' '));
+            card.dataset.domain = normalise(domainLabel);
+            card.style.setProperty('--card-index', String(index % 6));
+            link.href = clean(blog.url) || '#';
+            link.target = '_blank';
+            link.rel = 'noreferrer';
+            fragment.querySelector('[data-live-title]').textContent = title;
+            fragment.querySelector('[data-live-description]').textContent = description;
+            fragment.querySelector('[data-live-domain-label]').textContent = domainLabel;
+            fragment.querySelector('[data-live-date]').textContent = formatDate(blog.updatedAt);
+            fragment.querySelector('[data-live-date]').dateTime = clean(blog.updatedAt);
+            fragment.querySelector('[data-live-initial]').textContent = firstLetter;
+
+            const tagList = fragment.querySelector('[data-live-tags]');
+            tags.forEach((tag) => {
+              const item = document.createElement('li');
+              item.textContent = tag;
+              tagList.append(item);
+            });
+            if (!tags.length) tagList.remove();
+
+            liveGrid.append(fragment);
+          });
+
+          cards = [...liveGrid.querySelectorAll('[data-live-card]')];
+          liveGrid.hidden = false;
+          if (fallbackGrid) fallbackGrid.hidden = true;
+          if (status) status.innerHTML = `<span class="live-dot"></span><span>${allBlogs.length} learning notes are being loaded directly from my Google Drive.</span>`;
+          search?.addEventListener('input', updateFilters);
+          domain?.addEventListener('change', updateFilters);
+          updateFilters();
+        } catch (error) {
+          console.error('Drive blog rendering failed', error);
+        } finally {
+          script.remove();
+          delete window[callbackName];
+        }
+      };
+
+      script.onerror = () => {
+        if (status) status.innerHTML = '<span class="live-dot is-fallback"></span><span>Drive is temporarily unavailable, so the reliable local article collection is shown.</span>';
+        delete window[callbackName];
+      };
+
+      const separator = endpoint.includes('?') ? '&' : '?';
+      script.src = `${endpoint}${separator}action=blogs&callback=${encodeURIComponent(callbackName)}&_=${Date.now()}`;
+      document.head.append(script);
+
+      window.setTimeout(() => {
+        if (typeof window[callbackName] === 'function') {
+          script.onerror();
+          script.remove();
+        }
+      }, 12000);
+    });
+  })();
+</script>

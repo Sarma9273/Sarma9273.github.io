@@ -9,7 +9,12 @@ const requiredPaths = [
   'public',
   'src',
   'src/pages/index.astro',
+  'src/pages/contact.astro',
+  'src/components/LiveBlogGrid.astro',
+  'src/data/integrations.ts',
   'src/content.config.ts',
+  'tools/google-drive/Portfolio_Live_Backend.gs',
+  'docs/LIVE_DRIVE_BLOGS_AND_CONTACT.md',
 ];
 
 const missing = requiredPaths.filter((path) => !existsSync(path));
@@ -40,4 +45,10 @@ if (!packageJson.scripts?.build) {
   process.exit(1);
 }
 
-console.log('Repository structure and npm registry configuration are valid.');
+const integrationConfig = readFileSync('src/data/integrations.ts', 'utf8');
+if (!integrationConfig.includes('portfolioApiUrl')) {
+  console.error('Repository verification failed: integration configuration is incomplete.');
+  process.exit(1);
+}
+
+console.log('Portfolio V3 structure, live-integration files and npm registry configuration are valid.');

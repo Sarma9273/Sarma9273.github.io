@@ -2,16 +2,56 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+
 const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
 ---
-<BaseLayout title="Projects" description="Detailed case studies across cybersecurity, AI, security operations, automation, renewable energy, web development and education technology.">
-  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Project portfolio</span><h1>Case studies built around problems, evidence and next decisions.</h1><p>Flagship work appears first. Early learning projects remain available as evidence of progression rather than being presented at the same level.</p></div></section>
-  <section class="section"><div class="container">
-    <div class="filter-bar" data-project-filters><button class="filter-chip active" type="button" data-filter="all">All</button><button class="filter-chip" type="button" data-filter="featured">Flagship</button><button class="filter-chip" type="button" data-filter="supporting">Supporting</button><button class="filter-chip" type="button" data-filter="legacy">Legacy learning</button></div>
-    <p class="results-count"><span data-project-count>{projects.length}</span> projects</p>
-    <div class="project-grid" data-project-grid>{projects.map((project) => <div data-project-wrapper data-featured={String(project.data.featured)} data-legacy={String(project.data.legacy)}><ProjectCard project={project} /></div>)}</div>
-    <div class="project-link-note"><strong>Evidence links</strong><p>Repository, live-demo and report buttons appear only after a project is intentionally made public. Empty or unverified links are never shown.</p></div>
-  </div></section>
+<BaseLayout title="Projects" description="Personal project case studies across cybersecurity, AI, security operations, automation, renewable energy, web development and education technology.">
+  <section class="page-hero personal-page-hero">
+    <div class="container narrow reveal" data-reveal>
+      <span class="eyebrow">Things I have built</span>
+      <h1>Projects that helped me turn curiosity into practical evidence.</h1>
+      <p>
+        Some are functional prototypes, some are academic research and some are
+        still evolving. The case studies explain the decisions and limitations
+        honestly rather than presenting every project as a finished product.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" data-project-filters>
+        <button class="filter-chip active" type="button" data-filter="all">Everything</button>
+        <button class="filter-chip" type="button" data-filter="featured">Projects I’m proud of</button>
+        <button class="filter-chip" type="button" data-filter="supporting">Supporting builds</button>
+        <button class="filter-chip" type="button" data-filter="legacy">Where I started</button>
+      </div>
+      <p class="results-count"><span data-project-count>{projects.length}</span> projects and learning builds</p>
+      <div class="project-grid" data-project-grid>
+        {projects.map((project, index) => (
+          <div
+            class="reveal"
+            data-reveal
+            style={`--reveal-delay:${(index % 3) * 60}ms`}
+            data-project-wrapper
+            data-featured={String(project.data.featured)}
+            data-legacy={String(project.data.legacy)}
+          >
+            <ProjectCard project={project} />
+          </div>
+        ))}
+      </div>
+      <div class="project-link-note">
+        <strong>Live demos are being added gradually</strong>
+        <p>
+          Case studies are available now. Repository, public demo and report
+          buttons appear only when I have cleaned the project and intentionally
+          made that evidence public.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <script is:inline>
     (() => {
       const buttons = document.querySelectorAll('[data-filter]');
@@ -25,7 +65,11 @@ const projects = (await getCollection('projects')).sort((a,b) => a.data.order - 
         items.forEach((item) => {
           const featured = item.dataset.featured === 'true';
           const legacy = item.dataset.legacy === 'true';
-          const show = filter === 'all' || (filter === 'featured' && featured) || (filter === 'legacy' && legacy) || (filter === 'supporting' && !featured && !legacy);
+          const show =
+            filter === 'all' ||
+            (filter === 'featured' && featured) ||
+            (filter === 'legacy' && legacy) ||
+            (filter === 'supporting' && !featured && !legacy);
           item.hidden = !show;
           if (show) visible++;
         });

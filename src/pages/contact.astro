@@ -3,32 +3,210 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { site } from '../data/site';
+import { integrations, hasPortfolioApi } from '../data/integrations';
 ---
-<BaseLayout title="Contact" description="Connect with Guru Charan Mavuduru about SOC, cybersecurity, AI-for-security, projects, research or technical collaboration.">
-  <section class="page-hero"><div class="container narrow"><span class="eyebrow">Contact</span><h1>Start with the problem, role or collaboration you have in mind.</h1><p>The form opens your default email application with the details filled in. You can also contact me directly through email, LinkedIn or GitHub.</p></div></section>
-  <section class="section"><div class="container contact-grid">
-    <div class="contact-panel"><span class="eyebrow">Direct channels</span><h2>Let’s build a useful conversation</h2><p>I am particularly interested in SOC Analyst, cybersecurity, threat detection, AI-for-security, project collaboration and technical education opportunities.</p><div class="contact-email"><Icon name="mail" size={22} /><div><small>Email</small><a href={`mailto:${site.email}`}>{site.email}</a></div><button class="icon-button" type="button" aria-label="Copy email address" data-copy-email><Icon name="copy" size={18} /></button></div><SocialLinks compact={false} /><p class="privacy-note">My phone number is intentionally not published on the public portfolio. Professional contact begins through the channels above.</p></div>
-    <form class="contact-form" data-contact-form><div class="form-row"><label><span>Your name</span><input name="name" autocomplete="name" required /></label><label><span>Your email</span><input name="email" type="email" autocomplete="email" required /></label></div><label><span>Subject</span><input name="subject" required placeholder="SOC opportunity, project discussion, collaboration…" /></label><label><span>Message</span><textarea name="message" rows="8" required placeholder="Share the context, expected outcome and useful links."></textarea></label><button class="button button-primary" type="submit">Prepare email <Icon name="arrow" size={18} /></button><p class="form-help">No message is stored by this website. Your email client will open for review before sending.</p></form>
-  </div></section>
+
+<BaseLayout
+  title="Contact"
+  description="Connect with Guru Charan Mavuduru about SOC, cybersecurity, AI-for-security, projects, research or technical collaboration."
+>
+  <section class="page-hero personal-page-hero">
+    <div class="container narrow reveal" data-reveal>
+      <span class="eyebrow">Say hello</span>
+      <h1>Tell me what you are working on and why you thought of me.</h1>
+      <p>
+        Job opportunities, project discussions, research ideas, teaching
+        collaborations and thoughtful feedback are always welcome.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="contact-panel personal-contact-panel reveal" data-reveal>
+        <span class="eyebrow">Direct channels</span>
+        <h2>A real message is better than a generic connection request.</h2>
+        <p>
+          Share the role, problem, expected outcome or useful context. I read
+          professional messages through email and LinkedIn.
+        </p>
+
+        <div class="contact-email">
+          <Icon name="mail" size={22} />
+          <div>
+            <small>Email</small>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </div>
+          <button class="icon-button" type="button" aria-label="Copy email address" data-copy-email>
+            <Icon name="copy" size={18} />
+          </button>
+        </div>
+
+        <SocialLinks compact={false} />
+
+        <div class="contact-promise">
+          <strong>What happens after you send?</strong>
+          <p>
+            The message is emailed directly to me. Your details are used only to
+            reply to the enquiry and are not displayed on this website.
+          </p>
+        </div>
+
+        <p class="privacy-note">
+          My phone number is intentionally not published on the public portfolio.
+        </p>
+      </div>
+
+      <form
+        class="contact-form personal-contact-form reveal"
+        data-reveal
+        data-contact-form
+        data-endpoint={hasPortfolioApi && integrations.contactForm ? integrations.portfolioApiUrl : ''}
+        method="post"
+        target="contact-response-frame"
+        action={hasPortfolioApi && integrations.contactForm ? integrations.portfolioApiUrl : undefined}
+      >
+        <input type="hidden" name="action" value="contact" />
+        <input type="hidden" name="source" value="sarma9273.github.io" />
+
+        <label class="honeypot-field" aria-hidden="true">
+          <span>Leave this field empty</span>
+          <input name="company_website" tabindex="-1" autocomplete="off" />
+        </label>
+
+        <div class="form-row">
+          <label>
+            <span>Your name</span>
+            <input name="name" autocomplete="name" required maxlength="80" />
+          </label>
+          <label>
+            <span>Your email</span>
+            <input name="email" type="email" autocomplete="email" required maxlength="140" />
+          </label>
+        </div>
+
+        <label>
+          <span>What would you like to discuss?</span>
+          <select name="topic" required>
+            <option value="">Choose one</option>
+            <option>Job or internship opportunity</option>
+            <option>Cybersecurity or SOC discussion</option>
+            <option>AI / data science collaboration</option>
+            <option>Project or research collaboration</option>
+            <option>Teaching or workshop enquiry</option>
+            <option>Feedback on my work</option>
+            <option>Something else</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Subject</span>
+          <input
+            name="subject"
+            required
+            maxlength="150"
+            placeholder="A clear one-line summary"
+          />
+        </label>
+
+        <label>
+          <span>Message</span>
+          <textarea
+            name="message"
+            rows="8"
+            required
+            minlength="20"
+            maxlength="4000"
+            placeholder="Share the context, expected outcome, timeline and useful links."
+          ></textarea>
+        </label>
+
+        <div class="contact-submit-row">
+          <button class="button button-primary" type="submit" data-submit-button>
+            Send message <Icon name="arrow" size={18} />
+          </button>
+          <a class="button button-secondary" href={`mailto:${site.email}`} data-email-fallback>
+            Use email app
+          </a>
+        </div>
+
+        <p class="form-status" role="status" aria-live="polite" data-form-status>
+          {hasPortfolioApi
+            ? 'The form sends the message directly to my inbox.'
+            : 'The live email endpoint is not connected yet. The “Use email app” button still works.'}
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <iframe
+    name="contact-response-frame"
+    title="Contact form response"
+    class="contact-response-frame"
+    data-contact-frame
+  ></iframe>
+
   <div class="toast" role="status" aria-live="polite" data-toast>Email copied</div>
+
   <script is:inline>
     (() => {
       const email = 'charanmavuduru9273@gmail.com';
       const toast = document.querySelector('[data-toast]');
+      const form = document.querySelector('[data-contact-form]');
+      const frame = document.querySelector('[data-contact-frame]');
+      const status = document.querySelector('[data-form-status]');
+      const submit = document.querySelector('[data-submit-button]');
+      const endpoint = form?.dataset.endpoint || '';
+      let submitted = false;
+
       document.querySelector('[data-copy-email]')?.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(email); toast?.classList.add('visible'); setTimeout(() => toast?.classList.remove('visible'), 1800); } catch { window.location.href = `mailto:${email}`; }
+        try {
+          await navigator.clipboard.writeText(email);
+          toast?.classList.add('visible');
+          window.setTimeout(() => toast?.classList.remove('visible'), 1800);
+        } catch {
+          window.location.href = `mailto:${email}`;
+        }
       });
-      document.querySelector('[data-contact-form]')?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+
+      const openMailFallback = () => {
+        if (!form) return;
+        const data = new FormData(form);
         const subject = encodeURIComponent(String(data.get('subject') || 'Portfolio enquiry'));
-        const body = encodeURIComponent(`Hello Guru Charan,
-
-${data.get('message')}
-
-From: ${data.get('name')}
-Email: ${data.get('email')}`);
+        const body = encodeURIComponent(
+          `Hello Guru Charan,\n\n${data.get('message') || ''}\n\nTopic: ${data.get('topic') || ''}\nFrom: ${data.get('name') || ''}\nEmail: ${data.get('email') || ''}`
+        );
         window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      };
+
+      form?.addEventListener('submit', (event) => {
+        if (!endpoint) {
+          event.preventDefault();
+          openMailFallback();
+          return;
+        }
+
+        submitted = true;
+        if (submit) {
+          submit.disabled = true;
+          submit.textContent = 'Sending…';
+        }
+        if (status) status.textContent = 'Sending your message securely…';
+      });
+
+      frame?.addEventListener('load', () => {
+        if (!submitted) return;
+        submitted = false;
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = 'Send another message';
+        }
+        if (status) {
+          status.textContent =
+            'Message submitted. I should receive it in my inbox shortly. You can also use the direct email link if the message is urgent.';
+          status.classList.add('success');
+        }
+        form?.reset();
       });
     })();
   </script>

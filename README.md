@@ -1,63 +1,79 @@
-# Guru Charan Mavuduru — Portfolio V2
+# Guru Charan Mavuduru — Personal Portfolio V3
 
-A clean, responsive and content-driven personal brand platform for cybersecurity, AI, data science, automation, research, teaching and technical writing.
+A personal portfolio and learning-in-public platform built with Astro,
+TypeScript and GitHub Pages.
 
-**Production URL:** `https://sarma9273.github.io`
+## What changed in V3
 
-## What is included
+- Rewritten to feel like an individual journey rather than a company website
+- Dark, warm and less glaring visual system
+- Softer light theme with reduced white brightness
+- Scroll reveals, subtle tilt interactions and rotating current-focus text
+- Working contact-form backend through Google Apps Script
+- Live Google Drive blog feed with local Markdown fallback
+- Private Google Docs can be read through the Apps Script reader
+- Project demos can be added gradually through content metadata
 
-- Astro static site with TypeScript and content collections
-- 10 project case studies
-- 10 complete technical blog posts
-- Professional hero and About photography
-- Experience, education, skills, certifications, resume and contact pages
-- Search and filtering for blogs and projects
-- Dark/light themes, keyboard navigation, reduced-motion support and mobile layouts
-- SEO metadata, sitemap, RSS feed, structured data, robots file and custom 404 page
-- GitHub Actions deployment to GitHub Pages
-- Google Drive workspace generator and content-manifest workflow
-- Detailed maintenance and codebase documentation
-- Archived copy of the original 2023 portfolio
-
-## Local setup
+## Quick start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Astro.
-
-## Validate production build
+Build:
 
 ```bash
 npm run build
-npm run preview
 ```
 
-## Publish on GitHub Pages
+## One-time live integration
 
-1. Use the repository `Sarma9273/Sarma9273.github.io`.
-2. Replace its old files with this project, commit and push to `main`.
-3. In GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-4. The included workflow validates, builds and deploys the site automatically.
+Read:
 
-No Netlify configuration is used or required.
+```text
+docs/LIVE_DRIVE_BLOGS_AND_CONTACT.md
+```
 
-## Content updates
+Then deploy:
 
-- Blogs: `src/content/blogs/*.md`
-- Projects: `src/content/projects/*.md`
-- Experience, education, skills: `src/data/profile.ts`
-- Brand and links: `src/data/site.ts`
-- Resume: `public/resume/Guru_Charan_Mavuduru_ATS_Resume_2026.pdf`
-- Photos: `src/assets/images/`
+```text
+tools/google-drive/Portfolio_Live_Backend.gs
+```
 
-Read the `/docs` folder before changing architecture or deployment.
+Paste the resulting Apps Script `/exec` URL into:
 
-## Clean GitHub Pages deployment
+```text
+src/data/integrations.ts
+```
 
-This repository is prepared for the GitHub user site `https://sarma9273.github.io/`.
-It uses the public npm registry through `.npmrc`, verifies its folder structure before installation, builds Astro into `dist`, and deploys that artifact with GitHub Actions.
+## GitHub Pages
 
-For a completely fresh repository, follow [`CREATE_FRESH_REPOSITORY.md`](./CREATE_FRESH_REPOSITORY.md).
+The workflow at `.github/workflows/deploy.yml` builds the Astro project and
+deploys `dist` to GitHub Pages whenever `main` changes.
+
+Published address:
+
+```text
+https://sarma9273.github.io/
+```
+
+## Main content locations
+
+```text
+src/content/projects/       Project case studies
+src/content/blogs/          Reliable local blog fallback
+src/data/profile.ts         Education, experience and skills
+src/data/site.ts            Brand, links and navigation
+src/data/integrations.ts    Apps Script endpoint
+src/styles/global.css       Visual system and responsive design
+```
+
+## Privacy
+
+- Phone number is not shown publicly.
+- Contact messages go directly to the configured inbox.
+- The live blog reader only opens documents located in the configured Blogs
+  folder.
+- Do not upload student data, private wedding information, credentials or
+  sensitive incident evidence.

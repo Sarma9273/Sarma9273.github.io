@@ -1,6 +1,6 @@
 {
   "name": "sarma9273-github-io",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,7 +22,7 @@
     "@astrojs/check": "^0.9.9",
     "typescript": "^6.0.2"
   },
-  "description": "Personal portfolio of Guru Charan Mavuduru \u2014 cybersecurity, AI, data science, SOC projects, research, and technical blogs.",
+  "description": "Personal portfolio and live learning journal of Guru Charan Mavuduru — cybersecurity, applied AI, projects, Google Drive blogs, and contact backend.",
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=10.0.0"

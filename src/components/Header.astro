@@ -7,7 +7,7 @@ const pathname = Astro.url.pathname;
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="Guru Charan Mavuduru home">
       <span class="brand-mark">GC</span>
-      <span class="brand-copy"><strong>Guru Charan</strong><small>Cybersecurity · AI · Research</small></span>
+      <span class="brand-copy"><strong>Guru Charan</strong><small>Learning · building · sharing</small></span>
     </a>
     <nav class="desktop-nav" aria-label="Primary navigation">
       {site.navigation.map((item) => (
@@ -37,8 +37,7 @@ const pathname = Astro.url.pathname;
   (() => {
     const root = document.documentElement;
     const saved = localStorage.getItem('theme');
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    root.dataset.theme = saved || preferred;
+    root.dataset.theme = saved || 'dark';
     document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
