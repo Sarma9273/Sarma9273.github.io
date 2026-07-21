@@ -6,7 +6,7 @@ export const integrations = {
    * Example:
    * https://script.google.com/macros/s/AKfycb.../exec
    */
-  portfolioApiUrl: 'PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE',
+  portfolioApiUrl: 'https://script.google.com/macros/s/AKfycbxEyAnFjV7RZwYyN29zyDQIOn3w-F6Srp4DucSLXTZ5wgLzrhj_HVjePuA55tZtmvJb/exec',
 
   /**
    * Live Drive blogs are loaded in the visitor's browser. If the endpoint is
