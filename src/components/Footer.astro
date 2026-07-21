@@ -6,24 +6,33 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="brand footer-brand" href="/"><span class="brand-mark">GC</span><span class="brand-copy"><strong>{site.name}</strong><small>{site.headline}</small></span></a>
-      <p>Building practical, documented systems across cybersecurity, AI, automation, engineering and education.</p>
+      <a class="brand footer-brand" href="/">
+        <span class="brand-mark">GC</span>
+        <span class="brand-copy">
+          <strong>{site.name}</strong>
+          <small>Learning in public, one useful build at a time</small>
+        </span>
+      </a>
+      <p>
+        A personal record of my journey through cybersecurity, applied AI,
+        engineering, teaching and the projects connecting them.
+      </p>
     </div>
     <div class="footer-links">
-      <strong>Explore</strong>
+      <strong>Explore my work</strong>
       <a href="/projects/">Projects</a>
-      <a href="/blogs/">Technical blogs</a>
-      <a href="/experience/">Experience</a>
+      <a href="/blogs/">Learning notes</a>
+      <a href="/about/">My story</a>
       <a href="/resume/">Resume</a>
     </div>
     <div class="footer-connect">
-      <strong>Connect</strong>
+      <strong>Keep in touch</strong>
       <SocialLinks compact={true} />
       <a class="email-link" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
   </div>
   <div class="container footer-bottom">
     <span>© {year} Guru Charan Mavuduru.</span>
-    <span>Designed and deployed with Astro + GitHub Pages.</span>
+    <span>Designed, written and maintained by me.</span>
   </div>
 </footer>

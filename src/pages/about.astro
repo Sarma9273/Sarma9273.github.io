@@ -6,13 +6,88 @@ import Icon from '../components/Icon.astro';
 import aboutImage from '../assets/images/guru-charan-about.webp';
 import { education, skills, certifications } from '../data/profile';
 ---
-<BaseLayout title="About" description="The education, transition, interests and working principles behind Guru Charan Mavuduru's cybersecurity, AI and research portfolio.">
-  <section class="page-hero"><div class="container narrow"><span class="eyebrow">About me</span><h1>Systems thinking, practical experimentation and documented learning.</h1><p>I began in Electrical and Electronics Engineering, moved deeper into cybersecurity and applied AI, and now pursue M.Tech AI&DSE at IIT Patna while teaching and building hands-on projects.</p></div></section>
-  <section class="section"><div class="container about-grid">
-    <div class="about-image"><Image src={aboutImage} alt="Portrait of Guru Charan Mavuduru" widths={[480,720,960]} sizes="(max-width: 850px) 90vw, 38vw" /></div>
-    <div class="about-copy"><span class="eyebrow">My direction</span><h2>Bridging engineering, security, intelligence and education</h2><p>I am most engaged when a project connects technical depth with a real operational problem. That may mean helping a SOC analyst interpret an alert, organising a school lab, automating an institution's support workflow or testing an optimisation algorithm in Simulink.</p><p>My EEE background developed systems thinking and mathematical discipline. Cybersecurity added adversarial reasoning, evidence and incident workflow. AI&DSE adds data, retrieval, modelling and automation. Teaching keeps the work understandable and grounded.</p><div class="principles"><div><Icon name="check" size={20} /><span>Build in phases and keep every phase demonstrable.</span></div><div><Icon name="check" size={20} /><span>Document failures, not only successful screenshots.</span></div><div><Icon name="check" size={20} /><span>Use AI to assist human judgement, not hide uncertainty.</span></div><div><Icon name="check" size={20} /><span>Prefer maintainable, low-cost tools before unnecessary complexity.</span></div></div></div>
-  </div></section>
-  <section class="section section-muted"><div class="container"><SectionHeading eyebrow="Education" title="Academic foundation and current study" /><div class="timeline">{education.map((item) => <article><div class="timeline-marker"></div><span>{item.period}</span><h3>{item.qualification}</h3><strong>{item.institution}</strong><p>{item.detail}</p></article>)}</div></div></section>
-  <section class="section"><div class="container"><SectionHeading eyebrow="Capability map" title="Tools are grouped around workflows, not collected as badges" /><div class="skills-grid">{skills.map((group) => <article><h3>{group.group}</h3><ul class="tag-list large">{group.items.map((item) => <li>{item}</li>)}</ul></article>)}</div></div></section>
-  <section class="section section-muted"><div class="container"><SectionHeading eyebrow="Training" title="Selected certifications and professional learning" /><div class="certificate-grid">{certifications.map((item) => <div><Icon name="check" size={20} /><span>{item}</span></div>)}</div></div></section>
+<BaseLayout title="My Story" description="The education, transition, interests and working principles behind Guru Charan Mavuduru's cybersecurity, AI and research journey.">
+  <section class="page-hero personal-page-hero">
+    <div class="container narrow reveal" data-reveal>
+      <span class="eyebrow">My story</span>
+      <h1>I followed curiosity from electrical systems to security operations and applied AI.</h1>
+      <p>
+        The path was not perfectly planned. I learned web development, trained
+        people in cybersecurity, taught computer science, built security labs and
+        eventually began postgraduate study in AI&DSE at IIT Patna.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-image reveal" data-reveal data-tilt>
+        <Image src={aboutImage} alt="Portrait of Guru Charan Mavuduru" widths={[480,720,960]} sizes="(max-width: 850px) 90vw, 38vw" />
+      </div>
+      <div class="about-copy reveal" data-reveal>
+        <span class="eyebrow">Why these fields connect for me</span>
+        <h2>I enjoy understanding complete systems and explaining them clearly.</h2>
+        <p>
+          My EEE background taught me to think in systems, signals, control and
+          failure conditions. Cybersecurity added adversarial reasoning,
+          evidence and incident response. AI&DSE added data, retrieval, modelling
+          and automation. Teaching reminds me that technical work matters only
+          when people can understand and use it.
+        </p>
+        <p>
+          I am still early in this journey. I use projects to close the gap
+          between what I know theoretically and what I can actually build,
+          troubleshoot and communicate.
+        </p>
+        <div class="principles">
+          <div><Icon name="check" size={20} /><span>Build in small phases and keep each phase demonstrable.</span></div>
+          <div><Icon name="check" size={20} /><span>Document failures and fixes, not only polished outcomes.</span></div>
+          <div><Icon name="check" size={20} /><span>Use AI to support human judgement rather than hide uncertainty.</span></div>
+          <div><Icon name="check" size={20} /><span>Choose maintainable tools before unnecessary complexity.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <SectionHeading eyebrow="Education" title="The academic chapters behind my current direction" />
+      <div class="timeline">
+        {education.map((item) => (
+          <article class="reveal" data-reveal>
+            <div class="timeline-marker"></div>
+            <span>{item.period}</span>
+            <h3>{item.qualification}</h3>
+            <strong>{item.institution}</strong>
+            <p>{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="What I use" title="Skills organised around the work I am trying to do" />
+      <div class="skills-grid">
+        {skills.map((group) => (
+          <article class="reveal" data-reveal>
+            <h3>{group.group}</h3>
+            <ul class="tag-list large">{group.items.map((item) => <li>{item}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <SectionHeading eyebrow="Professional learning" title="Selected training that supported the journey" />
+      <div class="certificate-grid">
+        {certifications.map((item) => (
+          <div class="reveal" data-reveal><Icon name="check" size={20} /><span>{item}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
 </BaseLayout>

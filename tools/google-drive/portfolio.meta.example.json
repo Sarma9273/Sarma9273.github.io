@@ -1,0 +1,8 @@
+{
+  "title": "Replace with the blog title",
+  "description": "A concise portfolio description between 120 and 240 characters.",
+  "domain": "Cybersecurity",
+  "tags": ["SOC", "AI", "Project Build Log"],
+  "status": "Learning note",
+  "featured": false
+}
