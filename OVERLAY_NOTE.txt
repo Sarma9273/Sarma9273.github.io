@@ -1,0 +1,2 @@
+This overlay intentionally does NOT include src/data/integrations.ts.
+Your working Google Apps Script /exec URL and live Drive/contact configuration remain untouched when this overlay is copied into the V3 repository.

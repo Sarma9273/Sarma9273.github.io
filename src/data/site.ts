@@ -1,13 +1,13 @@
 export const site = {
   name: 'Guru Charan Mavuduru',
   shortName: 'Guru Charan',
-  title: 'Guru Charan Mavuduru — Cybersecurity, AI & Learning in Public',
+  title: 'Guru Charan Mavuduru — AI Security & SOC Engineering',
   description:
-    'Personal portfolio and learning journal of Guru Charan Mavuduru: M.Tech AI&DSE student at IIT Patna, cybersecurity learner, computer teacher and hands-on builder.',
+    'Immersive personal portfolio of Guru Charan Mavuduru: M.Tech AI&DSE student at IIT Patna building explainable AI-security, SOC engineering and practical automation systems.',
   url: 'https://sarma9273.github.io',
   email: 'charanmavuduru9273@gmail.com',
   location: 'Andhra Pradesh, India',
-  headline: 'Cybersecurity learner · Applied AI builder · Computer teacher',
+  headline: 'AI security builder · SOC engineering learner · Computer teacher',
   heroStatement: 'I learn by building, breaking, documenting and improving.',
   socials: [
     { label: 'GitHub', href: 'https://github.com/Sarma9273', icon: 'github' },

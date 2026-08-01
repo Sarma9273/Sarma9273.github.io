@@ -17,8 +17,7 @@ export const integrations = {
 
   /**
    * The same Apps Script endpoint receives contact-form submissions and emails
-   * them to the address configured in the backend script.
-   */
+   * them to the address configured in the backend script./
   contactForm: true,
 } as const;
 

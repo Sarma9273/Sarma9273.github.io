@@ -1,0 +1,115 @@
+---
+const stages = [
+  {
+    key: 'observe',
+    label: 'Observe',
+    title: 'Incident narrative enters the system',
+    description: 'An analyst provides a short alert, log summary or investigation note. The input stays visible so the system never hides the evidence that started the decision.',
+    input: 'Alert narrative, indicators, affected assets',
+    output: 'Normalised incident context',
+    meaning: 'Turn scattered evidence into a consistent starting point.',
+  },
+  {
+    key: 'retrieve',
+    label: 'Retrieve',
+    title: 'Relevant security knowledge is ranked',
+    description: 'Embeddings and FAISS compare the incident with a curated knowledge base. Security-specific keyword signals help separate attacks that use similar language.',
+    input: 'Normalised incident context',
+    output: 'Ranked attack hypotheses and playbooks',
+    meaning: 'Find the most useful previous knowledge without pretending that similarity is certainty.',
+  },
+  {
+    key: 'reason',
+    label: 'Reason',
+    title: 'Confidence and novelty are evaluated',
+    description: 'The system checks confidence, competing hypotheses and unusual patterns. Low-confidence cases are directed to human review instead of being presented as facts.',
+    input: 'Ranked hypotheses and retrieval scores',
+    output: 'Confidence, novelty and review decision',
+    meaning: 'Make uncertainty explicit so an analyst knows when to trust, verify or escalate.',
+  },
+  {
+    key: 'map',
+    label: 'Map',
+    title: 'The likely behaviour is connected to MITRE ATT&CK',
+    description: 'Relevant tactics and techniques provide a common language for investigation, reporting and detection improvement.',
+    input: 'Likely attack pattern',
+    output: 'MITRE ATT&CK mapping and severity context',
+    meaning: 'Connect a local incident to a recognised defensive knowledge model.',
+  },
+  {
+    key: 'respond',
+    label: 'Respond',
+    title: 'A structured analyst playbook is generated',
+    description: 'Containment, investigation, recovery and prevention guidance are organised into an actionable report while preserving the need for human approval.',
+    input: 'Mapped attack context and risk',
+    output: 'Structured SOC response guidance',
+    meaning: 'Reduce decision friction without automating away accountability.',
+  },
+];
+---
+<div class="architecture-explorer" data-architecture-explorer>
+  <div class="architecture-flow" role="tablist" aria-label="CyberGPT architecture stages">
+    {stages.map((stage, index) => (
+      <button
+        class:list={['architecture-node', { active: index === 0 }]}
+        type="button"
+        role="tab"
+        aria-selected={index === 0 ? 'true' : 'false'}
+        data-architecture-node={stage.key}
+      >
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        <strong>{stage.label}</strong>
+      </button>
+    ))}
+  </div>
+
+  <div class="architecture-detail" aria-live="polite">
+    <div class="architecture-detail-copy">
+      <span class="architecture-stage" data-architecture-stage>Stage 01 · Observe</span>
+      <h3 data-architecture-title>{stages[0].title}</h3>
+      <p data-architecture-description>{stages[0].description}</p>
+      <div class="architecture-io">
+        <div><span>Input</span><strong data-architecture-input>{stages[0].input}</strong></div>
+        <div><span>Output</span><strong data-architecture-output>{stages[0].output}</strong></div>
+      </div>
+    </div>
+    <div class="architecture-meaning">
+      <span>Why it matters</span>
+      <p data-architecture-meaning>{stages[0].meaning}</p>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ stages }}>
+  (() => {
+    const root = document.querySelector('[data-architecture-explorer]');
+    if (!root) return;
+    const buttons = [...root.querySelectorAll('[data-architecture-node]')];
+    const fields = {
+      stage: root.querySelector('[data-architecture-stage]'),
+      title: root.querySelector('[data-architecture-title]'),
+      description: root.querySelector('[data-architecture-description]'),
+      input: root.querySelector('[data-architecture-input]'),
+      output: root.querySelector('[data-architecture-output]'),
+      meaning: root.querySelector('[data-architecture-meaning]'),
+    };
+
+    const select = (index) => {
+      const stage = stages[index];
+      if (!stage) return;
+      buttons.forEach((button, buttonIndex) => {
+        const active = buttonIndex === index;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+      });
+      fields.stage.textContent = `Stage ${String(index + 1).padStart(2, '0')} · ${stage.label}`;
+      fields.title.textContent = stage.title;
+      fields.description.textContent = stage.description;
+      fields.input.textContent = stage.input;
+      fields.output.textContent = stage.output;
+      fields.meaning.textContent = stage.meaning;
+    };
+
+    buttons.forEach((button, index) => button.addEventListener('click', () => select(index)));
+  })();
+</script>
