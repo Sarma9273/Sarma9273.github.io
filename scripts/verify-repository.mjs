@@ -11,6 +11,10 @@ const requiredPaths = [
   'src/pages/index.astro',
   'src/pages/contact.astro',
   'src/components/LiveBlogGrid.astro',
+  'src/components/SecurityCore.astro',
+  'src/components/ArchitectureExplorer.astro',
+  'src/components/ProjectShowcase.astro',
+  'src/data/journey.ts',
   'src/data/integrations.ts',
   'src/content.config.ts',
   'tools/google-drive/Portfolio_Live_Backend.gs',
@@ -51,4 +55,4 @@ if (!integrationConfig.includes('portfolioApiUrl')) {
   process.exit(1);
 }
 
-console.log('Portfolio V3 structure, live-integration files and npm registry configuration are valid.');
+console.log('Portfolio V4 structure, immersive components, live integrations and npm registry configuration are valid.');

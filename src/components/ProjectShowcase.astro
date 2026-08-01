@@ -1,0 +1,88 @@
+---
+import Icon from './Icon.astro';
+interface Props { projects: any[]; }
+const { projects } = Astro.props;
+---
+<div class="project-showcase" data-project-showcase>
+  <div class="project-showcase-toolbar">
+    <div class="project-showcase-progress" aria-hidden="true"><span data-project-progress></span></div>
+    <div class="project-showcase-controls">
+      <button type="button" aria-label="Previous project" data-project-prev><Icon name="arrow" size={18} /></button>
+      <span><strong data-project-current>01</strong> / {String(projects.length).padStart(2, '0')}</span>
+      <button type="button" aria-label="Next project" data-project-next><Icon name="arrow" size={18} /></button>
+    </div>
+  </div>
+
+  <div class="project-showcase-track" data-project-track tabindex="0" aria-label="Featured projects">
+    {projects.map((project, index) => (
+      <article class="project-scene" data-project-scene>
+        <div class="project-scene-number">{String(index + 1).padStart(2, '0')}</div>
+        <div class="project-scene-visual" data-domain={project.data.domain}>
+          <span class="project-scene-grid" aria-hidden="true"></span>
+          <div class="project-scene-icon"><Icon name={project.data.coverIcon} size={56} /></div>
+          <div class="project-scene-domain">{project.data.domain}</div>
+          <div class="project-scene-status"><i></i>{project.data.status}</div>
+        </div>
+        <div class="project-scene-copy">
+          <span class="eyebrow">{project.data.period}</span>
+          <h3>{project.data.shortTitle}</h3>
+          <p>{project.data.description}</p>
+          <div class="project-scene-evidence">
+            {project.data.outcomes.slice(0, 3).map((outcome: string) => <span>{outcome}</span>)}
+          </div>
+          <ul class="tag-list" aria-label="Technologies">
+            {project.data.technologies.slice(0, 6).map((technology: string) => <li>{technology}</li>)}
+          </ul>
+          <a class="button button-secondary" href={`/projects/${project.id}/`}>
+            Explore case study <Icon name="arrow" size={18} />
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-project-showcase]');
+    if (!root) return;
+    const track = root.querySelector('[data-project-track]');
+    const scenes = [...root.querySelectorAll('[data-project-scene]')];
+    const progress = root.querySelector('[data-project-progress]');
+    const current = root.querySelector('[data-project-current]');
+    const previous = root.querySelector('[data-project-prev]');
+    const next = root.querySelector('[data-project-next]');
+    if (!track || !scenes.length) return;
+
+    const activeIndex = () => {
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0;
+      let distance = Infinity;
+      scenes.forEach((scene, index) => {
+        const sceneCenter = scene.offsetLeft + scene.clientWidth / 2;
+        const nextDistance = Math.abs(center - sceneCenter);
+        if (nextDistance < distance) {
+          distance = nextDistance;
+          closest = index;
+        }
+      });
+      return closest;
+    };
+
+    const update = () => {
+      const max = Math.max(1, track.scrollWidth - track.clientWidth);
+      if (progress) progress.style.transform = `scaleX(${Math.min(1, track.scrollLeft / max)})`;
+      if (current) current.textContent = String(activeIndex() + 1).padStart(2, '0');
+    };
+
+    const scrollToIndex = (index) => {
+      const clamped = Math.max(0, Math.min(scenes.length - 1, index));
+      scenes[clamped].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    };
+
+    previous?.addEventListener('click', () => scrollToIndex(activeIndex() - 1));
+    next?.addEventListener('click', () => scrollToIndex(activeIndex() + 1));
+    track.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
