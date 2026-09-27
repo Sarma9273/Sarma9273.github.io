@@ -33,7 +33,7 @@ Security analysts need to move from raw alerts and incident narratives to contex
 
 ## What I built
 
-RA-XSOC extends the CyberGPT research direction into a broader security-operations workflow. It combines security-event input, preprocessing, a cybersecurity knowledge base, vector retrieval, contextual reasoning, MITRE ATT&CK mapping and structured incident-response output.
+RA-XSOC is the current evolution of the CyberGPT research direction. It extends retrieval-augmented incident assistance into a broader security-operations workflow combining security-event input, preprocessing, a cybersecurity knowledge base, vector retrieval, contextual reasoning, MITRE ATT&CK mapping, novelty review and structured incident-response output.
 
 ## Core architecture
 
@@ -45,11 +45,20 @@ RA-XSOC extends the CyberGPT research direction into a broader security-operatio
 6. The analyst receives investigation findings and response guidance.
 7. Structured incident information is retained for reporting and review.
 
+## What changed from CyberGPT
+
+The project broadened from a focused incident-response copilot into an extended SOC investigation architecture. The emphasis moved toward evidence, contextual correlation, uncertainty handling and a structured analyst workflow.
+
+**CyberGPT** established the retrieval/playbook foundation.
+
+**RA-XSOC** carries that foundation into a wider investigation and response system.
+
 ## Engineering decisions
 
 - Human review remains part of the workflow when confidence is low.
 - Retrieval provides traceable context rather than relying only on free-form generation.
 - Security-specific knowledge and MITRE mapping keep the assistant grounded in SOC terminology.
+- The architecture separates evidence/context retrieval from the analyst's final decision.
 
 ## Current limitations
 
@@ -58,3 +67,22 @@ This is a research prototype rather than a production SOC platform. Live SIEM in
 ## Roadmap
 
 Live SIEM connectors, analyst feedback loops, richer evidence correlation, role-based access, evaluation datasets and approval-controlled SOAR actions.
+
+architecture:
+  - Security event / analyst input
+  - Evidence and context preprocessing
+  - Cybersecurity knowledge base
+  - SentenceTransformer embeddings
+  - FAISS retrieval
+  - Hybrid relevance and contextual reasoning
+  - MITRE ATT&CK mapping
+  - Novelty / low-confidence review
+  - Structured incident reporting
+workflow:
+  - Receive security event or investigation query
+  - Normalize available context and evidence
+  - Retrieve relevant security knowledge
+  - Correlate context and retrieved guidance
+  - Map supported behaviours to MITRE ATT&CK
+  - Surface findings, uncertainty and response guidance
+  - Retain structured information for analyst review
