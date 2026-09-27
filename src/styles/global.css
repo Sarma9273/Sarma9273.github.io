@@ -1365,3 +1365,82 @@ body[data-guru-state="WAKE"] .guru-bot{animation:guruWake .8s ease-out}
 @media(max-width:760px){.gv-command-hero{min-height:auto}.gv-command-inner{padding-block:45px 30px;gap:28px}.gv-command-copy h1{font-size:clamp(3rem,13vw,5.2rem)}.gv-command-lede{font-size:.96rem}.gv-command-stats{gap:8px 14px;margin-top:28px}.gv-command-console{min-height:590px;border-radius:18px}.gv-system-orbit{height:350px}.gv-orbit-ring-a{width:205px;height:205px}.gv-orbit-ring-b{width:300px;height:300px}.gv-orbit-line{width:300px}.gv-system-orb{width:122px}.gv-system-orb:nth-of-type(5){transform:translate(-50%,-50%) rotate(-90deg) translateY(-150px) rotate(90deg)}.gv-system-orb:nth-of-type(6){transform:translate(-50%,-50%) rotate(30deg) translateY(-150px) rotate(-30deg)}.gv-system-orb:nth-of-type(7){transform:translate(-50%,-50%) rotate(150deg) translateY(-150px) rotate(-150deg)}.gv-console-readout{padding:16px}.gv-discovery-rail{grid-template-columns:1fr 1fr;margin-top:35px}.gv-discovery-step{min-height:140px;padding:18px 16px 18px 0}.gv-discovery-step+.gv-discovery-step{padding-left:16px}.gv-system-cards{grid-template-columns:1fr}.gv-system-card.featured{grid-column:auto;min-height:430px}.gv-system-card{min-height:390px}.gv-proof-grid,.gv-featured-grid,.gv-notes-grid{grid-template-columns:1fr}.gv-section-top{align-items:flex-start;flex-direction:column;margin-bottom:30px}.gv-section-top h2,.gv-discovery h2,.gv-proof-intro h2{font-size:clamp(2.45rem,12vw,4.2rem)}.gv-finale-inner{min-height:430px}.command-trigger span{display:none}.command-trigger{width:44px;justify-content:center;padding:0}.command-trigger kbd{display:none}.command-links{grid-template-columns:1fr}}
 @media(max-width:430px){.gv-command-copy h1{font-size:clamp(2.7rem,14vw,4rem)}.gv-command-actions{align-items:stretch;flex-direction:column}.gv-command-primary,.gv-command-secondary{width:100%}.gv-command-console{min-height:560px}.gv-system-orbit{height:325px}.gv-orbit-ring-b{width:280px;height:280px}.gv-orbit-line{width:280px}.gv-system-orb{width:112px;min-height:66px}.gv-system-orb:nth-of-type(5){transform:translate(-50%,-50%) rotate(-90deg) translateY(-137px) rotate(90deg)}.gv-system-orb:nth-of-type(6){transform:translate(-50%,-50%) rotate(30deg) translateY(-137px) rotate(-30deg)}.gv-system-orb:nth-of-type(7){transform:translate(-50%,-50%) rotate(150deg) translateY(-137px) rotate(-150deg)}.gv-system-orb small{font-size:.46rem}.gv-core-node{width:78px;height:78px}.gv-core-node span{font-size:1.05rem}.gv-discovery-rail{grid-template-columns:1fr}.gv-discovery-step{min-height:auto;border-right:0;border-bottom:1px solid var(--border);padding:17px 0}.gv-discovery-step+.gv-discovery-step{padding-left:0}.gv-discovery-step strong{margin-top:18px}.gv-system-card.featured,.gv-system-card{min-height:370px}.command-panel{width:calc(100% - 20px);margin-top:3vh;padding:13px}}
 @media(prefers-reduced-motion:reduce){.gv-pulse{animation:none}[data-gv-reveal]{opacity:1;transform:none;transition:none}}
+
+
+/* Signature experience corrections: clear mobile navigation, explicit hero identity,
+   and deterministic system-node geometry. */
+.gv-command-intro {
+  margin: 18px 0 0;
+  color: var(--text);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+.gv-command-intro strong { color: var(--accent-strong); }
+.gv-command-status { white-space: nowrap; }
+
+.gv-system-orb-ra-xsoc,
+.gv-system-orb-sentinel,
+.gv-system-orb-cyber {
+  position: absolute;
+  margin: 0;
+}
+.gv-system-orb-ra-xsoc {
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+}
+.gv-system-orb-sentinel {
+  left: auto;
+  right: 5%;
+  top: 61%;
+  transform: translate(0, -50%);
+}
+.gv-system-orb-cyber {
+  left: 5%;
+  top: 61%;
+  transform: translate(0, -50%);
+}
+.gv-system-orb-ra-xsoc:hover,
+.gv-system-orb-ra-xsoc.active { transform: translate(-50%, -50%) translateY(-2px); }
+.gv-system-orb-sentinel:hover,
+.gv-system-orb-sentinel.active { transform: translate(0, -50%) translateY(-2px); }
+.gv-system-orb-cyber:hover,
+.gv-system-orb-cyber.active { transform: translate(0, -50%) translateY(-2px); }
+
+@media (max-width: 1120px) {
+  .command-trigger { display: none; }
+  .header-actions { gap: 6px; }
+  .menu-button::after {
+    content: 'MENU';
+    margin-left: 7px;
+    color: var(--muted);
+    font: 800 .58rem var(--font-mono);
+    letter-spacing: .08em;
+  }
+  .menu-button {
+    width: auto !important;
+    min-width: 76px;
+    padding-inline: 10px;
+    grid-template-columns: 22px auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .gv-command-inner { gap: 34px; }
+}
+@media (max-width: 760px) {
+  .gv-command-intro { margin-top: 14px; font-size: 1.05rem; }
+  .gv-command-status { font-size: .55rem; }
+  .gv-command-inner { padding-block: 38px 26px; }
+  .gv-system-orbit { height: 350px; }
+  .gv-system-orb-ra-xsoc { top: 10%; }
+  .gv-system-orb-sentinel { right: 0; top: 61%; }
+  .gv-system-orb-cyber { left: 0; top: 61%; }
+}
+@media (max-width: 430px) {
+  .gv-command-intro { font-size: 1rem; }
+  .gv-system-orbit { height: 325px; }
+  .gv-system-orb-ra-xsoc { top: 9%; }
+  .gv-system-orb-sentinel { right: 0; top: 60%; }
+  .gv-system-orb-cyber { left: 0; top: 60%; }
+}
