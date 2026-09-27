@@ -1,4 +1,7 @@
+let atmosphereStarted = false;
+let soundStarted = false;
 const initSignatureEngine = () => {
+  if (atmosphereStarted) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canvas = document.querySelector('[data-atmosphere]');
   if (!(canvas instanceof HTMLCanvasElement) || reduce || window.matchMedia('(max-width:760px)').matches) return;
@@ -22,9 +25,10 @@ const initSignatureEngine = () => {
     }
     ctx.globalAlpha=1;raf=requestAnimationFrame(draw);
   };
-  resize();window.addEventListener('resize',resize,{passive:true});raf=requestAnimationFrame(draw);
+  resize();window.addEventListener('resize',resize,{passive:true});raf=requestAnimationFrame(draw); atmosphereStarted = true;
 };
 const initSound=()=>{
+  if (soundStarted) return;
   const button=document.querySelector('[data-sound-toggle]'); if(!(button instanceof HTMLButtonElement)) return;
   let audio=null,enabled=false;
   const beep=(frequency=520,duration=.045)=>{
@@ -36,6 +40,7 @@ const initSound=()=>{
   };
   button.addEventListener('click',async()=>{enabled=!enabled;button.setAttribute('aria-pressed',String(enabled));button.classList.toggle('is-on',enabled);if(enabled&&audio?.state==='suspended')await audio.resume();beep(620,.06);});
   document.querySelectorAll('a,button').forEach(el=>el.addEventListener('mouseenter',()=>beep(420,.025),{passive:true}));
+  soundStarted = true;
 };
 document.addEventListener('astro:page-load',()=>{initSignatureEngine();initSound();});
 if(document.readyState!=='loading'){initSignatureEngine();initSound();}else document.addEventListener('DOMContentLoaded',()=>{initSignatureEngine();initSound();});
