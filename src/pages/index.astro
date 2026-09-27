@@ -7,6 +7,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import LiveBlogGrid from '../components/LiveBlogGrid.astro';
 import Icon from '../components/Icon.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import ArchitectureMap from '../components/ArchitectureMap.astro';
 import heroImage from '../assets/images/guru-charan-hero.webp';
 import aboutImage from '../assets/images/guru-charan-about.webp';
 import { focusAreas, education, experience } from '../data/profile';
@@ -145,6 +146,8 @@ const featuredBlogs = blogs.filter((post) => post.data.featured).slice(0,3);
       </div>
     </div>
   </section>
+
+  <ArchitectureMap />
 
   <section class="section now-section" data-guru-context="Current mission — what I am studying, building and exploring now.">
     <div class="container now-grid">
