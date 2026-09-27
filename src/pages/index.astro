@@ -2,227 +2,160 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionHeading from '../components/SectionHeading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import LiveBlogGrid from '../components/LiveBlogGrid.astro';
 import Icon from '../components/Icon.astro';
-import SocialLinks from '../components/SocialLinks.astro';
-import ArchitectureMap from '../components/ArchitectureMap.astro';
 import heroImage from '../assets/images/guru-charan-hero.webp';
-import aboutImage from '../assets/images/guru-charan-about.webp';
-import { focusAreas, education, experience } from '../data/profile';
+import { education, experience } from '../data/profile';
 
-const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0,6);
-const blogs = (await getCollection('blogs', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
-const featuredBlogs = blogs.filter((post) => post.data.featured).slice(0,3);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 4);
+const blogs = (await getCollection('blogs', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const featuredBlogs = blogs.filter((post) => post.data.featured).slice(0, 2);
+
+const projectSignals = [
+  { label: 'SECURITY', title: 'Systems that investigate', text: 'SOC workflows, evidence, detection and response.', icon: 'shield', href: '/projects/' },
+  { label: 'AI', title: 'Intelligence with evidence', text: 'Retrieval, embeddings and explainable decision support.', icon: 'brain', href: '/projects/' },
+  { label: 'PRODUCT', title: 'Ideas made usable', text: 'Learning platforms, automation and practical systems.', icon: 'workflow', href: '/projects/' },
+];
+
+const systemNodes = [
+  { code: '01', title: 'Research', text: 'Questions, experiments and technical investigation.' },
+  { code: '02', title: 'Systems', text: 'Architecture, implementation and engineering decisions.' },
+  { code: '03', title: 'Evidence', text: 'Results, limitations, repositories and documentation.' },
+  { code: '04', title: 'Evolution', text: 'What changed, what failed and what comes next.' },
+];
 ---
 
 <BaseLayout>
-  <section class="hero section-shell personal-hero" data-guru-context="Welcome to the command deck — this is where the GURUVERSE journey starts.">
-    <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
-    <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
-    <div class="container hero-grid">
-      <div class="hero-copy reveal" data-reveal>
-        <span class="availability"><span></span> Open to meaningful cybersecurity and AI opportunities</span>
-        <p class="hero-kicker">Hi, I’m Guru Charan 👋</p>
-        <h1>I’m learning how AI can make cybersecurity calmer, faster and more explainable.</h1>
-        <p class="hero-description">
-          I am an M.Tech AI&DSE student at IIT Patna, a cybersecurity learner,
-          computer teacher and hands-on builder. This portfolio is my public
-          notebook—projects I am proud of, mistakes I learned from and ideas I am
-          still turning into working systems.
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="/projects/">See what I’m building <Icon name="arrow" size={18} /></a>
-          <a class="button button-secondary" href="/blogs/">Follow my learning notes</a>
-          <a class="button button-quiet" href="/contact/"><Icon name="mail" size={18} /> Say hello</a>
+  <section class="gv-hero" data-guru-context="GURUVERSE command deck — identity, direction and the beginning of the engineering journey.">
+    <div class="gv-hero-grid" aria-hidden="true"></div>
+    <div class="gv-hero-glow gv-hero-glow-a" aria-hidden="true"></div>
+    <div class="gv-hero-glow gv-hero-glow-b" aria-hidden="true"></div>
+    <div class="container gv-hero-inner">
+      <div class="gv-hero-copy reveal" data-reveal>
+        <div class="gv-eyebrow"><span class="gv-live-dot"></span> GURUVERSE / ENGINEERING PORTFOLIO</div>
+        <p class="gv-hero-kicker">AI × CYBERSECURITY × SYSTEMS</p>
+        <h1>Building systems.<br /><em>Showing how they work.</em></h1>
+        <p class="gv-hero-lede">I’m Guru Charan — an AI&DSE postgraduate student, cybersecurity practitioner-in-training and builder documenting the path from idea to working system.</p>
+        <div class="gv-hero-actions">
+          <a class="gv-primary-action" href="#work">Enter the work <Icon name="arrow" size={18} /></a>
+          <a class="gv-text-action" href="/about/">Understand the person <Icon name="arrow" size={16} /></a>
         </div>
-        <SocialLinks compact={false} />
-        <div class="personal-signature" aria-label="Personal focus">
-          <span>Currently:</span>
-          <strong data-rotating-focus>building CyberGPT</strong>
+        <div class="gv-hero-metrics" aria-label="Portfolio focus">
+          <span><strong>AI</strong> applied intelligence</span>
+          <span><strong>SEC</strong> defensive engineering</span>
+          <span><strong>BUILD</strong> practical systems</span>
         </div>
       </div>
-
-      <div class="hero-visual reveal" data-reveal>
-        <div class="portrait-frame personal-portrait" data-tilt>
-          <Image
-            src={heroImage}
-            alt="Guru Charan Mavuduru wearing a navy blazer"
-            widths={[480, 720, 960]}
-            sizes="(max-width: 900px) 78vw, 38vw"
-            loading="eager"
-            fetchpriority="high"
-          />
-          <div class="portrait-glow"></div>
-          <div class="portrait-note">
-            <span class="portrait-note-label">My current chapter</span>
-            <strong>M.Tech AI&DSE · IIT Patna</strong>
-            <small>Cybersecurity, applied AI and learning in public</small>
+      <div class="gv-hero-visual reveal" data-reveal>
+        <div class="gv-portrait-shell" data-tilt>
+          <div class="gv-portrait-frame">
+            <Image src={heroImage} alt="Guru Charan Mavuduru" widths={[520, 760, 960]} sizes="(max-width: 900px) 72vw, 34vw" loading="eager" fetchpriority="high" />
           </div>
+          <div class="gv-orbit gv-orbit-one" aria-hidden="true"></div>
+          <div class="gv-orbit gv-orbit-two" aria-hidden="true"></div>
+          <div class="gv-portrait-label"><span>NOW</span><strong>M.Tech AI&DSE</strong><small>IIT Patna · 2026—</small></div>
         </div>
-        <div class="floating-card floating-card-a"><strong>Building</strong><span>CyberGPT · SOC automation</span></div>
-        <div class="floating-card floating-card-b"><strong>Learning</strong><span>AI&DSE · security engineering</span></div>
+        <div class="gv-floating-note gv-floating-note-a"><span>BUILDING</span><strong>RA-XSOC</strong></div>
+        <div class="gv-floating-note gv-floating-note-b"><span>EXPLORING</span><strong>AI × Security</strong></div>
       </div>
     </div>
-
-    <div class="container chapter-strip reveal" data-reveal aria-label="Current work and learning">
-      <div><span>01</span><strong>AI for security</strong><p>Designing tools that support analysts without hiding the reasoning.</p></div>
-      <div><span>02</span><strong>Practical SOC work</strong><p>Building labs, collecting evidence and understanding attacker behaviour.</p></div>
-      <div><span>03</span><strong>Teaching technology</strong><p>Turning difficult concepts into useful, beginner-friendly learning experiences.</p></div>
-      <div><span>04</span><strong>Documenting honestly</strong><p>Sharing the process, failures, fixes and next steps—not only final screenshots.</p></div>
-    </div>
+    <div class="container gv-scroll-cue" aria-hidden="true"><span>SCROLL TO EXPLORE</span><i></i></div>
   </section>
 
-  <section class="section personal-intro" data-guru-context="Origin story — the path from engineering into cybersecurity and applied AI.">
-    <div class="container personal-intro-grid">
-      <div class="about-image reveal" data-reveal data-tilt>
-        <Image
-          src={aboutImage}
-          alt="Guru Charan Mavuduru in an earlier portrait"
-          widths={[430, 650, 850]}
-          sizes="(max-width: 820px) 88vw, 34vw"
-        />
-      </div>
-      <div class="personal-story reveal" data-reveal>
-        <span class="eyebrow">A little about me</span>
-        <h2>I did not begin in cybersecurity. I kept following the problems that made me curious.</h2>
-        <p>
-          My journey started in Electrical and Electronics Engineering, moved
-          through web development and technical training, and gradually found a
-          home in security operations and applied AI. That mixed background is
-          now one of my strengths: I enjoy understanding complete systems, not
-          only isolated tools.
-        </p>
-        <blockquote>
-          “I want my work to be useful enough to solve a real problem and clear
-          enough that another learner can understand how it was built.”
-        </blockquote>
-        <div class="story-actions">
-          <a class="text-link" href="/about/">Read my full journey <Icon name="arrow" size={17} /></a>
-          <a class="text-link" href="/experience/">See where I have worked <Icon name="arrow" size={17} /></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-muted personal-section" data-guru-context="Focus systems — security operations, AI, automation, research and education.">
+  <section class="gv-orientation section" aria-labelledby="orientation-title">
     <div class="container">
-      <SectionHeading
-        eyebrow="Things I care about"
-        title="Four areas that keep connecting in my work"
-        description="I am not trying to look like a company. I am building a career by learning deeply, making practical things and sharing the journey clearly."
-      />
-      <div class="focus-grid">
-        {focusAreas.map((area, index) => (
-          <article class="focus-card interactive-card reveal" data-reveal data-tilt style={`--card-index:${index}`}>
-            <div class="focus-icon"><Icon name={area.icon} size={30} /></div>
-            <span class="focus-number">0{index + 1}</span>
-            <h3>{area.title}</h3>
-            <p>{area.description}</p>
-          </article>
+      <div class="gv-section-intro reveal" data-reveal>
+        <div><span class="gv-section-code">01 / ORIENTATION</span><h2 id="orientation-title">This is more than a list of projects.</h2></div>
+        <p>GURUVERSE connects the person, the systems he builds and the evidence behind them. Explore by what you want to understand—not by a fixed portfolio checklist.</p>
+      </div>
+      <div class="gv-signal-grid">
+        {projectSignals.map((signal, index) => (
+          <a class="gv-signal-card reveal" data-reveal href={signal.href} style={\`--signal-index:\${index}\`}>
+            <div class="gv-signal-top"><span>0{index + 1}</span><Icon name={signal.icon} size={22} /></div>
+            <span class="gv-signal-label">{signal.label}</span>
+            <h3>{signal.title}</h3><p>{signal.text}</p>
+            <span class="gv-card-arrow"><Icon name="arrow" size={17} /></span>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section" data-guru-context="Project hangar — these are the systems I have built and investigated.">
+  <section class="gv-system section section-muted" aria-labelledby="system-title">
     <div class="container">
-      <div class="section-row">
-        <SectionHeading
-          eyebrow="Projects I’m proud of"
-          title="Work that shows how I think, learn and solve"
-          description="Each case study includes what I attempted, how the system works, the challenges I faced and what I would improve next."
-        />
-        <a class="text-link section-link" href="/projects/">View every project <Icon name="arrow" size={17} /></a>
+      <div class="gv-system-header reveal" data-reveal>
+        <div><span class="gv-section-code">02 / THE METHOD</span><h2 id="system-title">Follow the engineering, not the decoration.</h2></div>
+        <p>Every serious project follows a visible trail from question to evidence to its next version.</p>
       </div>
-      <div class="project-grid">
+      <div class="gv-system-map" aria-label="GURUVERSE engineering method">
+        {systemNodes.map((node, index) => (
+          <div class="gv-system-node reveal" data-reveal style={\`--node-index:\${index}\`}>
+            <span class="gv-node-code">{node.code}</span><div><strong>{node.title}</strong><p>{node.text}</p></div>
+            {index < systemNodes.length - 1 && <span class="gv-node-connector" aria-hidden="true"></span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="gv-work section" data-guru-context="Project hangar — selected engineering systems and research.">
+    <div class="container">
+      <div class="gv-work-header reveal" data-reveal>
+        <div><span class="gv-section-code">03 / SELECTED SYSTEMS</span><h2>Open a project.<br /><em>Go deeper.</em></h2></div>
+        <div><p>Each case study exposes architecture, workflow, evidence and limitations—not just a polished outcome.</p><a class="gv-text-action" href="/projects/">View all systems <Icon name="arrow" size={16} /></a></div>
+      </div>
+      <div class="gv-featured-grid">
         {featuredProjects.map((project, index) => (
-          <div class="reveal" data-reveal style={`--reveal-delay:${index * 55}ms`}>
-            <ProjectCard project={project} />
-          </div>
+          <div class:list={['gv-project-slot', \`gv-project-slot-\${index + 1}\`, 'reveal']} data-reveal><ProjectCard project={project} /></div>
         ))}
       </div>
     </div>
   </section>
 
-  <ArchitectureMap />
-
-  <section class="section now-section" data-guru-context="Current mission — what I am studying, building and exploring now.">
-    <div class="container now-grid">
-      <div class="now-copy reveal" data-reveal>
-        <span class="eyebrow">What I’m doing now</span>
-        <h2>This portfolio is a living record, not a finished brochure.</h2>
-        <p>
-          I am currently balancing postgraduate study, teaching, security
-          learning and project development. Some projects are functional, some
-          are research prototypes and some are still becoming clearer through
-          experimentation.
-        </p>
-        <a class="button button-light" href="/contact/">Talk to me about an opportunity <Icon name="arrow" size={18} /></a>
+  <section class="gv-proof section" aria-labelledby="proof-title">
+    <div class="container"><div class="gv-proof-grid">
+      <div class="gv-proof-copy reveal" data-reveal>
+        <span class="gv-section-code">04 / EVIDENCE</span><h2 id="proof-title">I want the work to be inspectable.</h2>
+        <p>Projects are deliberately separated by maturity: functional system, research prototype, active development or planned direction. The goal is credibility through clarity.</p>
+        <div class="gv-proof-links">
+          <a href="/projects/">Inspect project evidence <Icon name="arrow" size={16} /></a>
+          <a href="/experience/">Trace the career journey <Icon name="arrow" size={16} /></a>
+          <a href="/resume/">Open the professional profile <Icon name="arrow" size={16} /></a>
+        </div>
       </div>
-      <div class="now-list reveal" data-reveal>
-        <article><span>Studying</span><strong>{education[0].qualification}</strong><small>{education[0].institution}</small></article>
-        <article><span>Working as</span><strong>{experience[0].role}</strong><small>{experience[0].organisation}</small></article>
-        <article><span>Building</span><strong>CyberGPT and Portfolio V3</strong><small>AI-assisted security and learning-in-public systems</small></article>
-        <article><span>Exploring</span><strong>SOC automation and explainable AI</strong><small>With practical labs, documentation and feedback</small></article>
+      <div class="gv-proof-stack reveal" data-reveal>
+        <article><span>STUDYING</span><strong>{education[0].qualification}</strong><small>{education[0].institution}</small></article>
+        <article><span>WORKING</span><strong>{experience[0].role}</strong><small>{experience[0].organisation}</small></article>
+        <article><span>BUILDING</span><strong>AI-assisted security systems</strong><small>RA-XSOC · CyberGPT · practical SOC research</small></article>
+        <article><span>TEACHING</span><strong>Technology through practice</strong><small>Python · HTML · CSS · cybersecurity learning</small></article>
       </div>
-    </div>
+    </div></div>
   </section>
 
-  <section class="section">
+  <section class="gv-notes section section-muted" aria-labelledby="notes-title">
     <div class="container">
-      <div class="section-row">
-        <SectionHeading
-          eyebrow="My learning notes"
-          title="New writing can appear here directly from Google Drive"
-          description="These are project journals, research explanations and practical notes. When Drive sync is enabled, newly uploaded Google Docs appear without rebuilding the GitHub repository."
-        />
-        <a class="text-link section-link" href="/blogs/">Open the complete notebook <Icon name="arrow" size={17} /></a>
+      <div class="gv-notes-header reveal" data-reveal>
+        <div><span class="gv-section-code">05 / FIELD NOTES</span><h2 id="notes-title">The thinking behind the builds.</h2></div>
+        <a class="gv-text-action" href="/blogs/">Open the notebook <Icon name="arrow" size={16} /></a>
       </div>
-      <LiveBlogGrid posts={featuredBlogs} limit={3} />
-    </div>
-  </section>
-
-  <section class="section section-muted" data-guru-context="Knowledge archive — project journals, research and practical learning notes.">
-    <div class="container cta-panel personal-cta reveal" data-reveal>
-      <div>
-        <span class="eyebrow">Let’s connect</span>
-        <h2>Have a role, idea or problem that matches my direction?</h2>
-        <p>
-          I am interested in SOC Analyst, Cybersecurity Analyst, AI-for-security,
-          technical education and meaningful project-collaboration opportunities.
-        </p>
-      </div>
-      <div class="cta-actions">
-        <a class="button button-primary" href="/contact/">Send me a message <Icon name="arrow" size={18} /></a>
-        <a class="button button-secondary" href="/resume/">Review my resume</a>
+      <div class="gv-notes-grid">
+        {featuredBlogs.map((post, index) => (
+          <a class="gv-note-card reveal" data-reveal href={\`/blogs/\${post.id}/\`} style={\`--note-index:\${index}\`}>
+            <span>{post.data.domain} · {post.data.publishedAt.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
+            <h3>{post.data.title}</h3><p>{post.data.description}</p><strong>Read field note <Icon name="arrow" size={16} /></strong>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <script is:inline>
-    (() => {
-      const focusItems = [
-        'building CyberGPT',
-        'studying AI&DSE at IIT Patna',
-        'improving my SOC skills',
-        'teaching computer fundamentals',
-        'documenting what I learn',
-      ];
-      const target = document.querySelector('[data-rotating-focus]');
-      let index = 0;
-      if (target && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.setInterval(() => {
-          index = (index + 1) % focusItems.length;
-          target.classList.add('is-changing');
-          window.setTimeout(() => {
-            target.textContent = focusItems[index];
-            target.classList.remove('is-changing');
-          }, 180);
-        }, 2800);
-      }
-    })();
-  </script>
+  <section class="gv-finale section" data-guru-context="The next chapter — connect with Guru Charan or continue exploring the engineering work.">
+    <div class="container gv-finale-inner reveal" data-reveal>
+      <span class="gv-section-code">06 / NEXT CHAPTER</span>
+      <h2>The universe gets bigger<br /><em>as the work gets deeper.</em></h2>
+      <p>GURUVERSE will eventually add project worlds, intelligent navigation and GURU-BOT. The foundation stays the same: useful work, visible reasoning and honest evidence.</p>
+      <div class="gv-hero-actions"><a class="gv-primary-action" href="/contact/">Start a conversation <Icon name="arrow" size={18} /></a><a class="gv-text-action" href="/about/">See the architecture <Icon name="arrow" size={16} /></a></div>
+    </div>
+  </section>
 </BaseLayout>
