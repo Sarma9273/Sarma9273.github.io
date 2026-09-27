@@ -1280,6 +1280,8 @@ body[data-guru-state="WAKE"] .guru-bot{animation:guruWake .8s ease-out}
 @media (prefers-reduced-motion:reduce){.universe-core-map{transition:none}body[data-guru-state="TALK"] .guru-bot,body[data-guru-state="WAKE"] .guru-bot{animation:none}}
 
 
+.guru-bot-query{display:flex;gap:8px;margin-top:10px}.guru-bot-query input{min-width:0;flex:1;padding:9px 10px;border:1px solid rgba(120,190,255,.16);background:rgba(4,9,17,.72);color:inherit;outline:none}.guru-bot-query button{padding:9px 12px;border:1px solid rgba(120,190,255,.22);background:rgba(80,170,255,.08);color:inherit;font:700 10px ui-monospace,monospace}.guru-bot-message{white-space:pre-line} 
+
 /* GURUVERSE GALAXY ARCHITECTURE */
 .galaxy-engine{position:relative;min-height:760px;overflow:hidden;isolation:isolate;background:#03050b;border-bottom:1px solid rgba(120,180,255,.12)}
 .galaxy-sky,.galaxy-camera,.galaxy-worlds{position:absolute;inset:0}.galaxy-sky{z-index:-3}.galaxy-camera{perspective:1100px;overflow:hidden}.galaxy-worlds{transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
