@@ -46,3 +46,19 @@ The visual language uses a restrained security-and-research palette, system font
 ## Maintenance
 
 A Google Apps Script creates the supporting Drive workspace. Public content remains local for performance and SEO; Drive is the master evidence and document library.
+
+architecture:
+  - Astro application layer
+  - Feature-oriented content system
+  - Shared layout and design tokens
+  - Ambient universe engine
+  - GURU-BOT interaction layer
+  - Project-world navigation
+  - GitHub Pages delivery
+workflow:
+  - Visitor enters the command deck
+  - GURU-BOT establishes context
+  - Visitor explores worlds and projects
+  - Project worlds expose architecture and evidence
+  - Mission Control provides direct navigation
+  - Static build is deployed through GitHub Pages
