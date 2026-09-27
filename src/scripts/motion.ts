@@ -1,6 +1,5 @@
 const initMotion = () => {
-  if (document.documentElement.dataset.gvMotionReady === 'true') return;
-  document.documentElement.dataset.gvMotionReady = 'true';
+
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(pointer: fine)').matches;
 
@@ -16,20 +15,23 @@ const initMotion = () => {
 
   const header = document.querySelector('[data-header]');
   const progress = document.querySelector('[data-scroll-progress]');
-  let ticking = false;
-  const paintScroll = () => {
+  if (!window.__gvScrollMotion) {
+    window.__gvScrollMotion = true;
+    let ticking = false;
+    const paintScroll = () => {
     const y = window.scrollY;
     header?.classList.toggle('is-scrolled', y > 12);
     if (progress) {
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       progress.style.transform = `scaleX(${Math.min(1, y / max)})`;
     }
-    ticking = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!ticking) { ticking = true; requestAnimationFrame(paintScroll); }
-  }, { passive: true });
-  paintScroll();
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(paintScroll); }
+    }, { passive: true });
+    paintScroll();
+  }
 
   document.querySelectorAll('.timeline').forEach((el) => {
     if (reduce) el.classList.add('is-visible');
@@ -48,7 +50,8 @@ const initMotion = () => {
     el.style.transitionDelay = `${Math.min(i * 45, 300)}ms`;
   });
 
-  if (fine && !reduce) {
+  if (fine && !reduce && !window.__gvCursorMotion) {
+    window.__gvCursorMotion = true;
     const cursor = document.querySelector('[data-cursor]');
     let cx = -100, cy = -100, tx = -100, ty = -100, raf = 0;
     const renderCursor = () => {
