@@ -71,7 +71,7 @@ const systemNodes = [
       </div>
       <div class="gv-signal-grid">
         {projectSignals.map((signal, index) => (
-          <a class="gv-signal-card reveal" data-reveal href={signal.href} style={\`--signal-index:\${index}\`}>
+          <a class="gv-signal-card reveal" data-reveal href={signal.href} style={`--signal-index:${index}`}>
             <div class="gv-signal-top"><span>0{index + 1}</span><Icon name={signal.icon} size={22} /></div>
             <span class="gv-signal-label">{signal.label}</span>
             <h3>{signal.title}</h3><p>{signal.text}</p>
@@ -90,7 +90,7 @@ const systemNodes = [
       </div>
       <div class="gv-system-map" aria-label="GURUVERSE engineering method">
         {systemNodes.map((node, index) => (
-          <div class="gv-system-node reveal" data-reveal style={\`--node-index:\${index}\`}>
+          <div class="gv-system-node reveal" data-reveal style={`--node-index:${index}`}>
             <span class="gv-node-code">{node.code}</span><div><strong>{node.title}</strong><p>{node.text}</p></div>
             {index < systemNodes.length - 1 && <span class="gv-node-connector" aria-hidden="true"></span>}
           </div>
@@ -107,7 +107,7 @@ const systemNodes = [
       </div>
       <div class="gv-featured-grid">
         {featuredProjects.map((project, index) => (
-          <div class:list={['gv-project-slot', \`gv-project-slot-\${index + 1}\`, 'reveal']} data-reveal><ProjectCard project={project} /></div>
+          <div class:list={['gv-project-slot', `gv-project-slot-${index + 1}`, 'reveal']} data-reveal><ProjectCard project={project} /></div>
         ))}
       </div>
     </div>
@@ -141,7 +141,7 @@ const systemNodes = [
       </div>
       <div class="gv-notes-grid">
         {featuredBlogs.map((post, index) => (
-          <a class="gv-note-card reveal" data-reveal href={\`/blogs/\${post.id}/\`} style={\`--note-index:\${index}\`}>
+          <a class="gv-note-card reveal" data-reveal href={`/blogs/${post.id}/`} style={`--note-index:${index}`}>
             <span>{post.data.domain} · {post.data.publishedAt.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
             <h3>{post.data.title}</h3><p>{post.data.description}</p><strong>Read field note <Icon name="arrow" size={16} /></strong>
           </a>
