@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BackToTop from '../components/BackToTop.astro';
 import GuruBot from '../components/GuruBot.astro';
+import AmbientSpace from '../components/AmbientSpace.astro';
 import { site } from '../data/site';
 interface Props {
   title?: string;
@@ -78,7 +79,7 @@ const jsonLd = {
       })();
     </script>
   </head>
-  <body>
+  <body data-guru-page={Astro.url.pathname}>\n    <AmbientSpace intensity="medium" />
     <div class="guru-page-transition" data-page-transition aria-hidden="true"><span>GURUVERSE</span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
