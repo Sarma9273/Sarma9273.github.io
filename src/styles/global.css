@@ -1216,3 +1216,15 @@ body { animation:guru-page-boot .38s ease both; }
   body { animation:none; }
   .guru-page-transition { display:none; }
 }
+
+
+/* AmbientSpace: deterministic depth field */
+.ambient-space{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;isolation:isolate}
+.ambient-space::before{content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--violet) 8%,transparent),transparent 32%),radial-gradient(circle at 75% 70%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 30%);filter:blur(10px)}
+.ambient-particle{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);z-index:var(--z);border-radius:50%;background:color-mix(in srgb,var(--text) 58%,transparent);opacity:calc(.12 + (var(--i) % 5) * .025);box-shadow:0 0 8px color-mix(in srgb,var(--accent) 28%,transparent);animation:ambient-float var(--d) ease-in-out calc(var(--i) * -0.37s) infinite alternate}
+.ambient-grid{position:absolute;left:-10%;right:-10%;bottom:-35%;height:70%;opacity:.08;background:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:70px 70px;transform:perspective(500px) rotateX(62deg);transform-origin:bottom}
+.ambient-depth{position:absolute;border:1px solid color-mix(in srgb,var(--accent) 10%,transparent);border-radius:50%;filter:blur(.2px)}
+.ambient-depth-a{width:55vw;height:55vw;left:-18vw;top:8vh}.ambient-depth-b{width:45vw;height:45vw;right:-16vw;bottom:4vh;border-color:color-mix(in srgb,var(--violet) 9%,transparent)}
+@keyframes ambient-float{from{transform:translate3d(0,0,0) scale(.8)}to{transform:translate3d(calc((var(--i) % 7) * 3px),-18px,0) scale(1.15)}}
+@media(max-width:680px){.ambient-grid{background-size:48px 48px}.ambient-depth-a{width:80vw;height:80vw}.ambient-depth-b{width:65vw;height:65vw}}
+@media(prefers-reduced-motion:reduce){.ambient-particle{animation:none}.ambient-grid{transform:perspective(500px) rotateX(62deg)}}
