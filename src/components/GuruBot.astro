@@ -1,0 +1,152 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  pageTitle?: string;
+  projectTitle?: string;
+  projectDomain?: string;
+  projectDescription?: string;
+}
+const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription } = Astro.props;
+---
+<aside class="guru-bot" data-guru-bot data-project={projectTitle ? 'true' : 'false'} aria-label="GURU-BOT portfolio guide">
+  <div class="guru-bot-scanline" aria-hidden="true"></div>
+  <div class="guru-bot-orbit guru-bot-orbit-one" aria-hidden="true"></div>
+  <div class="guru-bot-orbit guru-bot-orbit-two" aria-hidden="true"></div>
+  <button class="guru-bot-body" type="button" data-guru-toggle aria-expanded="true" aria-controls="guru-bot-dialog" aria-label="Open GURU-BOT guide">
+    <span class="guru-bot-ring" aria-hidden="true"></span>
+    <span class="guru-bot-antenna" aria-hidden="true"></span>
+    <span class="guru-bot-eye guru-bot-eye-left" aria-hidden="true"></span>
+    <span class="guru-bot-eye guru-bot-eye-right" aria-hidden="true"></span>
+    <span class="guru-bot-core" aria-hidden="true"></span>
+  </button>
+  <div id="guru-bot-dialog" class="guru-bot-dialog" data-guru-dialog>
+    <div class="guru-bot-dialog-top">
+      <span><i></i> GURU-BOT</span>
+      <button type="button" data-guru-minimize aria-label="Minimize GURU-BOT"><Icon name="close" size={15} /></button>
+    </div>
+    <p class="guru-bot-message" data-guru-message>
+      Welcome to GURUVERSE. I’ll guide you through this page.
+    </p>
+    <div class="guru-bot-actions">
+      <button type="button" data-guru-replay>Explain this</button>
+      <button type="button" data-guru-next>Next section <span aria-hidden="true">→</span></button>
+    </div>
+    {projectTitle && (
+      <div class="guru-bot-project">
+        <span>PROJECT INTEL</span>
+        <strong>{projectTitle}</strong>
+        <small>{projectDomain}</small>
+      </div>
+    )}
+  </div>
+</aside>
+
+<script define:vars={{ pageTitle, projectTitle, projectDomain, projectDescription }}>
+  (() => {
+    const bot = document.querySelector('[data-guru-bot]');
+    if (!bot) return;
+    const message = bot.querySelector('[data-guru-message]');
+    const dialog = bot.querySelector('[data-guru-dialog]');
+    const toggle = bot.querySelector('[data-guru-toggle]');
+    const minimize = bot.querySelector('[data-guru-minimize]');
+    const replay = bot.querySelector('[data-guru-replay]');
+    const next = bot.querySelector('[data-guru-next]');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const fallback = {
+      home: 'This is the command deck. Scroll through the universe and I’ll explain what each section is doing.',
+      about: 'This is the origin story: EEE → systems thinking → AI → cybersecurity. I’ll point out the important transitions.',
+      projects: 'This is the project hangar. Pick a build and I’ll explain the problem, architecture, tools and evidence.',
+      experience: 'This is the career timeline. Each role adds a different layer to the way I build and investigate systems.',
+      blogs: 'This is the knowledge archive. These notes capture experiments, research, labs and lessons learned.',
+      contact: 'You’ve reached the communication deck. If a role or project matches the direction, this is where we connect.',
+      resume: 'This is the compact professional view. Use it when you need the career signal without the full universe.',
+      default: 'You are exploring GURUVERSE. I’ll stay with you and explain the important moments as you move.'
+    };
+
+    const pageKey = location.pathname.split('/').filter(Boolean)[0] || 'home';
+    const base = fallback[pageKey] || fallback.default;
+    let sections = [...document.querySelectorAll('[data-guru-context], section[id]')];
+    let lastContext = '';
+
+    const projectIntro = projectTitle
+      ? `This is ${projectTitle}. I’ll break it into the problem, approach, architecture, technology choices, outcomes and next improvements.`
+      : base;
+
+    function setMessage(text, pulse = true) {
+      if (!message) return;
+      message.classList.toggle('is-changing', pulse);
+      window.setTimeout(() => {
+        message.textContent = text;
+        message.classList.remove('is-changing');
+      }, pulse ? 130 : 0);
+    }
+
+    function currentContext() {
+      const visible = sections
+        .map((el) => ({ el, rect: el.getBoundingClientRect() }))
+        .filter(({ rect }) => rect.top <= window.innerHeight * .55 && rect.bottom >= window.innerHeight * .25)
+        .sort((a, b) => Math.abs(a.rect.top - window.innerHeight * .4) - Math.abs(b.rect.top - window.innerHeight * .4))[0];
+      return visible?.el?.dataset.guruContext || '';
+    }
+
+    function explainCurrent() {
+      const context = currentContext();
+      if (projectTitle) {
+        const lower = context.toLowerCase();
+        if (lower.includes('overview') || lower.includes('problem')) return setMessage(`First, the problem: ${projectDescription || 'this build targets a concrete technical problem rather than a demo-only interaction.'}`);
+        if (lower.includes('architecture')) return setMessage('Architecture view: follow the data from input → processing → decision → output. The goal is traceability, not black-box magic.');
+        if (lower.includes('result') || lower.includes('outcome')) return setMessage('Outcome view: this is where I separate what is actually implemented from what remains a planned improvement.');
+        return setMessage(projectIntro);
+      }
+      setMessage(base);
+    }
+
+    function updateFromScroll() {
+      const context = currentContext();
+      if (context && context !== lastContext) {
+        lastContext = context;
+        setMessage(context);
+        bot.classList.remove('guru-bot-pulse');
+        void bot.offsetWidth;
+        bot.classList.add('guru-bot-pulse');
+      }
+      if (!reduced) {
+        const y = Math.min(window.scrollY * .035, 28);
+        bot.style.setProperty('--guru-drift', `${Math.sin(window.scrollY / 240) * 12 - y}px`);
+      }
+    }
+
+    toggle?.addEventListener('click', () => {
+      const collapsed = bot.classList.toggle('is-collapsed');
+      toggle.setAttribute('aria-expanded', String(!collapsed));
+      if (!collapsed) explainCurrent();
+    });
+    minimize?.addEventListener('click', () => {
+      bot.classList.add('is-collapsed');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+    replay?.addEventListener('click', explainCurrent);
+    next?.addEventListener('click', () => {
+      const index = sections.findIndex((el) => el.dataset.guruContext === lastContext || el.id === lastContext);
+      const target = sections[index + 1] || sections[0];
+      target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+
+    let pointerX = 0, pointerY = 0;
+    if (!reduced && window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('pointermove', (event) => {
+        pointerX += (event.clientX / window.innerWidth - .5 - pointerX) * .035;
+        pointerY += (event.clientY / window.innerHeight - .5 - pointerY) * .035;
+        bot.style.setProperty('--guru-x', `${pointerX * 16}px`);
+        bot.style.setProperty('--guru-y', `${pointerY * 10}px`);
+      }, { passive: true });
+    }
+
+    window.addEventListener('scroll', updateFromScroll, { passive: true });
+    window.addEventListener('resize', () => { sections = [...document.querySelectorAll('[data-guru-context], section[id]')]; }, { passive: true });
+    explainCurrent();
+    updateFromScroll();
+  })();
+</script>
