@@ -12,7 +12,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
 const normalizedProjectTitle = (projectTitle || '').toLowerCase();
 const activeKnowledge = guruKnowledge.find((item) => item.aliases.some((alias) => normalizedProjectTitle.includes(alias))) || guruKnowledge.find((item) => item.id === 'guruverse');
 ---
-<aside class="guru-bot" data-guru-bot data-project={projectTitle ? 'true' : 'false'} aria-label="GURU-BOT portfolio guide">
+<aside class="guru-bot is-collapsed" data-guru-bot data-project={projectTitle ? 'true' : 'false'} aria-label="GURU-BOT portfolio guide">
   <div class="guru-bot-scanline" aria-hidden="true"></div>
   <div class="guru-bot-orbit guru-bot-orbit-one" aria-hidden="true"></div>
   <div class="guru-bot-orbit guru-bot-orbit-two" aria-hidden="true"></div>
