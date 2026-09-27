@@ -97,7 +97,7 @@ const initMotion = () => {
         const y = (event.clientY - rect.top) / rect.height - .5;
         target.style.transform = `perspective(1100px) rotateX(${(-y * 3.2).toFixed(2)}deg) rotateY(${(x * 4).toFixed(2)}deg) translateY(-5px)`;
         target.style.setProperty('--spot-x', `${(x + .5) * 100}%`);
-        target.style.setProperty('--spot-y', `${(y + .5) * 100}%`;
+        target.style.setProperty('--spot-y', `${(y + .5) * 100}%`);
       }
     }, { passive: true });
     document.addEventListener('pointerover', (event) => {
