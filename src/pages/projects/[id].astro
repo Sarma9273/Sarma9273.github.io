@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import ContentActions from '../../components/ContentActions.astro';
 import Icon from '../../components/Icon.astro';
+import GuruBot from '../../components/GuruBot.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
@@ -15,4 +16,5 @@ const { Content } = await render(entry);
   {entry.data.outcomes.length > 0 && <div class="outcome-box"><h2>Selected outcomes</h2><ul>{entry.data.outcomes.map((outcome) => <li><Icon name="check" size={19} />{outcome}</li>)}</ul></div>}
   <Content />
   <div slot="aside" class="aside-card evidence-card"><strong>Evidence status</strong><p>Public repository, report and demo links are added only after privacy and quality review.</p></div>
-</ContentLayout>
+<div class="project-bot-context" data-guru-context="PROJECT OVERVIEW — ${entry.data.title}" hidden></div>
+  </ContentLayout>
