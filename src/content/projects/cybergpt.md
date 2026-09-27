@@ -3,7 +3,7 @@ order: 1
 title: "CyberGPT: Retrieval-Augmented Security Incident Response Copilot"
 shortTitle: "CyberGPT"
 description: "A Python-based SOC copilot that classifies incident narratives, retrieves response playbooks, maps MITRE ATT&CK techniques, detects novelty and generates structured analyst guidance."
-status: "Functional research prototype; ongoing improvements"
+status: "Functional research prototype; evolved into the RA-XSOC direction"
 period: "2026 — Present"
 domain: "AI-Driven Cybersecurity"
 role: "Independent researcher and developer"
@@ -33,7 +33,7 @@ Entry-level analysts and small SOC teams need to turn unstructured alert descrip
 
 ## What I built
 
-CyberGPT combines a structured cybersecurity knowledge base with semantic retrieval, security-specific keyword signals and confidence thresholds. It returns ranked attack hypotheses, MITRE ATT&CK mappings, severity, indicators and a practical response playbook.
+CyberGPT was the original security-copilot direction. It combines a structured cybersecurity knowledge base with semantic retrieval, security-specific keyword signals and confidence thresholds. It returns ranked attack hypotheses, MITRE ATT&CK mappings, severity, indicators and a practical response playbook.
 
 ## Core workflow
 
@@ -50,13 +50,23 @@ CyberGPT combines a structured cybersecurity knowledge base with semantic retrie
 - The knowledge base stores investigation, containment, recovery and prevention guidance instead of only labels.
 - Hybrid scoring reduces confusion between attacks that share vocabulary, such as prompt injection and SQL injection.
 
+## Evolution into RA-XSOC
+
+CyberGPT should not be treated as an unrelated predecessor to RA-XSOC. It is the earlier research direction that informed the broader RA-XSOC architecture.
+
+The progression was:
+
+**CyberGPT → retrieval + playbooks + MITRE context → RA-XSOC → evidence-driven investigation + correlation + extended SOC workflow**
+
+The important change is architectural scope, not a replacement of one unrelated project by another.
+
 ## Current limitations
 
 The prototype uses a curated knowledge base and evaluation examples. It is not yet connected to a production SIEM or live threat-intelligence feed.
 
 ## Roadmap
 
-Live SIEM ingestion, indicator extraction, labelled-dataset evaluation, analyst feedback, role-based access and approval-based automated playbook execution.
+The original CyberGPT roadmap included live SIEM ingestion, indicator extraction, labelled-dataset evaluation, analyst feedback, role-based access and approval-based automated playbook execution. The active development direction is now RA-XSOC.
 
 architecture:
   - Incident narrative input
