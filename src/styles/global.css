@@ -1985,9 +1985,7 @@ body{
   .site-header,.header-inner{height:68px}
   .desktop-nav{display:none}
   .header-actions{margin-left:auto}
-  .command-trigger{min-width:40px;width:40px;padding:0;justify-content:center}
-  .command-trigger span{display:none}
-  .command-trigger kbd{display:none}
+  .command-trigger{display:none!important}
   .menu-button{display:flex!important;min-width:74px;width:auto!important;height:40px;padding:0 10px;border:1px solid var(--border);background:var(--surface)}
   .menu-label{display:inline!important}
   .mobile-nav{top:68px}
@@ -1999,8 +1997,8 @@ body{
   .brand-mark{width:36px;height:36px}
   .brand-copy strong{font-size:.82rem}
   .header-actions{gap:5px}
-  .command-trigger,.icon-button,.menu-button{height:40px;min-height:40px}
-  .command-trigger,.icon-button{width:40px}
+  .icon-button,.menu-button{height:40px;min-height:40px}
+  .icon-button{width:40px}
   .menu-button{min-width:72px!important;width:72px!important;gap:7px}
   .menu-button svg{width:18px;height:18px}
   .menu-label{font-size:.58rem}
