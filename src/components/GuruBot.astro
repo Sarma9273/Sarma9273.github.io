@@ -152,7 +152,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
       setMessage(base);
     }
 
-    function openMission() {
+    function openMission() { window.dispatchEvent(new CustomEvent('guru:mission')); return; /* legacy inline panel disabled */
       if (!missionPanel || !missionSearch || !missionResults) return;
       missionPanel.hidden = false;
       const render = () => {
