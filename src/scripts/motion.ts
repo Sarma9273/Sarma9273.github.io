@@ -1,10 +1,3 @@
-declare global {
-  interface Window {
-    __gvScrollMotion?: boolean;
-    __gvCursorMotion?: boolean;
-  }
-}
-
 const initMotion = () => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(pointer: fine)').matches;
@@ -19,7 +12,7 @@ const initMotion = () => {
     }
   }
 
-  if (!window.__gvScrollMotion) {
+  if (!(window as typeof window & { __gvScrollMotion?: boolean }).__gvScrollMotion) {
     window.__gvScrollMotion = true;
     let ticking = false;
     const paintScroll = () => {
@@ -81,7 +74,7 @@ const initMotion = () => {
     });
   }
 
-  if (fine && !reduce && !window.__gvCursorMotion) {
+  if (fine && !reduce && !(window as typeof window & { __gvCursorMotion?: boolean }).__gvCursorMotion) {
     window.__gvCursorMotion = true;
     const cursor = document.querySelector('[data-cursor]');
     let cx = -100, cy = -100, tx = -100, ty = -100;
