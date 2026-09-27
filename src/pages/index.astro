@@ -26,7 +26,8 @@ const discoverySteps = [
     <div class="gv-command-scan" aria-hidden="true"></div>
     <div class="container gv-command-inner">
       <div class="gv-command-copy" data-gv-reveal>
-        <div class="gv-command-status"><span></span> SYSTEM ONLINE <b>GURUVERSE</b></div>
+        <div class="gv-command-status"><span></span> GURUVERSE / INTRO</div>
+        <p class="gv-command-intro">Hi, I'm <strong>Guru Charan.</strong></p>
         <p class="gv-command-kicker">AI × CYBERSECURITY × SYSTEMS</p>
         <h1 id="gv-hero-title">I build systems.<br /><em>Come see how they work.</em></h1>
         <p class="gv-command-lede">A living engineering portfolio by Guru Charan Mavuduru — where projects are not just displayed, they can be explored, traced and understood.</p>
@@ -54,7 +55,7 @@ const discoverySteps = [
           <div class="gv-orbit-line line-b"></div>
           <div class="gv-core-node" aria-hidden="true"><span>GC</span><small>ENGINEER</small></div>
           {systems.map((system) => (
-            <button class:list={['gv-system-orb', { active: system.id === 'ra-xsoc' }]} type="button" data-system={system.id} aria-pressed={system.id === 'ra-xsoc' ? 'true' : 'false'}>
+            <button class:list={['gv-system-orb', 'gv-system-orb-' + system.id, { active: system.id === 'ra-xsoc' }]} type="button" data-system={system.id} aria-pressed={system.id === 'ra-xsoc' ? 'true' : 'false'}>
               <span>{system.index}</span><strong>{system.title}</strong><small>{system.signal}</small>
             </button>
           ))}
