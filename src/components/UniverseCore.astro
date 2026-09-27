@@ -1,27 +1,9 @@
 ---
 ---
 <nav class="universe-core" data-universe-core aria-label="GURUVERSE universe navigation">
-  <div class="universe-core-map" data-universe-map>
-    <span class="universe-core-label">UNIVERSE MAP</span>
-    <a href="/" data-world="command"><i></i><span>COMMAND</span></a>
-    <a href="/projects/" data-world="projects"><i></i><span>PROJECTS</span></a>
-    <a href="/about/" data-world="origin"><i></i><span>ORIGIN</span></a>
-    <a href="/experience/" data-world="career"><i></i><span>CAREER</span></a>
-    <a href="/blogs/" data-world="archive"><i></i><span>ARCHIVE</span></a>
-    <a href="/contact/" data-world="contact"><i></i><span>CONTACT</span></a>
-  </div>
+  <div class="universe-core-map" data-universe-map><span class="universe-core-label">UNIVERSE MAP</span><a href="/" data-world="command"><i></i><span>COMMAND</span></a><a href="/projects/" data-world="projects"><i></i><span>PROJECTS</span></a><a href="/about/" data-world="origin"><i></i><span>ORIGIN</span></a><a href="/experience/" data-world="career"><i></i><span>CAREER</span></a><a href="/blogs/" data-world="archive"><i></i><span>ARCHIVE</span></a><a href="/contact/" data-world="contact"><i></i><span>CONTACT</span></a></div>
   <button type="button" class="universe-core-toggle" data-universe-toggle aria-expanded="false">MAP</button>
 </nav>
 <script>
-(()=>{const root=document.querySelector('[data-universe-core]');if(!root)return;const body=document.body;const toggle=root.querySelector('[data-universe-toggle]');const map=root.querySelector('[data-universe-map]');const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const state=['IDLE','OBSERVE','GUIDE','TALK','CELEBRATE','SLEEP','WAKE'];let index=0;
-const setState=(name)=>{body.dataset.guruState=name;root.dataset.guruState=name};
-const links=[...root.querySelectorAll('a')];const current=body.dataset.guruWorld;links.forEach(a=>{if(a.dataset.world===current)a.classList.add('active')});
-toggle?.addEventListener('click',()=>{const open=root.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));setState(open?'GUIDE':'IDLE')});
-links.forEach(a=>a.addEventListener('click',()=>{setState('GUIDE')}));
-if(!reduced){setInterval(()=>{index=(index+1)%state.length;setState(state[index])},5200)}
-window.addEventListener('guru:celebrate',()=>setState('CELEBRATE'));
-window.addEventListener('guru:talk',()=>setState('TALK'));
-window.addEventListener('guru:wake',()=>setState('WAKE'));
-})();
+(()=>{const root=document.querySelector('[data-universe-core]');if(!(root instanceof HTMLElement))return;const body=document.body;const toggle=root.querySelector('[data-universe-toggle]');const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const state=['IDLE','OBSERVE','GUIDE','TALK','CELEBRATE','SLEEP','WAKE'];let index=0;const setState=(name:string)=>{body.dataset.guruState=name;root.dataset.guruState=name};const links=[...root.querySelectorAll('a')];const current=body.dataset.guruWorld;links.forEach(a=>{if(a instanceof HTMLElement&&a.dataset.world===current)a.classList.add('active')});toggle?.addEventListener('click',()=>{const open=root.classList.toggle('is-open');if(toggle instanceof HTMLElement)toggle.setAttribute('aria-expanded',String(open));setState(open?'GUIDE':'IDLE')});links.forEach(a=>a.addEventListener('click',()=>setState('GUIDE')));if(!reduced){setInterval(()=>{index=(index+1)%state.length;setState(state[index])},5200)}window.addEventListener('guru:celebrate',()=>setState('CELEBRATE'));window.addEventListener('guru:talk',()=>setState('TALK'));window.addEventListener('guru:wake',()=>setState('WAKE'));})();
 </script>
