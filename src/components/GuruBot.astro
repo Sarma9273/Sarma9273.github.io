@@ -29,6 +29,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
       Welcome to GURUVERSE. I’ll guide you through this page.
     </p>
     <div class="guru-bot-actions">
+      <button type="button" data-guru-mission>⌘/Ctrl K · Mission Control</button>
       <button type="button" data-guru-replay>Explain this</button>
       <button type="button" data-guru-next>Next section <span aria-hidden="true">→</span></button>
     </div>
@@ -39,6 +40,14 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
         <small>{projectDomain}</small>
       </div>
     )}
+  </div>
+  <div class="guru-mission-control" data-guru-mission-panel hidden>
+    <div class="guru-mission-inner">
+      <div class="guru-mission-head"><div><span>GURUVERSE NAVIGATION</span><strong>Mission Control</strong></div><button type="button" data-guru-mission-close aria-label="Close Mission Control">×</button></div>
+      <input type="search" data-guru-search placeholder="Search worlds, projects, or commands…" autocomplete="off" />
+      <div class="guru-mission-results" data-guru-results></div>
+      <small>Esc to close · Enter to navigate</small>
+    </div>
   </div>
 </aside>
 
@@ -52,6 +61,11 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
     const minimize = bot.querySelector('[data-guru-minimize]');
     const replay = bot.querySelector('[data-guru-replay]');
     const next = bot.querySelector('[data-guru-next]');
+    const mission = bot.querySelector('[data-guru-mission]');
+    const missionPanel = bot.querySelector('[data-guru-mission-panel]');
+    const missionClose = bot.querySelector('[data-guru-mission-close]');
+    const missionSearch = bot.querySelector('[data-guru-search]');
+    const missionResults = bot.querySelector('[data-guru-results]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const fallback = {
@@ -68,6 +82,26 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
     const pageKey = location.pathname.split('/').filter(Boolean)[0] || 'home';
     const base = fallback[pageKey] || fallback.default;
     let sections = [...document.querySelectorAll('[data-guru-context], section[id]')];
+
+    function prepareProjectMoments() {
+      if (!projectTitle) return;
+      document.querySelectorAll('.prose h2, .prose h3').forEach((heading) => {
+        if (!heading.dataset.guruContext) {
+          heading.dataset.guruContext = `${heading.tagName === 'H2' ? 'PROJECT' : 'DETAIL'} — ${heading.textContent?.trim() || ''}`;
+        }
+      });
+      sections = [...document.querySelectorAll('[data-guru-context], section[id]')];
+    }
+
+    const destinations = [
+      ['Home', '/', 'Command deck'],
+      ['My Story', '/about/', 'Origin world'],
+      ['Projects', '/projects/', 'Project hangar'],
+      ['Learning Notes', '/blogs/', 'Knowledge archive'],
+      ['Experience', '/experience/', 'Career world'],
+      ['Resume', '/resume/', 'Professional view'],
+      ['Contact', '/contact/', 'Communication deck']
+    ];
     let lastContext = '';
 
     const projectIntro = projectTitle
@@ -103,6 +137,22 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
       setMessage(base);
     }
 
+    function openMission() {
+      if (!missionPanel || !missionSearch || !missionResults) return;
+      missionPanel.hidden = false;
+      const render = () => {
+        const q = missionSearch.value.trim().toLowerCase();
+        const items = destinations.filter(([name,path,kind]) => `${name} ${kind} ${path}`.toLowerCase().includes(q));
+        missionResults.innerHTML = items.map(([name,path,kind]) => `<button type="button" data-destination="${path}"><span>${kind}</span><strong>${name}</strong></button>`).join('') || '<p>No matching destination.</p>';
+        missionResults.querySelectorAll('[data-destination]').forEach((item) => item.addEventListener('click', () => { location.href = item.dataset.destination; }));
+      };
+      render();
+      missionSearch.oninput = render;
+      missionSearch.focus();
+    }
+
+    function closeMission() { if (missionPanel) missionPanel.hidden = true; }
+
     function updateFromScroll() {
       const context = currentContext();
       if (context && context !== lastContext) {
@@ -128,6 +178,14 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
       toggle?.setAttribute('aria-expanded', 'false');
     });
     replay?.addEventListener('click', explainCurrent);
+    mission?.addEventListener('click', openMission);
+    missionClose?.addEventListener('click', closeMission);
+    missionSearch?.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMission(); });
+    window.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openMission(); }
+      if (event.key === 'Escape') closeMission();
+    });
+
     next?.addEventListener('click', () => {
       const index = sections.findIndex((el) => el.dataset.guruContext === lastContext || el.id === lastContext);
       const target = sections[index + 1] || sections[0];
@@ -146,6 +204,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
 
     window.addEventListener('scroll', updateFromScroll, { passive: true });
     window.addEventListener('resize', () => { sections = [...document.querySelectorAll('[data-guru-context], section[id]')]; }, { passive: true });
+    prepareProjectMoments();
     explainCurrent();
     updateFromScroll();
   })();
