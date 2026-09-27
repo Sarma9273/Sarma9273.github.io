@@ -26,6 +26,7 @@ const {
   projectDomain,
   projectDescription,
 } = Astro.props;
+const world = Astro.url.pathname === '/' ? 'command' : Astro.url.pathname.startsWith('/projects') ? 'projects' : Astro.url.pathname.startsWith('/blogs') ? 'archive' : Astro.url.pathname.startsWith('/experience') ? 'career' : Astro.url.pathname.startsWith('/about') ? 'origin' : Astro.url.pathname.startsWith('/contact') ? 'contact' : 'professional';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 const fullTitle = title === site.title ? title : `${title} | ${site.shortName}`;
@@ -79,7 +80,7 @@ const jsonLd = {
       })();
     </script>
   </head>
-  <body data-guru-page={Astro.url.pathname}>\n    <AmbientSpace intensity="medium" />
+  <body data-guru-page={Astro.url.pathname} data-guru-world={world}>\n    <AmbientSpace intensity="medium" />
     <div class="guru-page-transition" data-page-transition aria-hidden="true"><span>GURUVERSE</span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
