@@ -1,0 +1,94 @@
+/* GURUVERSE cross-device experience layer
+   Keeps the core experience usable from compact phones through ultrawide displays. */
+
+html { min-width: 320px; }
+body { overflow-x: hidden; }
+.container { padding-inline: max(20px, env(safe-area-inset-left)) max(20px, env(safe-area-inset-right)); }
+button, a { -webkit-tap-highlight-color: transparent; }
+@media (pointer: coarse) {
+  .desktop-nav a, .icon-button, .gv-primary-action, .gv-text-action,
+  .button, .social-links a { min-height: 44px; }
+  .desktop-nav a { display: inline-flex; align-items: center; }
+}
+@media (min-width: 1280px) {
+  .container { width: min(calc(100% - 64px), 1280px); }
+  .gv-hero-inner { min-height: min(760px, calc(100svh - 76px)); }
+}
+@media (max-width: 1120px) {
+  .desktop-nav { display: none; }
+  .menu-button { display: inline-grid; }
+  .header-inner { height: 68px; }
+  .mobile-nav { inset: 68px 0 0; }
+  .brand-copy small { display: none; }
+  .gv-hero { min-height: auto; }
+  .gv-hero-inner { grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr); gap: 34px; }
+  .gv-hero h1 { font-size: clamp(3.25rem, 7vw, 6.4rem); }
+}
+@media (max-width: 760px) {
+  html { scroll-padding-top: 70px; }
+  .container { width: min(100%, 100%); padding-inline: 18px; }
+  .header-inner { height: 64px; gap: 10px; }
+  .brand { min-width: 0; }
+  .brand-mark { width: 38px; height: 38px; border-radius: 11px; }
+  .brand-copy strong { font-size: .9rem; }
+  .header-actions { margin-left: auto; }
+  .icon-button { width: 44px; height: 44px; }
+  .mobile-nav { inset: 64px 0 0; padding: 8px 0 calc(28px + env(safe-area-inset-bottom)); }
+  .mobile-nav .container { gap: 0; }
+  .mobile-nav a { min-height: 54px; display: flex; align-items: center; padding: 13px 2px; font-size: 1.05rem; }
+  .mobile-nav a[aria-current='page'] { color: var(--accent-strong); }
+  .gv-hero-inner { display: flex; flex-direction: column; padding-top: 38px; gap: 8px; }
+  .gv-hero-copy { order: 1; }
+  .gv-hero-visual { order: 2; width: min(100%, 520px); min-height: 360px; margin-inline: auto; }
+  .gv-hero h1 { font-size: clamp(2.85rem, 14vw, 4.8rem); line-height: .91; }
+  .gv-hero-lede { margin-top: 20px; line-height: 1.65; }
+  .gv-hero-actions { gap: 10px; margin-top: 25px; }
+  .gv-primary-action { min-height: 48px; padding-inline: 16px; }
+  .gv-text-action { min-height: 44px; }
+  .gv-hero-metrics { margin-top: 26px; gap: 8px 16px; padding-top: 15px; }
+  .gv-floating-note { transform: scale(.9); transform-origin: right center; }
+  .gv-floating-note-a { top: 10%; right: -2px; }
+  .gv-floating-note-b { bottom: 12%; right: -2px; }
+  .gv-portrait-label { left: 7%; bottom: 5%; }
+  .gv-section-intro, .gv-system-header, .gv-work-header, .gv-notes-header { margin-bottom: 28px; }
+  .gv-section-intro h2, .gv-system-header h2 { font-size: clamp(2rem, 10vw, 3.4rem); }
+  .gv-signal-card { min-height: 220px; padding: 20px; }
+  .gv-signal-label { margin-top: 35px; }
+  .gv-system-node { min-height: 145px; padding: 20px; }
+  .gv-work h2 { font-size: clamp(2.4rem, 12vw, 4rem); }
+  .gv-featured-grid { gap: 10px; }
+  .gv-proof-grid { gap: 42px; }
+  .gv-proof-stack article { gap: 12px; }
+  .gv-finale-inner { padding: 18px 0; }
+  .gv-finale h2 { font-size: clamp(2.7rem, 14vw, 4.7rem); }
+}
+@media (max-width: 420px) {
+  .container { padding-inline: 15px; }
+  .brand-mark { width: 36px; height: 36px; }
+  .brand-copy strong { font-size: .84rem; }
+  .gv-eyebrow { font-size: .58rem; padding: 7px 9px; }
+  .gv-hero h1 { font-size: clamp(2.65rem, 14.5vw, 4rem); }
+  .gv-hero-visual { min-height: 315px; }
+  .gv-floating-note { display: none; }
+  .gv-portrait-label { left: 4%; }
+  .gv-portrait-label strong { font-size: .76rem; }
+  .gv-hero-actions { align-items: stretch; flex-direction: column; }
+  .gv-primary-action { width: 100%; }
+  .gv-text-action { justify-content: center; }
+  .gv-proof-stack article { grid-template-columns: 1fr; }
+  .gv-proof-stack small { grid-column: 1; margin-top: -7px; }
+}
+@media (max-height: 620px) and (orientation: landscape) {
+  .gv-hero-inner { padding-top: 28px; }
+  .gv-hero-visual { min-height: 300px; }
+  .gv-portrait-shell { max-height: 300px; }
+  .gv-scroll-cue { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
