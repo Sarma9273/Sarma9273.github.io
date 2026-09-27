@@ -1,83 +1,119 @@
 # GURUVERSE Architecture
 
-## Design contract
+## System boundary
 
-GURUVERSE is a personal engineering portfolio with an optional exploration layer. The portfolio must remain understandable without JavaScript, animation, assistants, or visual effects.
+GURUVERSE is a static Astro site deployed to GitHub Pages. The public site must remain useful without a backend, authentication, client-side application state, or external API.
 
-### Experience hierarchy
+```
+Content + Data
+      |
+      v
+Astro pages/layouts
+      |
+      +--> Feature modules
+      |      - navigation
+      |      - projects
+      |      - architecture
+      |
+      +--> Shared UI
+      |      - typography / icons / footer / actions
+      |
+      +--> Progressive enhancement
+             - filtering
+             - theme
+             - motion
+             - optional integrations
+      |
+      v
+Static dist/
+      |
+      v
+GitHub Pages
+```
 
-1. **Person** — identity, direction and contact.
-2. **Evidence** — projects, research, experience and writing.
-3. **Understanding** — architecture, workflow, technologies and limitations.
-4. **Exploration** — optional interactive tools added when they improve discovery.
-5. **Atmosphere** — optional motion and spatial effects.
+## Five layers
 
-No lower layer may block a higher layer.
+1. **Identity** — person, direction, experience, education, contact.
+2. **Content** — projects, articles and profile data with one canonical source per concern.
+3. **Knowledge** — structured engineering knowledge that explains problem, solution, architecture, workflow, evidence and limitations.
+4. **Experience** — progressive project exploration, architecture views and optional universe modules.
+5. **Delivery** — static generation, verification, accessibility, SEO and GitHub Pages deployment.
 
-## System layers
+A lower layer must never be required for the higher layer to communicate its core information.
 
-### Identity
+## Source-of-truth rules
 
-Structured profile data drives the home, about, experience, resume and contact surfaces.
+- Project case studies live in `src/content/projects/`.
+- Articles live in `src/content/blogs/`.
+- Cross-project knowledge used by future GURU-BOT and exploration features lives in `src/data/guruKnowledge.ts`.
+- Identity and navigation live in `src/data/profile.ts` and `src/data/site.ts`.
+- Architecture metadata lives in `src/data/architecture.ts`.
+- External integration configuration is isolated in `src/data/integrations.ts`.
 
-### Content
+## Feature boundary
 
-Astro content collections and typed data are the source of truth for projects and writing.
+```
+src/features/
+  navigation/     Site navigation
+  projects/       Project discovery and project worlds
+  architecture/   Architecture presentation
 
-### Knowledge
+src/components/   Reusable presentation primitives and optional experience modules
+src/layouts/      Page contracts and global delivery shell
+src/pages/        Route composition only
+src/data/         Canonical structured data
+src/content/      Markdown content collections
+```
 
-Project architecture, workflow, evidence and limitations are stored as structured data. Future assistants can consume this layer, but the public release does not depend on an assistant being online.
+Pages compose features; they should not duplicate feature implementation.
 
-### Experience
+## Progressive enhancement
 
-Interactive behavior is progressive enhancement:
-- theme switching
+Core content is server-rendered by Astro. JavaScript is used only where it improves interaction:
+
 - mobile navigation
-- reveal-on-scroll
-- restrained pointer interactions
-- project architecture visualization
+- theme preference
+- scroll/reveal behaviour
+- project filtering
+- table-of-contents generation
+- optional live Drive content
 
-Richer spatial exploration can be introduced later without changing the content model.
+If optional JavaScript or an external integration fails, the underlying page remains readable.
 
-### Delivery
+## Exploration modules
 
-Astro builds a static site and GitHub Actions publishes the generated `dist/` directory to GitHub Pages.
+`AmbientSpace`, `GalaxyEngine`, `MissionControl`, `UniverseCore` and `GuruBot` are optional experience modules. They are not global dependencies of the portfolio shell.
+
+GURU-BOT is a future knowledge navigator. It must consume canonical project knowledge rather than inventing project claims.
 
 ## Security model
 
-The site is intentionally static.
-
-- No secrets are shipped to the browser.
-- No API keys are embedded in client code.
-- No authentication/session system is required for the public portfolio.
-- User input is not treated as trusted HTML.
-- External origins should be explicit and minimized.
-- `target="_blank"` links must use `rel="noopener noreferrer"`.
-- Client-side storage is limited to non-sensitive preferences such as theme.
-- Security-sensitive features belong in a future backend, not in the static portfolio.
-- Build verification checks repository structure and forbidden package-registry references.
-
-OWASP recommends CSP and security response headers as defense-in-depth controls. GitHub Pages does not provide application-controlled response headers from Astro, so the repository treats static delivery, dependency hygiene, browser-side controls and build-time checks as complementary controls rather than claiming server-side headers that are not actually enforceable here.
+- No secrets are stored in the Astro source.
+- User-controlled values rendered by client integrations are inserted with DOM text APIs rather than trusted HTML.
+- External links use explicit destinations and safe opener behaviour.
+- GitHub Pages does not provide application-controlled response headers; the project therefore does not claim server-enforced CSP/HSTS/etc.
+- Contact and live-content integrations are optional external services and must fail closed to the static experience.
 
 ## Accessibility contract
 
-Target WCAG 2.2 AA as the baseline:
+- Semantic landmarks and heading hierarchy.
+- Skip navigation.
+- Visible keyboard focus.
+- Keyboard-accessible controls.
+- Reduced-motion support.
+- Mobile navigation that works without hover.
+- Primary content does not depend on animation.
 
-- visible keyboard focus
-- semantic headings and landmarks
-- sufficient target sizes
-- reduced motion
-- usable mobile navigation
-- no interaction required to access primary content
+## Performance contract
 
-## UX contract
+- Astro static generation is the default.
+- Heavy spatial modules are opt-in.
+- Images use Astro asset processing where appropriate.
+- Client scripts are small, local and feature-scoped.
+- No global client framework is required for ordinary content pages.
 
-The visitor should understand within seconds:
+## Deployment
 
-- who this is
-- what he works on
-- what he has built
-- how to inspect evidence
-- how to contact him
+GitHub Actions runs repository verification, dependency installation, Astro validation/build, and deploys `dist/` through GitHub Pages.
 
-The portfolio is the product. Experimental interaction is an extension.
+The release is considered complete only when the current `main` commit passes the deployment workflow.
