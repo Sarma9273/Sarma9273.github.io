@@ -61,6 +61,7 @@ const jsonLd = {
     <ClientRouter fallback="animate" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script src="../scripts/motion.ts"></script>
+    <script src="../scripts/signature-engine.ts"></script>
     <script is:inline>
       (() => {
         document.documentElement.classList.add('has-js');
@@ -75,7 +76,9 @@ const jsonLd = {
       <p>GURUVERSE <span>INITIALIZING EXPERIENCE</span></p>
     </div>
     <div class="gv-scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+    <canvas class="gv-atmosphere" aria-hidden="true" data-atmosphere></canvas>
     <div class="gv-cursor" aria-hidden="true" data-cursor><span></span></div>
+    <button class="gv-sound-toggle" type="button" aria-label="Toggle interface sound" aria-pressed="false" data-sound-toggle><span>◌</span><b>SOUND</b></button>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <main id="main-content"><slot /></main>
