@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import ContentActions from '../../components/ContentActions.astro';
 import Icon from '../../components/Icon.astro';
-import ProjectWorld from '../../components/ProjectWorld.astro';
+import ProjectWorld from '../../features/projects/ProjectWorld.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
