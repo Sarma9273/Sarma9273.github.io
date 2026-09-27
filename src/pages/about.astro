@@ -3,11 +3,12 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
+import ArchitectureMap from '../components/ArchitectureMap.astro';
 import aboutImage from '../assets/images/guru-charan-about.webp';
 import { education, skills, certifications } from '../data/profile';
 ---
 <BaseLayout title="My Story" description="The education, transition, interests and working principles behind Guru Charan Mavuduru's cybersecurity, AI and research journey.">
-  <section class="page-hero personal-page-hero" data-guru-context="Origin world — the story behind the systems thinker you are exploring.">
+  <section class="page-hero personal-page-hero">
     <div class="container narrow reveal" data-reveal>
       <span class="eyebrow">My story</span>
       <h1>I followed curiosity from electrical systems to security operations and applied AI.</h1>
@@ -19,7 +20,7 @@ import { education, skills, certifications } from '../data/profile';
     </div>
   </section>
 
-  <section class="section" data-guru-context="Systems thinking — how engineering, cybersecurity, AI and teaching connect.">
+  <section class="section">
     <div class="container about-grid">
       <div class="about-image reveal" data-reveal data-tilt>
         <Image src={aboutImage} alt="Portrait of Guru Charan Mavuduru" widths={[480,720,960]} sizes="(max-width: 850px) 90vw, 38vw" />
@@ -49,7 +50,9 @@ import { education, skills, certifications } from '../data/profile';
     </div>
   </section>
 
-  <section class="section section-muted" data-guru-context="Academic timeline — the foundations behind the current direction.">
+  <ArchitectureMap />
+
+  <section class="section section-muted">
     <div class="container">
       <SectionHeading eyebrow="Education" title="The academic chapters behind my current direction" />
       <div class="timeline">
