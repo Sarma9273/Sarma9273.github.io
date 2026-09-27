@@ -3,218 +3,140 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../features/projects/ProjectCard.astro';
 import Icon from '../components/Icon.astro';
-import { education, experience } from '../data/profile';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 4);
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 3);
 const blogs = (await getCollection('blogs', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 const featuredBlogs = blogs.filter((post) => post.data.featured).slice(0, 2);
-
-const systems = [{"id":"ra-xsoc","index":"01","label":"FLAGSHIP SYSTEM","title":"RA-XSOC","short":"AI-assisted security investigation.","detail":"Retrieval, evidence correlation, MITRE mapping and structured investigation guidance — designed around traceability rather than generated text alone.","signal":"SECURITY / AI","href":"/projects/ra-xsoc/"},{"id":"sentinel","index":"02","label":"OPERATIONS","title":"SENTINEL","short":"Security operations in practice.","detail":"Detection, investigation, telemetry and defensive workflows that connect cybersecurity learning with operational thinking.","signal":"SOC / DEFENSE","href":"/projects/"},{"id":"cyber","index":"03","label":"FIELD","title":"CYBERSECURITY","short":"Labs, investigations and experiments.","detail":"A growing body of hands-on security work spanning networks, web security, digital forensics, OSINT and investigation design.","signal":"LAB / RESEARCH","href":"/projects/"}];
-
-const discoverySteps = [
-  ['01', 'DISCOVER', 'What is being built?'],
-  ['02', 'TRACE', 'How does the system work?'],
-  ['03', 'INSPECT', 'What evidence supports it?'],
-  ['04', 'CONNECT', 'Where does it lead next?'],
-];
 ---
 
 <BaseLayout>
-  <section class="gv-command-hero" aria-labelledby="gv-hero-title">
-    <div class="gv-command-grid" aria-hidden="true"></div>
-    <div class="gv-command-scan" aria-hidden="true"></div>
-    <div class="container gv-command-inner">
-      <div class="gv-command-copy" data-gv-reveal>
-        <div class="gv-command-status"><span></span> GURUVERSE / INTRO</div>
-        <p class="gv-command-intro">Hi, I'm <strong>Guru Charan.</strong></p>
-        <p class="gv-command-kicker">AI × CYBERSECURITY × SYSTEMS</p>
-        <h1 id="gv-hero-title">I build systems.<br /><em>Come see how they work.</em></h1>
-        <p class="gv-command-lede">A living engineering portfolio by Guru Charan Mavuduru — where projects are not just displayed, they can be explored, traced and understood.</p>
-        <div class="gv-command-actions">
-          <a class="gv-command-primary" href="#systems"><span>ENTER THE SYSTEMS</span><Icon name="arrow" size={18} /></a>
-          <a class="gv-command-secondary" href="/about/">WHO IS GURU CHARAN?</a>
+  <main class="gv-home-v2">
+    <section class="gv-v2-hero" aria-labelledby="v2-title">
+      <div class="gv-v2-rail" aria-hidden="true">
+        <span>GURUVERSE</span><i></i><span>AI / SEC / BUILD</span>
+      </div>
+      <div class="gv-v2-noise" aria-hidden="true"></div>
+      <div class="container gv-v2-hero-grid">
+        <div class="gv-v2-hero-copy">
+          <p class="gv-v2-overline"><b></b> ENGINEER / RESEARCHER / EDUCATOR</p>
+          <p class="gv-v2-hello">Hi, I'm Guru Charan.</p>
+          <h1 id="v2-title"><span>GURU</span><span>CHARAN</span></h1>
+          <div class="gv-v2-rule"><span></span><strong>01</strong><small>OPEN SYSTEMS. UNDERSTAND THEM.</small></div>
+          <p class="gv-v2-manifesto">I build AI and cybersecurity systems to understand complex problems, prove what I learn, and make difficult technology easier to explain.</p>
+          <div class="gv-v2-actions">
+            <a class="gv-v2-primary" href="#work">ENTER THE WORK <Icon name="arrow" size={17} /></a>
+            <a class="gv-v2-textlink" href="/about/">READ THE STORY <span>↗</span></a>
+          </div>
         </div>
-        <div class="gv-command-stats" aria-label="Current focus">
-          <span><strong>AI</strong> applied intelligence</span>
-          <span><strong>SEC</strong> defensive systems</span>
-          <span><strong>BUILD</strong> engineering in public</span>
+        <div class="gv-v2-observer">
+          <div class="gv-v2-observer-head"><span>OBSERVATORY / 001</span><span>LIVE</span></div>
+          <div class="gv-v2-orbit">
+            <div class="gv-v2-orbit-ring ring-1"></div>
+            <div class="gv-v2-orbit-ring ring-2"></div>
+            <div class="gv-v2-orbit-ring ring-3"></div>
+            <div class="gv-v2-sun"><b>GC</b><small>ENGINEERING</small></div>
+            <span class="gv-v2-satellite sat-a">AI</span>
+            <span class="gv-v2-satellite sat-b">SEC</span>
+            <span class="gv-v2-satellite sat-c">DSE</span>
+          </div>
+          <div class="gv-v2-observer-readout">
+            <span>CURRENT VECTOR</span>
+            <strong>AI × SECURITY</strong>
+            <p>Building systems that retrieve evidence, connect signals and explain what happened.</p>
+          </div>
+          <div class="gv-v2-microgrid"><span>LAT / BUILD</span><span>MODE / RESEARCH</span><span>STATE / ACTIVE</span></div>
         </div>
       </div>
+      <div class="container gv-v2-scroll"><span>SCROLL TO INVESTIGATE</span><i></i></div>
+    </section>
 
-      <div class="gv-command-console" aria-label="Interactive GURUVERSE system navigator" data-system-console>
-        <div class="gv-console-chrome">
-          <span><i></i><i></i><i></i></span>
-          <span>GURUVERSE / SYSTEM MAP</span>
-          <span class="gv-console-live">LIVE</span>
+    <section class="gv-v2-statement" aria-label="Engineering philosophy">
+      <div class="container gv-v2-statement-grid">
+        <span class="gv-v2-section-no">02</span>
+        <h2>Curiosity became a method.</h2>
+        <p>Machines → internet → cybersecurity → AI. I keep asking the same question: <em>what is happening underneath?</em></p>
+      </div>
+    </section>
+
+    <section id="work" class="gv-v2-work section" aria-labelledby="work-title">
+      <div class="container">
+        <div class="gv-v2-section-head">
+          <div><span class="gv-v2-section-no">03 / THE WORK</span><h2 id="work-title">Built to be inspected.</h2></div>
+          <p>Projects are evidence of learning — not decoration.</p>
         </div>
-        <div class="gv-system-orbit">
-          <div class="gv-orbit-ring gv-orbit-ring-a"></div>
-          <div class="gv-orbit-ring gv-orbit-ring-b"></div>
-          <div class="gv-orbit-line line-a"></div>
-          <div class="gv-orbit-line line-b"></div>
-          <div class="gv-core-node" aria-hidden="true"><span>GC</span><small>ENGINEER</small></div>
-          {systems.map((system) => (
-            <button class:list={['gv-system-orb', 'gv-system-orb-' + system.id, { active: system.id === 'ra-xsoc' }]} type="button" data-system={system.id} aria-pressed={system.id === 'ra-xsoc' ? 'true' : 'false'}>
-              <span>{system.index}</span><strong>{system.title}</strong><small>{system.signal}</small>
-            </button>
+        <div class="gv-v2-projects">
+          {featuredProjects.map((project, index) => (
+            <a class:list={['gv-v2-project', { 'is-main': index === 0 }]} href={`/projects/${project.id}/`} data-reveal>
+              <div class="gv-v2-project-index">0{index + 1}</div>
+              <div class="gv-v2-project-visual"><span>{index === 0 ? 'RX' : index === 1 ? 'AI' : 'SQ'}</span><i></i></div>
+              <div class="gv-v2-project-body">
+                <span>{project.data.domain} / {project.data.status}</span>
+                <h3>{project.data.title}</h3>
+                <p>{project.data.description}</p>
+                <strong>OPEN CASE STUDY <Icon name="arrow" size={15} /></strong>
+              </div>
+            </a>
           ))}
         </div>
-        <div class="gv-console-readout" aria-live="polite">
-          <span class="gv-readout-label" data-readout-label>FLAGSHIP SYSTEM</span>
-          <strong data-readout-title>RA-XSOC</strong>
-          <p data-readout-short>AI-assisted security investigation.</p>
-          <p class="gv-readout-detail" data-readout-detail>Retrieval, evidence correlation, MITRE mapping and structured investigation guidance — designed around traceability rather than generated text alone.</p>
-          <a data-readout-link href="/projects/ra-xsoc/">OPEN SYSTEM <Icon name="arrow" size={15} /></a>
+      </div>
+    </section>
+
+    <section class="gv-v2-evolution section" aria-labelledby="evolution-title">
+      <div class="container gv-v2-evolution-grid">
+        <div>
+          <span class="gv-v2-section-no">04 / EVOLUTION</span>
+          <h2 id="evolution-title">One project became another.</h2>
+          <p>CyberGPT started as an attempt to understand security assistance. It evolved into RA-XSOC — a more evidence-driven direction for security investigation.</p>
+        </div>
+        <div class="gv-v2-evolution-map" aria-label="CyberGPT to RA-XSOC evolution">
+          <div><span>ORIGIN</span><strong>CYBERGPT</strong><small>Retrieval · playbooks · MITRE</small></div>
+          <i>→</i>
+          <div class="active"><span>EVOLUTION</span><strong>RA-XSOC</strong><small>Evidence · correlation · investigation</small></div>
         </div>
       </div>
-    </div>
-    <div class="container gv-command-footer">
-      <span>GURU CHARAN MAVUDURU</span>
-      <span>AI &amp; DSE · CYBERSECURITY · ENGINEERING</span>
-      <span>SCROLL / EXPLORE</span>
-    </div>
-  </section>
+    </section>
 
-  <section class="gv-discovery section" aria-labelledby="discovery-title">
-    <div class="container">
-      <div class="gv-discovery-head" data-gv-reveal>
-        <span class="gv-section-code">01 / HOW TO EXPLORE</span>
-        <h2 id="discovery-title">Don't just read the portfolio.<br /><em>Follow the signal.</em></h2>
-        <p>Every important part of GURUVERSE has a path deeper. Start with a system, trace its architecture, inspect the evidence, then see what it connects to.</p>
+    <section class="gv-v2-proof section" aria-labelledby="proof-title">
+      <div class="container">
+        <div class="gv-v2-section-head">
+          <div><span class="gv-v2-section-no">05 / PROOF</span><h2 id="proof-title">What sits behind the work.</h2></div>
+        </div>
+        <div class="gv-v2-proof-grid">
+          <a href="/about/"><span>IDENTITY</span><strong>AI × Cybersecurity × Research</strong><small>The person, skills and direction.</small></a>
+          <a href="/experience/"><span>JOURNEY</span><strong>Learning → building → teaching</strong><small>The path that shaped the systems.</small></a>
+          <a href="/blogs/"><span>FIELD NOTES</span><strong>Thinking in public</strong><small>Experiments, research and lessons.</small></a>
+          <a href="/resume/"><span>PROFESSIONAL</span><strong>Inspect the résumé</strong><small>Education, experience and capabilities.</small></a>
+        </div>
       </div>
-      <div class="gv-discovery-rail">
-        {discoverySteps.map(([index, title, text], i) => (
-          <div class="gv-discovery-step" data-gv-reveal style={`--step-index:${i}`}>
-            <span>{index}</span><div><strong>{title}</strong><p>{text}</p></div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="systems" class="gv-systems section" aria-labelledby="systems-title" data-guru-context="Interactive system hangar — RA-XSOC, Sentinel and cybersecurity work.">
-    <div class="container">
-      <div class="gv-section-top" data-gv-reveal>
-        <div><span class="gv-section-code">02 / SYSTEMS</span><h2 id="systems-title">The work is the showcase.</h2></div>
-        <a class="gv-command-secondary" href="/projects/">ALL PROJECTS <Icon name="arrow" size={16} /></a>
+    <section class="gv-v2-notes section" aria-labelledby="notes-title">
+      <div class="container">
+        <div class="gv-v2-section-head">
+          <div><span class="gv-v2-section-no">06 / NOTES</span><h2 id="notes-title">Still learning.</h2></div>
+          <a class="gv-v2-textlink" href="/blogs/">ALL NOTES ↗</a>
+        </div>
+        <div class="gv-v2-notes-grid">
+          {featuredBlogs.map((post) => (
+            <a href={`/blogs/${post.id}/`} data-reveal>
+              <span>{post.data.domain} · {post.data.publishedAt.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              <strong>READ ↗</strong>
+            </a>
+          ))}
+        </div>
       </div>
-      <div class="gv-system-cards">
-        {systems.map((system, index) => (
-          <a class:list={['gv-system-card', { featured: index === 0 }]} href={system.href} data-gv-reveal>
-            <div class="gv-system-card-top"><span>{system.index}</span><span>{system.signal}</span></div>
-            <div class="gv-system-card-visual"><span class="gv-pulse"></span><span class="gv-card-node">{index === 0 ? 'RX' : index === 1 ? 'SN' : 'CY'}</span></div>
-            <span class="gv-system-card-label">{system.label}</span>
-            <h3>{system.title}</h3>
-            <p>{system.detail}</p>
-            <span class="gv-system-card-action">TRACE SYSTEM <Icon name="arrow" size={15} /></span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="gv-proof section section-muted" aria-labelledby="proof-title">
-    <div class="container">
-      <div class="gv-proof-intro" data-gv-reveal>
-        <span class="gv-section-code">03 / PROOF</span>
-        <h2 id="proof-title">See the person behind the systems.</h2>
-        <p>Engineering work has context. Follow the journey from learning to building, teaching and research.</p>
+    <section class="gv-v2-end" aria-labelledby="end-title">
+      <div class="container">
+        <span class="gv-v2-section-no">07 / NEXT</span>
+        <h2 id="end-title">Independent<br /><em>AI security engineer.</em></h2>
+        <p>And an author. Build systems. Understand them. Explain them.</p>
+        <a class="gv-v2-primary" href="/contact/">START A CONVERSATION <Icon name="arrow" size={17} /></a>
       </div>
-      <div class="gv-proof-grid">
-        <a class="gv-proof-tile" href="/experience/" data-gv-reveal><span>01 / JOURNEY</span><strong>Learning → building → teaching</strong><small>Trace the decisions and transitions behind the work.</small><Icon name="arrow" size={18} /></a>
-        <a class="gv-proof-tile" href="/about/" data-gv-reveal><span>02 / PROFILE</span><strong>AI × cybersecurity × applied research</strong><small>Skills, education, focus areas and the direction ahead.</small><Icon name="arrow" size={18} /></a>
-        <a class="gv-proof-tile" href="/resume/" data-gv-reveal><span>03 / PROFESSIONAL</span><strong>Inspect the professional profile</strong><small>{education[0].institution} · {experience[0].role}</small><Icon name="arrow" size={18} /></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="gv-featured section" aria-labelledby="featured-title">
-    <div class="container">
-      <div class="gv-section-top" data-gv-reveal>
-        <div><span class="gv-section-code">04 / CASE STUDIES</span><h2 id="featured-title">Open the machinery.</h2></div>
-        <p>Architecture, workflow, evidence and limitations — not just technology lists.</p>
-      </div>
-      <div class="gv-featured-grid">
-        {featuredProjects.map((project) => <div data-gv-reveal><ProjectCard project={project} /></div>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="gv-notes section section-muted" aria-labelledby="notes-title">
-    <div class="container">
-      <div class="gv-section-top" data-gv-reveal>
-        <div><span class="gv-section-code">05 / FIELD NOTES</span><h2 id="notes-title">Thinking in public.</h2></div>
-        <a class="gv-command-secondary" href="/blogs/">OPEN NOTEBOOK <Icon name="arrow" size={16} /></a>
-      </div>
-      <div class="gv-notes-grid">
-        {featuredBlogs.map((post) => (
-          <a class="gv-note-card" data-gv-reveal href={`/blogs/${post.id}/`}>
-            <span>{post.data.domain} · {post.data.publishedAt.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
-            <h3>{post.data.title}</h3><p>{post.data.description}</p><strong>READ FIELD NOTE <Icon name="arrow" size={15} /></strong>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="gv-finale section" aria-labelledby="finale-title">
-    <div class="container gv-finale-inner" data-gv-reveal>
-      <span class="gv-section-code">06 / CONTINUE</span>
-      <h2 id="finale-title">There is more<br /><em>under the surface.</em></h2>
-      <p>Explore a system. Follow the evidence. Then come back and find another.</p>
-      <div class="gv-command-actions"><a class="gv-command-primary" href="/projects/">EXPLORE ALL SYSTEMS <Icon name="arrow" size={18} /></a><a class="gv-command-secondary" href="/contact/">SAY HELLO</a></div>
-    </div>
-  </section>
-
-  <script is:inline>
-    (() => {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const reveal = [...document.querySelectorAll('[data-gv-reveal]')];
-      if (reduced || !('IntersectionObserver' in window)) reveal.forEach((el) => el.classList.add('is-visible'));
-      else {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          });
-        }, { threshold: .08 });
-        reveal.forEach((el) => observer.observe(el));
-      }
-
-      const systems = [{"id":"ra-xsoc","index":"01","label":"FLAGSHIP SYSTEM","title":"RA-XSOC","short":"AI-assisted security investigation.","detail":"Retrieval, evidence correlation, MITRE mapping and structured investigation guidance — designed around traceability rather than generated text alone.","signal":"SECURITY / AI","href":"/projects/ra-xsoc/"},{"id":"sentinel","index":"02","label":"OPERATIONS","title":"SENTINEL","short":"Security operations in practice.","detail":"Detection, investigation, telemetry and defensive workflows that connect cybersecurity learning with operational thinking.","signal":"SOC / DEFENSE","href":"/projects/"},{"id":"cyber","index":"03","label":"FIELD","title":"CYBERSECURITY","short":"Labs, investigations and experiments.","detail":"A growing body of hands-on security work spanning networks, web security, digital forensics, OSINT and investigation design.","signal":"LAB / RESEARCH","href":"/projects/"}];
-      const buttons = [...document.querySelectorAll('[data-system]')];
-      const label = document.querySelector('[data-readout-label]');
-      const title = document.querySelector('[data-readout-title]');
-      const short = document.querySelector('[data-readout-short]');
-      const detail = document.querySelector('[data-readout-detail]');
-      const link = document.querySelector('[data-readout-link]');
-      const select = (id) => {
-        const system = systems.find((item) => item.id === id);
-        if (!system) return;
-        buttons.forEach((button) => {
-          const active = button.dataset.system === id;
-          button.classList.toggle('active', active);
-          button.setAttribute('aria-pressed', String(active));
-        });
-        if (label) label.textContent = system.label;
-        if (title) title.textContent = system.title;
-        if (short) short.textContent = system.short;
-        if (detail) detail.textContent = system.detail;
-        if (link) link.href = system.href;
-      };
-      buttons.forEach((button) => button.addEventListener('click', () => select(button.dataset.system)));
-
-      if (!reduced && window.matchMedia('(pointer: fine)').matches) {
-        const consoleEl = document.querySelector('[data-system-console]');
-        consoleEl?.addEventListener('pointermove', (event) => {
-          const rect = consoleEl.getBoundingClientRect();
-          consoleEl.style.setProperty('--mx', ((event.clientX - rect.left) / rect.width * 100).toFixed(2) + '%');
-          consoleEl.style.setProperty('--my', ((event.clientY - rect.top) / rect.height * 100).toFixed(2) + '%');
-        });
-        consoleEl?.addEventListener('pointerleave', () => { consoleEl.style.removeProperty('--mx'); consoleEl.style.removeProperty('--my'); });
-      }
-    })();
-  </script>
+    </section>
+  </main>
 </BaseLayout>
