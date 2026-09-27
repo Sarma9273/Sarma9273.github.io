@@ -15,7 +15,6 @@ const pathname = Astro.url.pathname;
       ))}
     </nav>
     <div class="header-actions">
-      <button class="explore-button" type="button" data-explore-button>Explore</button>
       <button class="icon-button theme-toggle" type="button" aria-label="Toggle colour theme" data-theme-toggle>
         <span class="theme-icon theme-icon-sun"><Icon name="sunSimple" size={19} /></span>
         <span class="theme-icon theme-icon-moon"><Icon name="moon" size={19} /></span>
@@ -37,14 +36,12 @@ const pathname = Astro.url.pathname;
 <script is:inline>
   (() => {
     const root = document.documentElement;
-    const saved = localStorage.getItem('theme');
-    root.dataset.theme = saved || 'dark';
+    root.dataset.theme = localStorage.getItem('theme') || 'dark';
     document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
       localStorage.setItem('theme', next);
     });
-    document.querySelector('[data-explore-button]')?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('guru:mission')));
     const button = document.querySelector('[data-menu-button]');
     const nav = document.querySelector('[data-mobile-nav]');
     button?.addEventListener('click', () => {
