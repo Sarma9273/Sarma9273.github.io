@@ -57,3 +57,20 @@ The prototype uses a curated knowledge base and evaluation examples. It is not y
 ## Roadmap
 
 Live SIEM ingestion, indicator extraction, labelled-dataset evaluation, analyst feedback, role-based access and approval-based automated playbook execution.
+
+architecture:
+  - Incident narrative input
+  - Incident classification
+  - Security knowledge base
+  - SentenceTransformer embeddings
+  - FAISS vector retrieval
+  - Hybrid retrieval and context ranking
+  - MITRE ATT&CK mapping
+  - Structured incident response
+workflow:
+  - Receive security alert
+  - Identify attack context
+  - Embed and retrieve relevant playbooks
+  - Apply keyword and confidence logic
+  - Map techniques to MITRE ATT&CK
+  - Produce analyst guidance and report
