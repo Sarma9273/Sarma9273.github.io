@@ -6,3 +6,7 @@ const { intensity = 'medium' } = Astro.props;
   {Array.from({ length: 45 }, (_, index) => <span class="ambient-particle" style={`--i:${index};--x:${(index * 37) % 100}%;--y:${(index * 61) % 100}%;--s:${1 + (index % 3) * .55}px;--d:${9 + (index % 8)}s;--z:${index % 4}`}></span>)}
   <div class="ambient-grid"></div><div class="ambient-depth ambient-depth-a"></div><div class="ambient-depth ambient-depth-b"></div>
 </div>
+
+<script>
+(()=>{const root=document.querySelector('[data-ambient-space]');if(!root||window.matchMedia('(prefers-reduced-motion: reduce)').matches||!window.matchMedia('(pointer:fine)').matches)return;let tx=0,ty=0,x=0,y=0;window.addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*12;ty=(e.clientY/innerHeight-.5)*8},{passive:true});function tick(){x+=(tx-x)*.035;y+=(ty-y)*.035;root.style.transform=`translate3d(${x}px,${y}px,0)`;requestAnimationFrame(tick)}tick()})();
+</script>
