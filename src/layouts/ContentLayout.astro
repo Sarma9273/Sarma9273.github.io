@@ -12,7 +12,7 @@ interface Props {
 }
 const { title, description, eyebrow, meta, breadcrumbs, tags = [], isProject = false } = Astro.props;
 ---
-<BaseLayout title={title} description={description} type="article" projectTitle={isProject ? title : undefined} projectDomain={isProject ? eyebrow : undefined} projectDescription={isProject ? description : undefined}>
+<BaseLayout title={title} description={description} type="article">
   <section class="content-hero" data-guru-context={isProject ? `PROJECT WORLD — ${title} overview, evidence and navigation.` : `${eyebrow} — ${title}`}>
     <div class="container content-hero-inner">
       <Breadcrumbs items={breadcrumbs} />
