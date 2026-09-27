@@ -11,11 +11,12 @@ import { education, skills, certifications } from '../data/profile';
   <section class="page-hero personal-page-hero">
     <div class="container narrow reveal" data-reveal>
       <span class="eyebrow">My story</span>
-      <h1>I followed curiosity from electrical systems to security operations and applied AI.</h1>
+      <h1>I open systems, understand them, build them, and explain them.</h1>
       <p>
-        The path was not perfectly planned. I learned web development, trained
-        people in cybersecurity, taught computer science, built security labs and
-        eventually began postgraduate study in AI&DSE at IIT Patna.
+        My direction grew from curiosity rather than a single planned career:
+        electrical systems led me to ask what is happening inside machines;
+        cybersecurity made me ask what is happening inside the internet; AI
+        became a way to make security work faster and more useful.
       </p>
     </div>
   </section>
@@ -26,26 +27,37 @@ import { education, skills, certifications } from '../data/profile';
         <Image src={aboutImage} alt="Portrait of Guru Charan Mavuduru" widths={[480,720,960]} sizes="(max-width: 850px) 90vw, 38vw" />
       </div>
       <div class="about-copy reveal" data-reveal>
-        <span class="eyebrow">Why these fields connect for me</span>
-        <h2>I enjoy understanding complete systems and explaining them clearly.</h2>
+        <span class="eyebrow">Why these fields connect</span>
+        <h2>Curiosity became a method.</h2>
         <p>
-          My EEE background taught me to think in systems, signals, control and
-          failure conditions. Cybersecurity added adversarial reasoning,
-          evidence and incident response. AI&DSE added data, retrieval, modelling
-          and automation. Teaching reminds me that technical work matters only
-          when people can understand and use it.
+          My EEE background gave me a systems mindset. Cybersecurity added
+          adversarial reasoning, evidence and incident response. AI&DSE is
+          adding retrieval, modelling, data and automation. Teaching keeps me
+          focused on the final test: can another person understand the system?
         </p>
         <p>
-          I am still early in this journey. I use projects to close the gap
-          between what I know theoretically and what I can actually build,
-          troubleshoot and communicate.
+          I use projects as proof of learning. The goal is not to present
+          everything as finished; it is to make the implementation, failures,
+          decisions and limitations inspectable.
         </p>
         <div class="principles">
           <div><Icon name="check" size={20} /><span>Build in small phases and keep each phase demonstrable.</span></div>
           <div><Icon name="check" size={20} /><span>Document failures and fixes, not only polished outcomes.</span></div>
           <div><Icon name="check" size={20} /><span>Use AI to support human judgement rather than hide uncertainty.</span></div>
-          <div><Icon name="check" size={20} /><span>Choose maintainable tools before unnecessary complexity.</span></div>
+          <div><Icon name="check" size={20} /><span>Prefer understandable systems over unnecessary complexity.</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container narrow">
+      <SectionHeading eyebrow="The through-line" title="Machines → internet → cybersecurity → AI → engineering" />
+      <div class="gv-story-path">
+        <article><span>01</span><h3>Open</h3><p>Understand what is inside a system instead of treating it as a black box.</p></article>
+        <article><span>02</span><h3>Investigate</h3><p>Follow evidence, signals and failure conditions to explain what happened.</p></article>
+        <article><span>03</span><h3>Build</h3><p>Turn learning into working prototypes, products, labs and research.</p></article>
+        <article><span>04</span><h3>Explain</h3><p>Teach the result so a complex system becomes easier for someone else to understand.</p></article>
       </div>
     </div>
   </section>
