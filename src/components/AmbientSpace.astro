@@ -1,0 +1,8 @@
+---
+interface Props { intensity?: 'low' | 'medium' | 'high'; }
+const { intensity = 'medium' } = Astro.props;
+---
+<div class="ambient-space" data-ambient-space data-intensity={intensity} aria-hidden="true">
+  {Array.from({ length: 45 }, (_, index) => <span class="ambient-particle" style={`--i:${index};--x:${(index * 37) % 100}%;--y:${(index * 61) % 100}%;--s:${1 + (index % 3) * .55}px;--d:${9 + (index % 8)}s;--z:${index % 4}`}></span>)}
+  <div class="ambient-grid"></div><div class="ambient-depth ambient-depth-a"></div><div class="ambient-depth ambient-depth-b"></div>
+</div>
