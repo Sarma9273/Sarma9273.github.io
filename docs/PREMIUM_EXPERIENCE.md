@@ -1,41 +1,127 @@
-# GURUVERSE — Premium Experience Coverage
+# GURUVERSE — Product Completion Matrix
 
-This document maps the requested high-production portfolio capabilities to the actual implementation boundary.
+GURUVERSE is treated as an interactive engineering portfolio, not an enterprise marketing site. The product scope is deliberately constrained to capabilities that strengthen identity, technical evidence, exploration, knowledge and delivery.
 
-| Area | GURUVERSE implementation | Delivery status |
-|---|---|---|
-| Strategic positioning | Identity, narrative architecture, discovery flow, systems-first information hierarchy | Implemented |
-| Executive copy direction | Hero, proof, case-study, journey and CTA narrative contracts | Implemented |
-| Case-study framework | Problem, solution, architecture, workflow, outcomes, evidence, metrics, limitations fields | Implemented in schema; populate per project |
-| WebGL / shader direction | Lightweight custom canvas particle/network atmosphere with progressive fallback | Implemented |
-| Three.js / R3F | Deliberately not required for the core shell; can be isolated as an opt-in project-world module | Planned |
-| Advanced motion | Astro transitions, cinematic loader, scroll reveals, cursor, tilt, orbital motion, magnetic-ready interaction primitives | Implemented |
-| Creative assets | SVG/icon system and generated visual primitives; photography/video assets remain content inputs | Partially implemented |
-| Audio branding | Muted-by-default synthesized UI feedback toggle; no autoplay | Implemented |
-| Interactive modules | System navigator, project worlds, filtering, architecture views, timeline interactions | Implemented / expanding |
-| Private portals | Static architecture keeps the public site backend-free; authenticated vault requires a backend/identity provider | Planned |
-| Headless stack | Astro static architecture intentionally avoids CMS/runtime dependency | Implemented; CMS optional |
-| Edge/performance | Static GitHub Pages delivery, responsive CSS, local scripts, progressive enhancement | Implemented |
-| API orchestration | Integration boundary exists; contact API is optional and has mail fallback | Implemented boundary |
-| Lead routing | Structured contact form, topic qualification, honeypot, direct mail fallback | Implemented |
-| Analytics | Event-ready architecture can accept privacy-first analytics without coupling core UX | Ready; provider not claimed |
-| Booking | Contact workflow exists; booking provider can be attached as an integration | Planned |
-| Accessibility | Semantic landmarks, keyboard focus, skip link, reduced motion, mobile controls | Implemented; audit required before claiming AAA |
-| Privacy | No mandatory tracking; no secrets; external integrations optional | Implemented |
-| Security | Static attack surface, safe link patterns, input constraints, no secret client code | Implemented; external pen-test not claimed |
-| SEO | Sitemap, canonical URLs, OpenGraph, Twitter metadata, Person JSON-LD | Implemented |
-| Knowledge graph | Structured Person identity and project relationships; richer graph expansion is possible | Implemented / expanding |
-| PR / awards | Site architecture supports case-study and showcase assets; submissions are external processes | Planned |
+## Status legend
 
-## Quality gate
+- **COMPLETE** — implemented in the repository and part of the deployed product.
+- **PENDING** — architecture/foundation exists; final content, depth or QA remains.
+- **NOT STARTED** — intentionally deferred.
 
-“$50k appearance” is treated as a **creative-direction target**, not a claim about commercial valuation. A feature is only considered complete when its implementation, fallback behaviour, accessibility and performance are verified.
+## 1. Identity & narrative
 
-## Non-negotiable constraints
+| Capability | Status |
+|---|---|
+| GURUVERSE identity and visual direction | COMPLETE |
+| Hero and first-30-second experience | PENDING |
+| Personal narrative: machines → internet → cybersecurity → AI → engineering | COMPLETE |
+| Portrait / identity system | COMPLETE |
+| Final SahaayaOS / Urban Company context | PENDING |
+| Final content accuracy review | PENDING |
 
-- No fake metrics or invented outcomes.
-- No fake client portals or security claims.
-- No autoplay audio.
-- No animation may block primary content.
-- Heavy WebGL remains opt-in.
-- GitHub Pages remains a valid static fallback.
+## 2. Project evidence
+
+| Capability | Status |
+|---|---|
+| Project collections and cards | COMPLETE |
+| Project worlds | COMPLETE |
+| Architecture and workflow views | COMPLETE |
+| Evidence / limitation model | COMPLETE |
+| CyberGPT → RA-XSOC evolution | COMPLETE |
+| Case-study narratives for core projects | COMPLETE |
+| Real repository/demo/report evidence where public | PENDING |
+| Deeper project-specific diagrams and screenshots | PENDING |
+
+## 3. Knowledge & exploration
+
+| Capability | Status |
+|---|---|
+| Canonical project knowledge model | COMPLETE |
+| Grounded GURU-BOT project answers | COMPLETE |
+| Project-question routing | COMPLETE |
+| Mission Control | COMPLETE |
+| Project Galaxy / Universe exploration | COMPLETE |
+| Cross-project relationship exploration | PENDING |
+| Full multi-world Universe experience | PENDING |
+
+## 4. Engineering journey
+
+| Capability | Status |
+|---|---|
+| Education and experience timeline | COMPLETE |
+| Skills and professional learning | COMPLETE |
+| Engineering narrative | COMPLETE |
+| Research / author direction | COMPLETE |
+| Deeper research portfolio | PENDING |
+
+## 5. Interaction & motion
+
+| Capability | Status |
+|---|---|
+| Page transitions | COMPLETE |
+| Reveal / scroll motion | COMPLETE |
+| Cursor and card interactions | COMPLETE |
+| Ambient particle atmosphere | COMPLETE |
+| Project-world interaction | COMPLETE |
+| Galaxy interaction | COMPLETE |
+| Mission Control interaction | COMPLETE |
+| Advanced magnetic/context-aware interactions | PENDING |
+| Motion/performance cross-device QA | PENDING |
+
+## 6. Accessibility, security & performance
+
+| Capability | Status |
+|---|---|
+| Semantic structure / skip navigation | COMPLETE |
+| Keyboard navigation and focus foundation | COMPLETE |
+| Reduced-motion safeguards | COMPLETE |
+| Mobile navigation and non-overlap behaviour | COMPLETE |
+| No secrets / static attack-surface baseline | COMPLETE |
+| Static Astro delivery | COMPLETE |
+| Image optimisation | COMPLETE |
+| Formal accessibility audit | PENDING |
+| Formal browser/device performance audit | PENDING |
+
+## 7. SEO & delivery
+
+| Capability | Status |
+|---|---|
+| Canonical URLs | COMPLETE |
+| Sitemap / RSS | COMPLETE |
+| Open Graph / Twitter metadata | COMPLETE |
+| Person structured data | COMPLETE |
+| Project/article schema refinement | PENDING |
+| Internal linking refinement | PENDING |
+| GitHub Actions build/deploy | COMPLETE |
+| GitHub Pages deployment | COMPLETE |
+
+## Deliberately removed from scope
+
+These are not required for GURUVERSE and should not be added merely to make the site look more expensive:
+
+- Authenticated private portals
+- CRM / enterprise lead-routing infrastructure
+- Booking systems
+- Headless CMS
+- Enterprise analytics stack
+- Heavy API orchestration
+- Full Three.js/R3F or custom GLSL/WebGL as a dependency
+- GDPR/CCPA enterprise compliance infrastructure
+- Pen-testing as a website feature
+- PR / awards infrastructure
+- Autoplay or major audio-branding systems
+- Decorative effects that compromise performance or accessibility
+
+## Final product definition
+
+**Identity → Evidence → Understanding → Exploration → Delivery**
+
+A feature is complete only when it has:
+1. a clear user purpose,
+2. a reliable fallback,
+3. accessible interaction,
+4. acceptable performance,
+5. truthful content/evidence,
+6. successful production deployment.
+
+GURUVERSE must never manufacture metrics, client results, security claims or implementation status.
