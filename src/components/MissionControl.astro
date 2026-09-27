@@ -1,0 +1,15 @@
+---
+const commands=[['GALAXY','/','Open the command deck'],['PROJECTS','/projects/','Enter the project hangar'],['ORIGIN','/about/','Explore the origin world'],['CAREER','/experience/','Travel the career timeline'],['ARCHIVE','/blogs/','Open the knowledge archive'],['CONTACT','/contact/','Open communications'],['RESUME','/resume/','Open the professional view']];
+---
+<div class="mission-control-system" data-mission-control hidden>
+<div class="mission-control-backdrop" data-mission-close></div>
+<section class="mission-control-panel" role="dialog" aria-modal="true" aria-label="GURUVERSE Mission Control">
+<header><div><span>GURUVERSE OPERATING SYSTEM</span><strong>MISSION CONTROL</strong></div><button type="button" data-mission-close aria-label="Close Mission Control">×</button></header>
+<div class="mission-control-search"><kbd>⌘ K</kbd><input type="search" data-mission-input placeholder="Search worlds, projects, commands…" autocomplete="off"/></div>
+<div class="mission-control-body"><aside><span>EXPLORATION MODES</span><button data-mission-mode="recruiter">RECRUITER</button><button data-mission-mode="developer">DEVELOPER</button><button data-mission-mode="learner">LEARNER</button></aside><div class="mission-control-results" data-mission-results>
+{commands.map(([name,href,description])=><a href={href} data-mission-item><span>{name}</span><strong>{description}</strong></a>)}
+</div></div><footer><span>ESC close</span><span>ENTER navigate</span><span>GURU-BOT online</span></footer>
+</section></div>
+<script>
+(()=>{const root=document.querySelector('[data-mission-control]');if(!(root instanceof HTMLElement))return;const input=root.querySelector('[data-mission-input]');const results=root.querySelector('[data-mission-results]');const closeButtons=root.querySelectorAll('[data-mission-close]');const modes=root.querySelectorAll('[data-mission-mode]');const open=()=>{root.hidden=false;if(input instanceof HTMLInputElement){input.value='';input.focus()}};const close=()=>{root.hidden=true};window.addEventListener('guru:mission',open);closeButtons.forEach(b=>b.addEventListener('click',close));modes.forEach(b=>b.addEventListener('click',()=>{if(!(b instanceof HTMLElement))return;document.body.dataset.guruMode=b.dataset.missionMode||'learner';close();window.dispatchEvent(new CustomEvent('guru:talk'))}));input?.addEventListener('input',()=>{if(!(input instanceof HTMLInputElement)||!(results instanceof HTMLElement))return;const q=input.value.toLowerCase().trim();results.querySelectorAll('[data-mission-item]').forEach(item=>{if(item instanceof HTMLElement)item.hidden=!item.textContent?.toLowerCase().includes(q)})});window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}if(e.key==='Escape'&&!root.hidden)close()})})();
+</script>
