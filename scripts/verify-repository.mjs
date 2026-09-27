@@ -12,6 +12,13 @@ const requiredPaths = [
   'src/pages/contact.astro',
   'src/components/LiveBlogGrid.astro',
   'src/data/integrations.ts',
+  'src/data/architecture.ts',
+  'src/data/guruKnowledge.ts',
+  'src/features/navigation/Header.astro',
+  'src/features/projects/ProjectCard.astro',
+  'src/features/projects/ProjectWorld.astro',
+  'src/features/architecture/ArchitectureMap.astro',
+  'docs/ARCHITECTURE.md',
   'src/content.config.ts',
   'tools/google-drive/Portfolio_Live_Backend.gs',
   'docs/LIVE_DRIVE_BLOGS_AND_CONTACT.md',
@@ -51,4 +58,14 @@ if (!integrationConfig.includes('portfolioApiUrl')) {
   process.exit(1);
 }
 
-console.log('Portfolio V3 structure, live-integration files and npm registry configuration are valid.');
+const architectureMap = readFileSync('src/features/architecture/ArchitectureMap.astro', 'utf8');
+if (!architectureMap.includes("../../data/architecture")) {
+  console.error('Repository verification failed: ArchitectureMap is not connected to canonical architecture data.');
+  process.exit(1);
+}
+const projectWorld = readFileSync('src/features/projects/ProjectWorld.astro', 'utf8');
+if (projectWorld.includes('GURU-BOT')) {
+  console.error('Repository verification failed: deferred GURU-BOT is incorrectly presented as a project-world dependency.');
+  process.exit(1);
+}
+console.log('GURUVERSE architecture, feature boundaries, live-integration files and npm registry configuration are valid.');
