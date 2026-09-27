@@ -37,15 +37,17 @@ const activeKnowledge = guruKnowledge.find((item) => item.aliases.some((alias) =
       <button type="button" data-guru-next>Next section <span aria-hidden="true">→</span></button>
     </div>
     {projectTitle && (
-      <div class="guru-bot-project">
-        <span>PROJECT INTEL</span>
-        <strong>{activeKnowledge?.title || projectTitle}</strong>
-        <small>{activeKnowledge?.domain || projectDomain}</small>
-      </div>
-      <form class="guru-bot-query" data-guru-query-form>
-        <input type="text" data-guru-question placeholder="Ask about this project…" autocomplete="off" aria-label="Ask GURU-BOT about this project" />
-        <button type="submit">ASK</button>
-      </form>
+      <>
+        <div class="guru-bot-project">
+          <span>PROJECT INTEL</span>
+          <strong>{activeKnowledge?.title || projectTitle}</strong>
+          <small>{activeKnowledge?.domain || projectDomain}</small>
+        </div>
+        <form class="guru-bot-query" data-guru-query-form>
+          <input type="text" data-guru-question placeholder="Ask about this project…" autocomplete="off" aria-label="Ask GURU-BOT about this project" />
+          <button type="submit">ASK</button>
+        </form>
+      </>
     )}
   </div>
   <div class="guru-mission-control" data-guru-mission-panel hidden>
@@ -182,7 +184,7 @@ const activeKnowledge = guruKnowledge.find((item) => item.aliases.some((alias) =
       setMessage(base);
     }
 
-    function openMission() { window.dispatchEvent(new CustomEvent('guru:mission')); return; /* legacy inline panel disabled */
+    function openMission() { window.dispatchEvent(new CustomEvent('guru:mission')); return;
       if (!missionPanel || !missionSearch || !missionResults) return;
       missionPanel.hidden = false;
       const render = () => {
