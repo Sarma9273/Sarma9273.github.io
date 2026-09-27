@@ -6,6 +6,8 @@ import BackToTop from '../components/BackToTop.astro';
 import GuruBot from '../components/GuruBot.astro';
 import AmbientSpace from '../components/AmbientSpace.astro';
 import UniverseCore from '../components/UniverseCore.astro';
+import GalaxyEngine from '../components/GalaxyEngine.astro';
+import MissionControl from '../components/MissionControl.astro';
 import { site } from '../data/site';
 interface Props {
   title?: string;
@@ -83,11 +85,12 @@ const jsonLd = {
   </head>
   <body data-guru-page={Astro.url.pathname} data-guru-world={world}>\n    <AmbientSpace intensity="medium" />
     <UniverseCore />
+    <MissionControl />
     <div class="guru-boot" data-guru-boot aria-hidden="true"><div class="guru-boot-core"><span>GURUVERSE</span><strong>INITIALIZING</strong><i></i></div><button type="button" data-guru-skip>ENTER UNIVERSE</button></div>
     <div class="guru-page-transition" data-page-transition aria-hidden="true"><span>GURUVERSE</span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
-    <main id="main-content"><slot /></main>
+    <main id="main-content"><GalaxyEngine /><slot /></main>
     <Footer />
     <GuruBot pageTitle={fullTitle} projectTitle={projectTitle} projectDomain={projectDomain} projectDescription={projectDescription} />
     <BackToTop />
