@@ -20,6 +20,9 @@ const requiredPaths = [
   'src/features/architecture/ArchitectureMap.astro',
   'docs/ARCHITECTURE.md',
   'src/content.config.ts',
+  'src/scripts/motion.ts',
+  'src/scripts/signature-engine.ts',
+  'docs/PREMIUM_EXPERIENCE.md',
   'tools/google-drive/Portfolio_Live_Backend.gs',
   'docs/LIVE_DRIVE_BLOGS_AND_CONTACT.md',
 ];
@@ -63,6 +66,19 @@ if (!architectureMap.includes("../../data/architecture")) {
   console.error('Repository verification failed: ArchitectureMap is not connected to canonical architecture data.');
   process.exit(1);
 }
+const baseLayout = readFileSync('src/layouts/BaseLayout.astro', 'utf8');
+for (const script of ['../scripts/motion.ts', '../scripts/signature-engine.ts']) {
+  if (!baseLayout.includes(script)) {
+    console.error(`Repository verification failed: BaseLayout is missing required progressive-enhancement script: ${script}`);
+    process.exit(1);
+  }
+}
+const signatureEngine = readFileSync('src/scripts/signature-engine.ts', 'utf8');
+if (!signatureEngine.includes("prefers-reduced-motion") || !signatureEngine.includes('AudioContext')) {
+  console.error('Repository verification failed: signature engine is missing accessibility/audio safeguards.');
+  process.exit(1);
+}
+
 const projectWorld = readFileSync('src/features/projects/ProjectWorld.astro', 'utf8');
 if (projectWorld.includes('GURU-BOT')) {
   console.error('Repository verification failed: deferred GURU-BOT is incorrectly presented as a project-world dependency.');
