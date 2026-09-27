@@ -62,10 +62,11 @@ if (!integrationConfig.includes('portfolioApiUrl')) {
 }
 
 const architectureMap = readFileSync('src/features/architecture/ArchitectureMap.astro', 'utf8');
-if (!architectureMap.includes("../../data/architecture")) {
+if (!architectureMap.includes('../../data/architecture')) {
   console.error('Repository verification failed: ArchitectureMap is not connected to canonical architecture data.');
   process.exit(1);
 }
+
 const baseLayout = readFileSync('src/layouts/BaseLayout.astro', 'utf8');
 for (const script of ['../scripts/motion.ts', '../scripts/signature-engine.ts']) {
   if (!baseLayout.includes(script)) {
@@ -73,8 +74,21 @@ for (const script of ['../scripts/motion.ts', '../scripts/signature-engine.ts'])
     process.exit(1);
   }
 }
+for (const persisted of ['data-page-loader', 'data-scroll-progress', 'data-atmosphere', 'data-cursor', 'data-sound-toggle']) {
+  if (!baseLayout.includes(`transition:persist`) || !baseLayout.includes(persisted)) {
+    console.error(`Repository verification failed: BaseLayout is missing persistent transition support for ${persisted}.`);
+    process.exit(1);
+  }
+}
+
+const motion = readFileSync('src/scripts/motion.ts', 'utf8');
+if (!motion.includes('astro:page-load') || !motion.includes('document.querySelector(\'[data-header]\')')) {
+  console.error('Repository verification failed: motion lifecycle does not rebind page-local UI after navigation.');
+  process.exit(1);
+}
+
 const signatureEngine = readFileSync('src/scripts/signature-engine.ts', 'utf8');
-if (!signatureEngine.includes("prefers-reduced-motion") || !signatureEngine.includes('AudioContext')) {
+if (!signatureEngine.includes('prefers-reduced-motion') || !signatureEngine.includes('AudioContext')) {
   console.error('Repository verification failed: signature engine is missing accessibility/audio safeguards.');
   process.exit(1);
 }
@@ -84,4 +98,4 @@ if (projectWorld.includes('GURU-BOT')) {
   console.error('Repository verification failed: deferred GURU-BOT is incorrectly presented as a project-world dependency.');
   process.exit(1);
 }
-console.log('GURUVERSE architecture, feature boundaries, live-integration files and npm registry configuration are valid.');
+console.log('GURUVERSE architecture, feature boundaries, transition lifecycle and npm registry configuration are valid.');
