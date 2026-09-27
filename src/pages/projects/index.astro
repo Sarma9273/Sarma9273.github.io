@@ -6,7 +6,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
 ---
 <BaseLayout title="Projects" description="Personal project case studies across cybersecurity, AI, security operations, automation, renewable energy, web development and education technology.">
-  <section class="page-hero personal-page-hero" data-guru-context="Project hangar — choose a system and enter its world."
+  <section class="page-hero personal-page-hero" data-guru-context="Project hangar — choose a system and enter its world.">
     <div class="container narrow reveal" data-reveal>
       <span class="eyebrow">Things I have built</span>
       <h1>Projects that helped me turn curiosity into practical evidence.</h1>
@@ -18,7 +18,7 @@ const projects = (await getCollection('projects')).sort((a,b) => a.data.order - 
     </div>
   </section>
 
-  <section class="section" data-guru-context="Project navigation — filter the universe by featured, supporting and legacy builds."
+  <section class="section" data-guru-context="Project navigation — filter the universe by featured, supporting and legacy builds.">
     <div class="container">
       <div class="filter-bar" data-project-filters>
         <button class="filter-chip active" type="button" data-filter="all">Everything</button>
