@@ -12,8 +12,13 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 <ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, entry.data.period, entry.data.role]} breadcrumbs={[{label:'Home',href:'/'},{label:'Projects',href:'/projects/'},{label:entry.data.shortTitle}]} tags={entry.data.technologies}>
-  <ProjectWorld title={entry.data.title} domain={entry.data.domain} description={entry.data.description} technologies={entry.data.technologies} architecture={entry.data.architecture} />
+  <ProjectWorld title={entry.data.title} domain={entry.data.domain} description={entry.data.description} technologies={entry.data.technologies} architecture={entry.data.architecture} evidence={entry.data.evidence} metrics={entry.data.metrics} />
   <ContentActions slot="actions" repositoryUrl={entry.data.repositoryUrl} demoUrl={entry.data.demoUrl} reportUrl={entry.data.reportUrl} blogSlug={entry.data.blogSlug} />
+  {(entry.data.problem || entry.data.solution || entry.data.impact) && <section class="case-study-brief" aria-label="Case study brief">
+    {entry.data.problem && <div><span>PROBLEM</span><p>{entry.data.problem}</p></div>}
+    {entry.data.solution && <div><span>APPROACH</span><p>{entry.data.solution}</p></div>}
+    {entry.data.impact && <div><span>IMPACT</span><p>{entry.data.impact}</p></div>}
+  </section>}
   {entry.data.outcomes.length > 0 && <div class="outcome-box"><h2>Selected outcomes</h2><ul>{entry.data.outcomes.map((outcome) => <li><Icon name="check" size={19} />{outcome}</li>)}</ul></div>}
   <Content />
   <div slot="aside" class="aside-card evidence-card"><strong>Evidence status</strong><p>Public repository, report and demo links are added only after privacy and quality review.</p></div>
