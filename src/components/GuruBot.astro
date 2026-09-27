@@ -142,6 +142,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
       missionPanel.hidden = false;
       const render = () => {
         const q = missionSearch.value.trim().toLowerCase();
+        const destinations = getDestinations();
         const items = destinations.filter(([name,path,kind]) => `${name} ${kind} ${path}`.toLowerCase().includes(q));
         missionResults.innerHTML = items.map(([name,path,kind]) => `<button type="button" data-destination="${path}"><span>${kind}</span><strong>${name}</strong></button>`).join('') || '<p>No matching destination.</p>';
         missionResults.querySelectorAll('[data-destination]').forEach((item) => item.addEventListener('click', () => { location.href = item.dataset.destination; }));
