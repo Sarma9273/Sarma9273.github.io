@@ -20,11 +20,14 @@ const projects = (await getCollection('projects')).sort((a,b) => a.data.order - 
 
   <section class="section" data-guru-context="Project navigation — filter the universe by featured, supporting and legacy builds.">
     <div class="container">
-      <div class="filter-bar" data-project-filters>
+      <div class="projects-toolbar">
+        <div class="filter-bar" data-project-filters>
         <button class="filter-chip active" type="button" data-filter="all">Everything</button>
         <button class="filter-chip" type="button" data-filter="featured">Projects I’m proud of</button>
         <button class="filter-chip" type="button" data-filter="supporting">Supporting builds</button>
         <button class="filter-chip" type="button" data-filter="legacy">Where I started</button>
+      </div>
+        <span class="projects-toolbar-hint">FILTER THE BUILD LOG</span>
       </div>
       <p class="results-count"><span data-project-count>{projects.length}</span> projects and learning builds</p>
       <div class="project-grid" data-project-grid>
