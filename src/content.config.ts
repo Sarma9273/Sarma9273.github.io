@@ -44,6 +44,10 @@ const projects = defineCollection({
     coverIcon: z.string().default('code'),
     blogSlug: z.string().optional(),
     outcomes: z.array(z.string()).default([]),
+    architecture: z.array(z.string()).default([]),
+    workflow: z.array(z.string()).default([]),
+    problem: z.string().optional(),
+    solution: z.string().optional(),
     ...commonLinks,
   }),
 });
