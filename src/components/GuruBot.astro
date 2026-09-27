@@ -83,6 +83,20 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
     const base = fallback[pageKey] || fallback.default;
     let sections = [...document.querySelectorAll('[data-guru-context], section[id]')];
 
+    function getDestinations() {
+      const seen = new Set();
+      return [...document.querySelectorAll('a[href]')].map((link) => {
+        const href = link.getAttribute('href') || '';
+        const label = link.textContent?.replace(/\s+/g, ' ').trim() || '';
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || !label) return null;
+        const key = href + '|' + label;
+        if (seen.has(key)) return null;
+        seen.add(key);
+        const kind = href.includes('/projects/') ? 'Project / route' : 'Universe route';
+        return [label, href, kind];
+      }).filter(Boolean).slice(0, 80);
+    }
+
     function prepareProjectMoments() {
       if (!projectTitle) return;
       document.querySelectorAll('.prose h2, .prose h3').forEach((heading) => {
