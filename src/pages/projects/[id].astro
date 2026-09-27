@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
-<ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, entry.data.period, entry.data.role]} breadcrumbs={[{label:'Home',href:'/'},{label:'Projects',href:'/projects/'},{label:entry.data.shortTitle}]} tags={entry.data.technologies} isProject={true}>
+<ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, entry.data.period, entry.data.role]} breadcrumbs={[{label:'Home',href:'/'},{label:'Projects',href:'/projects/'},{label:entry.data.shortTitle}]} tags={entry.data.technologies}>
   <ProjectWorld title={entry.data.title} domain={entry.data.domain} description={entry.data.description} technologies={entry.data.technologies} architecture={entry.data.architecture} />
   <ContentActions slot="actions" repositoryUrl={entry.data.repositoryUrl} demoUrl={entry.data.demoUrl} reportUrl={entry.data.reportUrl} blogSlug={entry.data.blogSlug} />
   {entry.data.outcomes.length > 0 && <div class="outcome-box"><h2>Selected outcomes</h2><ul>{entry.data.outcomes.map((outcome) => <li><Icon name="check" size={19} />{outcome}</li>)}</ul></div>}
