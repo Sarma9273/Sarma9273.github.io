@@ -4,7 +4,7 @@ import Icon from '../components/Icon.astro';
 import { experience } from '../data/profile';
 ---
 <BaseLayout title="Experience" description="Guru Charan Mavuduru's experience across computer education, cybersecurity training, engineering design and electrical infrastructure.">
-  <section class="page-hero personal-page-hero">
+  <section class="page-hero personal-page-hero" data-guru-context="Career world — the roles that shaped the way I work."
     <div class="container narrow reveal" data-reveal>
       <span class="eyebrow">Where I have learned by working</span>
       <h1>Teaching, training and engineering roles that changed how I approach problems.</h1>
@@ -16,7 +16,7 @@ import { experience } from '../data/profile';
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" data-guru-context="Experience timeline — teaching, training, engineering and infrastructure."
     <div class="container">
       <div class="experience-list">
         {experience.map((item,index) => (
@@ -39,7 +39,7 @@ import { experience } from '../data/profile';
     </div>
   </section>
 
-  <section class="section section-muted">
+  <section class="section section-muted" data-guru-context="Next mission — the direction toward real security operations work."
     <div class="container cta-panel personal-cta reveal" data-reveal>
       <div>
         <span class="eyebrow">My next chapter</span>
