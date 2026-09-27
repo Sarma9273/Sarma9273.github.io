@@ -159,7 +159,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
         const q = missionSearch.value.trim().toLowerCase();
         const destinations = getDestinations();
         const items = destinations.filter(([name,path,kind]) => `${name} ${kind} ${path}`.toLowerCase().includes(q));
-        missionResults.innerHTML = modes.map(([name,desc]) => \`<button type="button" data-mode="${name}"><span>MODE</span><strong>${name}</strong><small>${desc}</small></button>\`).join('') + items.map(([name,path,kind]) => `<button type="button" data-destination="${path}"><span>${kind}</span><strong>${name}</strong></button>`).join('') || '<p>No matching destination.</p>';
+        missionResults.innerHTML = modes.map(([name,desc]) => `<button type="button" data-mode="${name}"><span>MODE</span><strong>${name}</strong><small>${desc}</small></button>`).join('') + items.map(([name,path,kind]) => `<button type="button" data-destination="${path}"><span>${kind}</span><strong>${name}</strong></button>`).join('') || '<p>No matching destination.</p>';
         missionResults.querySelectorAll('[data-mode]').forEach((item)=>item.addEventListener('click',()=>{document.body.dataset.guruMode=item.dataset.mode.toLowerCase();missionPanel.hidden=true;setMessage(`${item.dataset.mode} mode active. I will emphasize the information relevant to this exploration.`)}));
         missionResults.querySelectorAll('[data-destination]').forEach((item) => item.addEventListener('click', () => { location.href = item.dataset.destination; }));
       };
