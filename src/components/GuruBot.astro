@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { guruKnowledge } from '../data/guruKnowledge';
 
 interface Props {
   pageTitle?: string;
@@ -8,6 +9,8 @@ interface Props {
   projectDescription?: string;
 }
 const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription } = Astro.props;
+const normalizedProjectTitle = (projectTitle || '').toLowerCase();
+const activeKnowledge = guruKnowledge.find((item) => item.aliases.some((alias) => normalizedProjectTitle.includes(alias))) || guruKnowledge.find((item) => item.id === 'guruverse');
 ---
 <aside class="guru-bot" data-guru-bot data-project={projectTitle ? 'true' : 'false'} aria-label="GURU-BOT portfolio guide">
   <div class="guru-bot-scanline" aria-hidden="true"></div>
@@ -51,7 +54,7 @@ const { pageTitle = 'GURUVERSE', projectTitle, projectDomain, projectDescription
   </div>
 </aside>
 
-<script define:vars={{ pageTitle, projectTitle, projectDomain, projectDescription }}>
+<script define:vars={{ pageTitle, projectTitle, projectDomain, projectDescription, activeKnowledge }}>
   (() => {
     const bot = document.querySelector('[data-guru-bot]');
     if (!bot) return;
