@@ -1303,3 +1303,19 @@ body[data-guru-state="WAKE"] .guru-bot{animation:guruWake .8s ease-out}
 .guru-bot-body{box-shadow:0 10px 30px rgba(0,0,0,.18)}
 .guru-bot-dialog{max-width:320px}
 @media (max-width:760px){.desktop-nav{display:none}.explore-button{display:none}.header-inner{height:68px}.container{width:min(calc(100% - 28px),var(--container))}.hero{padding-top:42px}.hero-grid{gap:28px}.hero-copy{padding-bottom:35px}.hero h1{font-size:clamp(2.7rem,13vw,4.1rem)}.hero-actions{gap:9px}.hero-actions .button{min-height:45px}.hero-visual{min-height:390px}}
+
+
+/* ARCHITECTURE MAP */
+.architecture-section{padding:96px 0;background:var(--surface)}
+.architecture-heading{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:48px;align-items:end;margin-bottom:32px}
+.architecture-heading h2{margin:8px 0 0;font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;letter-spacing:-.04em}
+.architecture-heading p{margin:0;color:var(--muted);max-width:560px}
+.architecture-stack{display:grid;gap:10px}
+.architecture-layer{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(240px,.65fr);gap:28px;align-items:start;padding:25px 26px;border:1px solid var(--border);border-radius:18px;background:var(--bg);transition:border-color .18s ease,transform .18s ease}
+.architecture-layer:hover{border-color:var(--accent);transform:translateY(-2px)}
+.architecture-layer>span{font:700 .72rem/1.3 var(--font-mono);color:var(--accent-strong);letter-spacing:.08em}
+.architecture-layer h3{margin:0 0 6px;font-size:1.12rem}
+.architecture-layer p{margin:0;color:var(--muted);font-size:.93rem;line-height:1.6}
+.architecture-layer ul{display:flex;flex-wrap:wrap;gap:7px;margin:0;padding:0;list-style:none}
+.architecture-layer li{padding:6px 9px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:.74rem;background:var(--surface)}
+@media(max-width:760px){.architecture-section{padding:68px 0}.architecture-heading{grid-template-columns:1fr;gap:14px}.architecture-layer{grid-template-columns:1fr;gap:12px;padding:20px}.architecture-layer>span{font-size:.68rem}}
