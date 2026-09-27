@@ -1793,3 +1793,73 @@ body::after {
  .project-proof-strip{position:relative;left:auto;right:auto;bottom:auto;padding:0 14px 14px;display:grid;grid-template-columns:1fr;}
  .project-world{padding-bottom:0;}
 }
+
+
+/* GURUVERSE art direction: Industrial Digital Observatory */
+:root{
+  --gv-line:color-mix(in srgb,var(--border) 78%,transparent);
+  --gv-panel:color-mix(in srgb,var(--surface) 88%,transparent);
+  --gv-glow:color-mix(in srgb,var(--accent) 28%,transparent);
+  --gv-ease:cubic-bezier(.2,.8,.2,1);
+}
+body{
+  background-image:
+    radial-gradient(circle at 50% -15%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34%),
+    linear-gradient(90deg,transparent 49.95%,color-mix(in srgb,var(--border) 22%,transparent) 50%,transparent 50.05%);
+}
+.site-header{border-bottom-color:var(--gv-line);box-shadow:0 1px 0 rgba(255,255,255,.015);}
+.site-header.scrolled{box-shadow:0 12px 40px rgba(0,0,0,.12);}
+.brand-mark{border-radius:10px;position:relative;overflow:hidden;}
+.brand-mark::after{content:'';position:absolute;inset:-30%;background:conic-gradient(from 0deg,transparent,var(--accent),transparent 24%);opacity:.16;animation:gv-spin 8s linear infinite;}
+.button,.icon-button,.filter-chip,.focus-card,.project-card,.blog-card,.skills-grid article,.experience-item,.certificate-grid div{border-radius:10px;}
+.button-primary{position:relative;overflow:hidden;}
+.button-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.28),transparent 58%);transform:translateX(-120%);transition:transform .65s var(--gv-ease);}
+.button-primary:hover::after{transform:translateX(120%);}
+.gv-atmosphere{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.65;mix-blend-mode:screen;}
+.gv-sound-toggle{
+ position:fixed;right:18px;bottom:18px;z-index:95;display:inline-flex;align-items:center;gap:7px;
+ min-height:34px;padding:7px 10px;border:1px solid var(--gv-line);border-radius:7px;
+ background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(12px);
+ color:var(--subtle);font:700 .55rem var(--font-mono);letter-spacing:.12em;cursor:pointer;
+}
+.gv-sound-toggle span{font-size:1rem;line-height:1;}
+.gv-sound-toggle.is-on{color:var(--accent-strong);border-color:var(--accent);}
+@keyframes gv-spin{to{transform:rotate(360deg)}}
+@media(max-width:760px){
+ .container{width:min(calc(100% - 28px),var(--container));}
+ .header-inner{height:68px;}
+ .mobile-nav{inset:68px 0 0;}
+ .gv-sound-toggle{right:12px;bottom:12px;}
+ .gv-atmosphere{display:none;}
+ .hero h1,.page-hero h1,.content-hero h1{font-size:clamp(2.35rem,12vw,4rem);}
+ .hero{padding-top:44px;}
+ .hero-grid{grid-template-columns:1fr;min-height:auto;gap:30px;}
+ .hero-copy{padding-bottom:0;}
+ .hero-visual{min-height:auto;}
+ .portrait-frame{width:min(88vw,400px);}
+ .floating-card-a{left:0;bottom:45px;}
+ .floating-card-b{right:0;top:35px;}
+ .proof-strip{grid-template-columns:repeat(2,1fr);border-radius:12px 12px 0 0;}
+ .proof-strip div{padding:17px;border-bottom:1px solid var(--border);}
+ .proof-strip div:nth-child(2){border-right:0;}
+ .section{padding:68px 0;}
+ .section-row,.gv-section-top{align-items:flex-start;flex-direction:column;}
+ .project-grid,.home-blog-grid,.focus-grid,.skills-grid,.certificate-grid{grid-template-columns:1fr;}
+ .journey-grid,.about-grid{grid-template-columns:1fr;gap:38px;}
+ .experience-item{grid-template-columns:1fr;}
+ .experience-index{display:none;}
+ .experience-main{padding:23px 20px;}
+ .experience-header{flex-direction:column;gap:10px;}
+ .cta-panel{padding:25px;flex-direction:column;align-items:flex-start;}
+ .content-hero{padding:55px 0 40px;}
+ .content-section{padding:55px 0;}
+ .article-grid{grid-template-columns:1fr;}
+ .article-aside{order:-1;}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+ .gv-sound-toggle{display:none;}
+}
+@media(pointer:coarse){
+ .gv-cursor{display:none!important;}
+}
