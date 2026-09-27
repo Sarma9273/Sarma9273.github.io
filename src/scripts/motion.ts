@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    __gvScrollMotion?: boolean;
+    __gvCursorMotion?: boolean;
+  }
+}
+
 const initMotion = () => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(pointer: fine)').matches;
