@@ -81,6 +81,7 @@ const jsonLd = {
     </script>
   </head>
   <body data-guru-page={Astro.url.pathname} data-guru-world={world}>\n    <AmbientSpace intensity="medium" />
+    <div class="guru-boot" data-guru-boot aria-hidden="true"><div class="guru-boot-core"><span>GURUVERSE</span><strong>INITIALIZING</strong><i></i></div><button type="button" data-guru-skip>ENTER UNIVERSE</button></div>
     <div class="guru-page-transition" data-page-transition aria-hidden="true"><span>GURUVERSE</span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
@@ -91,6 +92,8 @@ const jsonLd = {
     <script is:inline>
       (() => {
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const boot=document.querySelector('[data-guru-boot]');const bootSeen=sessionStorage.getItem('guruverse-boot');if(boot && !reduced && !bootSeen){document.body.classList.add('guru-booting');const finish=()=>{sessionStorage.setItem('guruverse-boot','1');boot.classList.add('is-complete');document.body.classList.remove('guru-booting');setTimeout(()=>boot.remove(),500)};boot.querySelector('[data-guru-skip]')?.addEventListener('click',finish);setTimeout(finish,4200)}else boot?.remove();
+        
         const revealItems = [...document.querySelectorAll('[data-reveal]')];
 
         if (reduced || !('IntersectionObserver' in window)) {
