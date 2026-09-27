@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../features/projects/ProjectCard.astro';
+import GalaxyEngine from '../../components/GalaxyEngine.astro';
+import MissionControl from '../../components/MissionControl.astro';
 
 const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
 ---
@@ -17,6 +19,13 @@ const projects = (await getCollection('projects')).sort((a,b) => a.data.order - 
       </p>
     </div>
   </section>
+
+  <section class="section" aria-label="GURUVERSE project universe">
+    <div class="container">
+      <GalaxyEngine />
+    </div>
+  </section>
+  <MissionControl />
 
   <section class="section" data-guru-context="Project navigation — filter the universe by featured, supporting and legacy builds.">
     <div class="container">
