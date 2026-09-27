@@ -971,3 +971,171 @@ body {
     transform: none;
   }
 }
+
+
+/* GURUVERSE universe layer */
+html { scroll-behavior: smooth; }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: .34;
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 24%),
+    radial-gradient(circle at 88% 72%, color-mix(in srgb, var(--violet) 9%, transparent), transparent 26%);
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .14;
+  background-image:
+    radial-gradient(circle at 18% 28%, currentColor 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 64%, currentColor 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 84%, currentColor 0 1px, transparent 1.5px);
+  background-size: 170px 190px, 230px 250px, 310px 330px;
+  animation: guruverse-stars 24s linear infinite;
+}
+@keyframes guruverse-stars { to { transform: translate3d(0,-42px,0); } }
+
+.guru-bot {
+  --guru-drift: 0px;
+  --guru-x: 0px;
+  --guru-y: 0px;
+  position: fixed;
+  right: clamp(16px, 3vw, 34px);
+  bottom: clamp(18px, 4vw, 34px);
+  z-index: 1000;
+  width: min(330px, calc(100vw - 32px));
+  transform: translate3d(calc(var(--guru-x) + var(--guru-drift)), var(--guru-y), 0);
+  transition: transform .25s ease;
+  pointer-events: none;
+}
+.guru-bot-body,
+.guru-bot-dialog { pointer-events: auto; }
+.guru-bot-body {
+  position: absolute;
+  right: 6px;
+  bottom: 8px;
+  width: 70px;
+  height: 70px;
+  border: 1px solid color-mix(in srgb, var(--accent) 70%, var(--border));
+  border-radius: 24px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 92%, var(--accent)), var(--surface-3));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent), 0 14px 42px color-mix(in srgb, var(--accent) 22%, transparent);
+  cursor: pointer;
+  animation: guru-bot-float 3.2s ease-in-out infinite;
+}
+.guru-bot-ring {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 19px;
+}
+.guru-bot-ring::before,
+.guru-bot-ring::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 24%, transparent);
+  border-radius: 50%;
+  animation: guru-orbit 5s linear infinite;
+}
+.guru-bot-ring::after { inset: 5px -12px; animation-direction: reverse; opacity: .55; }
+.guru-bot-antenna {
+  position: absolute;
+  width: 2px; height: 12px;
+  left: 50%; top: -9px;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+.guru-bot-antenna::after {
+  content: '';
+  position: absolute;
+  width: 5px; height: 5px;
+  left: -2px; top: -4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+.guru-bot-eye {
+  position: absolute;
+  top: 27px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  box-shadow: 0 0 9px var(--accent);
+}
+.guru-bot-eye-left { left: 24px; }
+.guru-bot-eye-right { right: 24px; }
+.guru-bot-core {
+  position: absolute;
+  width: 13px; height: 4px;
+  left: 50%; bottom: 19px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 80%, white);
+}
+.guru-bot-dialog {
+  position: relative;
+  margin-right: 76px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface) 93%, transparent);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  transform-origin: right bottom;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.guru-bot-dialog::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: 18px;
+  width: 15px; height: 15px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-right: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: var(--surface);
+  transform: rotate(45deg);
+}
+.guru-bot.is-collapsed .guru-bot-dialog {
+  opacity: 0;
+  transform: translateY(10px) scale(.94);
+  pointer-events: none;
+}
+.guru-bot-dialog-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.guru-bot-dialog-top > span { font: 800 .67rem/1 var(--font-mono); letter-spacing:.12em; color:var(--accent-strong); }
+.guru-bot-dialog-top i { display:inline-block; width:6px; height:6px; margin-right:5px; border-radius:50%; background:var(--success); box-shadow:0 0 8px var(--success); }
+.guru-bot-dialog-top button { width:25px; height:25px; display:grid; place-items:center; border:0; background:transparent; color:var(--muted); cursor:pointer; }
+.guru-bot-message { min-height:46px; margin:10px 0 12px; color:var(--text); font-size:.82rem; line-height:1.55; }
+.guru-bot-message.is-changing { opacity:.25; transform:translateY(3px); transition:opacity .13s ease, transform .13s ease; }
+.guru-bot-actions { display:flex; gap:7px; }
+.guru-bot-actions button { flex:1; padding:8px 9px; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); color:var(--text); font-size:.7rem; font-weight:760; cursor:pointer; }
+.guru-bot-actions button:hover { border-color:var(--accent); color:var(--accent-strong); }
+.guru-bot-project { margin-top:10px; padding-top:10px; border-top:1px solid var(--border); display:grid; gap:2px; }
+.guru-bot-project span { font:700 .57rem/1 var(--font-mono); color:var(--subtle); letter-spacing:.1em; }
+.guru-bot-project strong { font-size:.78rem; }
+.guru-bot-project small { color:var(--muted); }
+.guru-bot-pulse .guru-bot-body { animation: guru-bot-scan .55s ease; }
+@keyframes guru-bot-float { 50% { transform: translateY(-5px) rotate(-1deg); } }
+@keyframes guru-bot-scan { 0%,100% { filter: brightness(1); } 40% { filter: brightness(1.7); } }
+@keyframes guru-orbit { to { transform: rotate(360deg); } }
+
+[data-guru-context] { scroll-margin-top: 100px; }
+@media (max-width: 680px) {
+  .guru-bot { width: min(300px, calc(100vw - 24px)); right:12px; bottom:12px; }
+  .guru-bot-dialog { margin-right:0; margin-bottom:74px; }
+  .guru-bot-body { width:58px; height:58px; right:4px; bottom:4px; border-radius:19px; }
+  .guru-bot-eye { top:22px; width:7px; height:7px; }
+  .guru-bot-eye-left { left:20px; }
+  .guru-bot-eye-right { right:20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after, .guru-bot-body, .guru-bot-ring::before, .guru-bot-ring::after { animation:none; }
+  .guru-bot { transform:none; transition:none; }
+}
