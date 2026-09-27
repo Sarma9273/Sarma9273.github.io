@@ -1,7 +1,7 @@
 ---
-interface Props { title:string; domain:string; description:string; technologies:string[]; }
-const { title, domain, description, technologies } = Astro.props;
-const steps = ['INPUT','INTELLIGENCE','DECISION','EVIDENCE','OUTCOME'];
+interface Props { title:string; domain:string; description:string; technologies:string[]; architecture?:string[]; }
+const { title, domain, description, technologies, architecture = [] } = Astro.props;
+const steps = architecture.length ? architecture.slice(0,7) : ['INPUT','INTELLIGENCE','DECISION','EVIDENCE','OUTCOME'];
 ---
 <section class="project-world" data-project-world data-guru-context={`PROJECT WORLD — ${title} interactive architecture.`} aria-label={`${title} project world`}>
   <div class="project-world-stars" aria-hidden="true"></div>
@@ -15,5 +15,5 @@ const steps = ['INPUT','INTELLIGENCE','DECISION','EVIDENCE','OUTCOME'];
   <div class="project-tech-strip"><span>STACK</span>{technologies.slice(0,8).map((tech)=><b>{tech}</b>)}</div>
 </section>
 <script>
-(()=>{const root=document.querySelector('[data-project-world]');if(!(root instanceof HTMLElement))return;const copy:Record<string,string[]>={INPUT:['INPUT','What enters the system?','Start with the problem, data, incident, request or physical signal the system receives.'],INTELLIGENCE:['INTELLIGENCE','How is information transformed?','This layer represents retrieval, analysis, modelling, processing or system logic.'],DECISION:['DECISION','Where does reasoning become action?','The system converts processed evidence into a decision, recommendation, control signal or workflow.'],EVIDENCE:['EVIDENCE','What can be demonstrated?','Separate implemented behavior from assumptions, experiments and planned work.'],OUTCOME:['OUTCOME','What does the system produce?','The final value is the observable result, limitation and next engineering step.']};const label=root.querySelector('[data-project-panel-label]');const panelTitle=root.querySelector('[data-project-panel-title]');const text=root.querySelector('[data-project-panel-copy]');if(!(label instanceof HTMLElement)||!(panelTitle instanceof HTMLElement)||!(text instanceof HTMLElement))return;root.querySelectorAll('[data-project-node]').forEach((node)=>{if(!(node instanceof HTMLElement))return;node.addEventListener('click',()=>{const d=copy[node.dataset.step||''];if(!d)return;root.querySelectorAll('[data-project-node]').forEach(n=>n.classList.remove('active'));node.classList.add('active');label.textContent=d[0];panelTitle.textContent=d[1];text.textContent=d[2]})})})();
+(()=>{const root=document.querySelector('[data-project-world]');if(!(root instanceof HTMLElement))return;const copy:Record<string,string[]>={};steps.forEach((step,index)=>{copy[step]=[step,`Architecture layer ${index+1}`,`Inspect how ${step.toLowerCase()} contributes to the ${title} system.`]});const label=root.querySelector('[data-project-panel-label]');const panelTitle=root.querySelector('[data-project-panel-title]');const text=root.querySelector('[data-project-panel-copy]');if(!(label instanceof HTMLElement)||!(panelTitle instanceof HTMLElement)||!(text instanceof HTMLElement))return;root.querySelectorAll('[data-project-node]').forEach((node)=>{if(!(node instanceof HTMLElement))return;node.addEventListener('click',()=>{const d=copy[node.dataset.step||''];if(!d)return;root.querySelectorAll('[data-project-node]').forEach(n=>n.classList.remove('active'));node.classList.add('active');label.textContent=d[0];panelTitle.textContent=d[1];text.textContent=d[2]})})})();
 </script>
