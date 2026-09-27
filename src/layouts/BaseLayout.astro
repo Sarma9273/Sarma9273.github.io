@@ -79,6 +79,7 @@ const jsonLd = {
     </script>
   </head>
   <body>
+    <div class="guru-page-transition" data-page-transition aria-hidden="true"><span>GURUVERSE</span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <main id="main-content"><slot /></main>
@@ -102,6 +103,18 @@ const jsonLd = {
           }, { threshold: 0.12 });
           revealItems.forEach((item) => observer.observe(item));
         }
+
+        document.querySelectorAll('a[href]').forEach((link) => {
+          link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href') || '';
+            if (reduced || event.defaultPrevented || link.target === '_blank' || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http')) return;
+            const transition = document.querySelector('[data-page-transition]');
+            if (!transition) return;
+            event.preventDefault();
+            transition.classList.add('is-active');
+            window.setTimeout(() => { window.location.href = href; }, 220);
+          });
+        });
 
         if (!reduced && window.matchMedia('(pointer: fine)').matches) {
           document.querySelectorAll('[data-tilt]').forEach((item) => {
