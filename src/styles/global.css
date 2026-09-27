@@ -1139,3 +1139,50 @@ body::after {
   body::after, .guru-bot-body, .guru-bot-ring::before, .guru-bot-ring::after { animation:none; }
   .guru-bot { transform:none; transition:none; }
 }
+
+
+.guru-bot-actions { flex-wrap:wrap; }
+.guru-bot-actions button:last-child { flex-basis:100%; }
+.guru-mission-control {
+  position:fixed; inset:0; z-index:1200;
+  display:grid; place-items:start center;
+  padding:clamp(70px,12vh,130px) 16px 24px;
+  background:color-mix(in srgb, #02060d 78%, transparent);
+  backdrop-filter:blur(12px);
+  pointer-events:auto;
+}
+.guru-mission-control[hidden] { display:none; }
+.guru-mission-inner {
+  width:min(680px,100%);
+  padding:20px;
+  border:1px solid color-mix(in srgb,var(--accent) 38%,var(--border));
+  border-radius:22px;
+  background:var(--surface);
+  box-shadow:0 30px 90px rgba(0,0,0,.4);
+}
+.guru-mission-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.guru-mission-head div { display:grid; gap:3px; }
+.guru-mission-head span { font:700 .62rem/1 var(--font-mono); letter-spacing:.12em; color:var(--accent-strong); }
+.guru-mission-head strong { font-size:1.2rem; }
+.guru-mission-head button { width:34px; height:34px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2); color:var(--text); cursor:pointer; font-size:1.2rem; }
+.guru-mission-inner input {
+  width:100%; box-sizing:border-box; padding:13px 14px;
+  border:1px solid var(--border); border-radius:12px;
+  background:var(--surface-2); color:var(--text); outline:none;
+  font:600 .9rem var(--font-body);
+}
+.guru-mission-inner input:focus { border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent); }
+.guru-mission-results { display:grid; gap:7px; margin-top:12px; max-height:48vh; overflow:auto; }
+.guru-mission-results button {
+  display:grid; grid-template-columns:130px 1fr; gap:10px; align-items:center;
+  text-align:left; padding:12px 13px; border:1px solid var(--border);
+  border-radius:11px; background:var(--surface-2); color:var(--text); cursor:pointer;
+}
+.guru-mission-results button:hover { border-color:var(--accent); transform:translateX(2px); }
+.guru-mission-results span { color:var(--subtle); font:700 .62rem var(--font-mono); text-transform:uppercase; }
+.guru-mission-results strong { font-size:.85rem; }
+.guru-mission-inner > small { display:block; margin-top:11px; color:var(--subtle); font-size:.68rem; }
+
+@media (max-width:680px) {
+  .guru-mission-results button { grid-template-columns:1fr; gap:3px; }
+}
