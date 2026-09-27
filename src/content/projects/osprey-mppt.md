@@ -45,3 +45,18 @@ The project connects an EEE foundation with intelligent optimisation, data inter
 ## Roadmap
 
 Hardware validation, rapidly changing weather tests, sensor noise, larger arrays, battery integration and embedded controller implementation.
+
+architecture:
+  - Solar PV voltage and current sensing
+  - PV power calculation
+  - Modified Osprey optimization
+  - Maximum power point search
+  - Duty-cycle control
+  - Simulink power-stage response
+workflow:
+  - Measure PV operating point
+  - Calculate instantaneous power
+  - Search candidate duty cycles
+  - Track the best operating point
+  - Apply duty-cycle command
+  - Validate tracking under changing conditions
