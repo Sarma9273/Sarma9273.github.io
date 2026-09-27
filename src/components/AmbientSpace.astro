@@ -7,5 +7,5 @@ const { intensity = 'medium' } = Astro.props;
   <div class="ambient-grid"></div><div class="ambient-depth ambient-depth-a"></div><div class="ambient-depth ambient-depth-b"></div>
 </div>
 <script>
-(()=>{const root=document.querySelector('[data-ambient-space]');if(!(root instanceof HTMLElement)||window.matchMedia('(prefers-reduced-motion: reduce)').matches||!window.matchMedia('(pointer:fine)').matches)return;let tx=0,ty=0,x=0,y=0;window.addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*12;ty=(e.clientY/innerHeight-.5)*8},{passive:true});function tick(){x+=(tx-x)*.035;y+=(ty-y)*.035;root.style.transform=`translate3d(${x}px,${y}px,0)`;requestAnimationFrame(tick)}tick()})();
+(()=>{const root=document.querySelector('[data-ambient-space]') as HTMLElement | null;if(!root||window.matchMedia('(prefers-reduced-motion: reduce)').matches||!window.matchMedia('(pointer:fine)').matches)return;let tx=0,ty=0,x=0,y=0;window.addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*12;ty=(e.clientY/innerHeight-.5)*8},{passive:true});function tick(){x+=(tx-x)*.035;y+=(ty-y)*.035;root.style.transform=`translate3d(${x}px,${y}px,0)`;requestAnimationFrame(tick)}tick()})();
 </script>
