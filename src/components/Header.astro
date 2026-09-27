@@ -44,6 +44,7 @@ const pathname = Astro.url.pathname;
       root.dataset.theme = next;
       localStorage.setItem('theme', next);
     });
+    document.querySelector('[data-explore-button]')?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('guru:mission')));
     const button = document.querySelector('[data-menu-button]');
     const nav = document.querySelector('[data-mobile-nav]');
     button?.addEventListener('click', () => {
