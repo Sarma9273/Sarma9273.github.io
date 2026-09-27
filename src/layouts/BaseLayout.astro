@@ -5,6 +5,7 @@ import Header from '../features/navigation/Header.astro';
 import Footer from '../components/Footer.astro';
 import BackToTop from '../components/BackToTop.astro';
 import { site } from '../data/site';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -57,7 +58,9 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     <link rel="alternate" type="application/rss+xml" title="Guru Charan Mavuduru technical blog" href="/rss.xml" />
+    <ClientRouter fallback="animate" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script src="../scripts/motion.ts"></script>
     <script is:inline>
       (() => {
         document.documentElement.classList.add('has-js');
@@ -66,6 +69,13 @@ const jsonLd = {
     </script>
   </head>
   <body data-guru-page={Astro.url.pathname} data-guru-world={world}>
+    <div class="gv-page-loader" aria-hidden="true" data-page-loader>
+      <div class="gv-loader-grid"></div>
+      <div class="gv-loader-mark"><span>GC</span><i></i></div>
+      <p>GURUVERSE <span>INITIALIZING EXPERIENCE</span></p>
+    </div>
+    <div class="gv-scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+    <div class="gv-cursor" aria-hidden="true" data-cursor><span></span></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <main id="main-content"><slot /></main>
