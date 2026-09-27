@@ -1,4 +1,6 @@
 const initMotion = () => {
+  if (document.documentElement.dataset.gvMotionReady === 'true') return;
+  document.documentElement.dataset.gvMotionReady = 'true';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(pointer: fine)').matches;
 
@@ -28,6 +30,18 @@ const initMotion = () => {
     if (!ticking) { ticking = true; requestAnimationFrame(paintScroll); }
   }, { passive: true });
   paintScroll();
+
+  document.querySelectorAll('.timeline').forEach((el) => {
+    if (reduce) el.classList.add('is-visible');
+    else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+        });
+      }, {threshold:.18});
+      observer.observe(el);
+    }
+  });
 
   document.querySelectorAll('[data-gv-reveal]').forEach((el, i) => {
     if (reduce) { el.classList.add('is-visible'); return; }
