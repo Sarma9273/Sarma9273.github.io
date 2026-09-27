@@ -7,7 +7,7 @@ const pathname = Astro.url.pathname;
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="Guru Charan Mavuduru home">
       <span class="brand-mark">GC</span>
-      <span class="brand-copy"><strong>Guru Charan</strong><small>Learning · building · sharing</small></span>
+      <span class="brand-copy"><strong>GURUVERSE</strong><small>Guru Charan · AI × Security</small></span>
     </a>
     <nav class="desktop-nav" aria-label="Primary navigation">
       {site.navigation.map((item) => (
@@ -15,23 +15,30 @@ const pathname = Astro.url.pathname;
       ))}
     </nav>
     <div class="header-actions">
-      <button class="icon-button theme-toggle" type="button" aria-label="Toggle colour theme" data-theme-toggle>
-        <span class="theme-icon theme-icon-sun"><Icon name="sunSimple" size={19} /></span>
-        <span class="theme-icon theme-icon-moon"><Icon name="moon" size={19} /></span>
-      </button>
-      <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav" data-menu-button>
-        <span class="menu-open"><Icon name="menu" size={22} /></span>
-        <span class="menu-close"><Icon name="close" size={22} /></span>
-      </button>
+      <button class="command-trigger" type="button" aria-label="Open GURUVERSE command menu" aria-expanded="false" aria-controls="command-menu" data-command-trigger><span>EXPLORE</span><kbd>⌘ K</kbd></button>
+      <button class="icon-button theme-toggle" type="button" aria-label="Toggle colour theme" data-theme-toggle><span class="theme-icon theme-icon-sun"><Icon name="sunSimple" size={19} /></span><span class="theme-icon theme-icon-moon"><Icon name="moon" size={19} /></span></button>
+      <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav" data-menu-button><span class="menu-open"><Icon name="menu" size={22} /></span><span class="menu-close"><Icon name="close" size={22} /></span></button>
     </div>
   </div>
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" data-mobile-nav hidden>
-    <div class="container">
-      {site.navigation.map((item) => (
-        <a href={item.href} aria-current={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? 'page' : undefined}>{item.label}</a>
-      ))}
-    </div>
+    <div class="container">{site.navigation.map((item) => <a href={item.href} aria-current={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? 'page' : undefined}>{item.label}</a>)}</div>
   </nav>
+  <div id="command-menu" class="command-menu" hidden data-command-menu>
+    <button class="command-backdrop" type="button" aria-label="Close command menu" data-command-close></button>
+    <div class="command-panel" role="dialog" aria-modal="true" aria-labelledby="command-title">
+      <div class="command-panel-head"><span id="command-title">GURUVERSE / EXPLORE</span><button class="icon-button" type="button" aria-label="Close" data-command-close><Icon name="close" size={18} /></button></div>
+      <p>Choose a direction. The interface will take you deeper.</p>
+      <div class="command-links">
+        <a href="/projects/"><span>01</span><strong>Systems</strong><small>Projects, architecture and evidence</small><Icon name="arrow" size={16} /></a>
+        <a href="/experience/"><span>02</span><strong>Journey</strong><small>Learning, work and evolution</small><Icon name="arrow" size={16} /></a>
+        <a href="/about/"><span>03</span><strong>Profile</strong><small>Skills, focus and direction</small><Icon name="arrow" size={16} /></a>
+        <a href="/blogs/"><span>04</span><strong>Field Notes</strong><small>Research, experiments and thinking</small><Icon name="arrow" size={16} /></a>
+        <a href="/resume/"><span>05</span><strong>Resume</strong><small>Professional profile</small><Icon name="arrow" size={16} /></a>
+        <a href="/contact/"><span>06</span><strong>Say Hello</strong><small>Start a conversation</small><Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="command-shortcut">ESC <span>close</span></div>
+    </div>
+  </div>
 </header>
 <script is:inline>
   (() => {
@@ -39,21 +46,33 @@ const pathname = Astro.url.pathname;
     root.dataset.theme = localStorage.getItem('theme') || 'dark';
     document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      root.dataset.theme = next;
-      localStorage.setItem('theme', next);
+      root.dataset.theme = next; root.dataset.theme = next; localStorage.setItem('theme', next);
     });
     const button = document.querySelector('[data-menu-button]');
     const nav = document.querySelector('[data-mobile-nav]');
     button?.addEventListener('click', () => {
       const open = button.getAttribute('aria-expanded') === 'true';
-      button.setAttribute('aria-expanded', String(!open));
-      if (nav) nav.hidden = open;
+      button.setAttribute('aria-expanded', String(!open)); if (nav) nav.hidden = open;
       document.body.classList.toggle('menu-open', !open);
     });
     nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-      button?.setAttribute('aria-expanded', 'false');
-      if (nav) nav.hidden = true;
-      document.body.classList.remove('menu-open');
+      button?.setAttribute('aria-expanded', 'false'); if (nav) nav.hidden = true; document.body.classList.remove('menu-open');
     }));
+    const commandButton = document.querySelector('[data-command-trigger]');
+    const commandMenu = document.querySelector('[data-command-menu]');
+    const closeButtons = [...document.querySelectorAll('[data-command-close]')];
+    const closeCommand = () => {
+      if (!commandMenu) return; commandMenu.hidden = true; commandButton?.setAttribute('aria-expanded', 'false'); document.body.classList.remove('menu-open');
+    };
+    const openCommand = () => {
+      if (!commandMenu) return; commandMenu.hidden = false; commandButton?.setAttribute('aria-expanded', 'true'); document.body.classList.add('menu-open'); commandMenu.querySelector('a')?.focus();
+    };
+    commandButton?.addEventListener('click', () => commandMenu?.hidden ? openCommand() : closeCommand());
+    closeButtons.forEach((item) => item.addEventListener('click', closeCommand));
+    commandMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeCommand));
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openCommand(); }
+      if (event.key === 'Escape') closeCommand();
+    });
   })();
 </script>
