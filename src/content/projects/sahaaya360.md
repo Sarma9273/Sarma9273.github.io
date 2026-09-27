@@ -44,3 +44,17 @@ The project required prioritising a demonstrable MVP, designing data structures,
 ## Roadmap
 
 Role-based access, dedicated web and mobile interfaces, notifications, AI-assisted classification, escalations, vendor performance, subscription plans and privacy-support features.
+
+architecture:
+  - Institutional request intake
+  - Identity and role context
+  - Workflow orchestration
+  - Document and data automation
+  - Notification and approval flow
+  - Operational evidence
+workflow:
+  - Capture an institutional request
+  - Identify the responsible workflow
+  - Automate repetitive processing
+  - Route approvals and notifications
+  - Record the operational result
