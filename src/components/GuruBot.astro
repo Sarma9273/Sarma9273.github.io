@@ -69,7 +69,30 @@ const activeKnowledge = guruKnowledge.find((item) => item.aliases.some((alias) =
     const missionClose = bot.querySelector('[data-guru-mission-close]');
     const missionSearch = bot.querySelector('[data-guru-search]');
     const missionResults = bot.querySelector('[data-guru-results]');
+    const queryForm = bot.querySelector('[data-guru-query-form]');
+    const questionInput = bot.querySelector('[data-guru-question]');
+    queryForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!(questionInput instanceof HTMLInputElement)) return;
+      const question = questionInput.value.trim();
+      if (question) setMessage(localAnswer(question));
+    });
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const knowledge = activeKnowledge || null;
+    const localAnswer = (question) => {
+      if (!knowledge) return 'I do not have verified knowledge for this project yet.';
+      const q = question.toLowerCase();
+      if (q.includes('architecture') || q.includes('structure')) return knowledge.architecture.join(' → ');
+      if (q.includes('workflow') || q.includes('process') || q.includes('how')) return knowledge.workflow.join(' → ');
+      if (q.includes('technology') || q.includes('tools') || q.includes('stack')) return knowledge.technologies.join(' · ');
+      if (q.includes('problem') || q.includes('why')) return knowledge.problem;
+      if (q.includes('solution') || q.includes('solve')) return knowledge.solution;
+      if (q.includes('status') || q.includes('complete')) return knowledge.status;
+      if (q.includes('limitation') || q.includes('not done')) return knowledge.limitations.join(' ');
+      if (q.includes('evidence') || q.includes('implemented') || q.includes('result')) return knowledge.evidence.join(' ');
+      if (q.includes('related') || q.includes('connection')) return knowledge.related.join(', ');
+      return knowledge.summary;
+    };
 
     const fallback = {
       home: 'This is the command deck. Scroll through the universe and I’ll explain what each section is doing.',
