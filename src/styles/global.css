@@ -1228,3 +1228,14 @@ body { animation:guru-page-boot .38s ease both; }
 @keyframes ambient-float{from{transform:translate3d(0,0,0) scale(.8)}to{transform:translate3d(calc((var(--i) % 7) * 3px),-18px,0) scale(1.15)}}
 @media(max-width:680px){.ambient-grid{background-size:48px 48px}.ambient-depth-a{width:80vw;height:80vw}.ambient-depth-b{width:65vw;height:65vw}}
 @media(prefers-reduced-motion:reduce){.ambient-particle{animation:none}.ambient-grid{transform:perspective(500px) rotateX(62deg)}}
+
+
+/* Page-specific universe atmospheres */
+body[data-guru-world="command"] .ambient-space{--world-hue:var(--accent)}
+body[data-guru-world="projects"] .ambient-space{filter:hue-rotate(18deg) saturate(1.08)}
+body[data-guru-world="archive"] .ambient-space{filter:hue-rotate(55deg) saturate(.9)}
+body[data-guru-world="career"] .ambient-space{filter:hue-rotate(-12deg)}
+body[data-guru-world="origin"] .ambient-space{filter:hue-rotate(28deg)}
+body[data-guru-world="contact"] .ambient-space{filter:hue-rotate(-25deg)}
+body[data-guru-world="projects"] .guru-bot-body{border-radius:50%;box-shadow:0 0 0 1px color-mix(in srgb,var(--violet) 24%,transparent),0 14px 48px color-mix(in srgb,var(--violet) 26%,transparent)}
+body[data-guru-world="projects"] .guru-bot-ring{border-color:color-mix(in srgb,var(--violet) 58%,transparent)}
