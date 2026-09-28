@@ -29,7 +29,7 @@ GURUVERSE is treated as an interactive engineering portfolio, not an enterprise 
 | Evidence / limitation model | COMPLETE |
 | CyberGPT → RA-XSOC evolution | COMPLETE |
 | Case-study narratives for core projects | COMPLETE |
-| Real repository/demo/report evidence where public | PENDING |
+| Real repository/demo/report evidence where public | PENDING — audit completed; no unverified public links added |
 | Deeper project-specific diagrams and screenshots | PENDING |
 
 ## 3. Knowledge & exploration
@@ -41,7 +41,7 @@ GURUVERSE is treated as an interactive engineering portfolio, not an enterprise 
 | Project-question routing | COMPLETE |
 | Mission Control | COMPLETE |
 | Project Galaxy / Universe exploration | COMPLETE |
-| Cross-project relationship exploration | PENDING |
+| Cross-project relationship exploration | COMPLETE |
 | Full multi-world Universe experience | PENDING |
 
 ## 4. Engineering journey
@@ -90,8 +90,8 @@ GURUVERSE is treated as an interactive engineering portfolio, not an enterprise 
 | Sitemap / RSS | COMPLETE |
 | Open Graph / Twitter metadata | COMPLETE |
 | Person structured data | COMPLETE |
-| Project/article schema refinement | PENDING |
-| Internal linking refinement | PENDING |
+| Project/article schema refinement | PENDING — queued for the next structured-data pass |
+| Internal linking refinement | COMPLETE |
 | GitHub Actions build/deploy | COMPLETE |
 | GitHub Pages deployment | COMPLETE |
 
@@ -111,6 +111,10 @@ These are not required for GURUVERSE and should not be added merely to make the 
 - PR / awards infrastructure
 - Autoplay or major audio-branding systems
 - Decorative effects that compromise performance or accessibility
+
+## Evidence audit note
+
+The current audit found one verified project repository that is private (`Sarma9273/ra-xsoc-security-copilot`) and one public legacy portfolio repository (`Sarma9273/portfolio`). Neither is presented as public project evidence on GURUVERSE unless the destination is appropriate and verified. Empty evidence-link fields are intentional.
 
 ## Final product definition
 
