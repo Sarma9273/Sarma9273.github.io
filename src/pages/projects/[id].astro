@@ -5,6 +5,7 @@ import ContentActions from '../../components/ContentActions.astro';
 import Icon from '../../components/Icon.astro';
 import ProjectWorld from '../../features/projects/ProjectWorld.astro';
 import GuruBot from '../../components/GuruBot.astro';
+import { guruKnowledgeById } from '../../data/guruKnowledge';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -12,6 +13,13 @@ export async function getStaticPaths() {
 }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const knowledge = guruKnowledgeById[entry.id];
+const allProjects = await getCollection('projects');
+const relatedProjects = (knowledge?.related ?? [])
+  .map((related) => allProjects.find((candidate) => candidate.data.shortTitle.toLowerCase() === related.toLowerCase() || candidate.id === related))
+  .filter(Boolean)
+  .slice(0, 4);
+const evidenceLinks = [entry.data.repositoryUrl, entry.data.demoUrl, entry.data.reportUrl].filter(Boolean);
 ---
 <ContentLayout title={entry.data.title} description={entry.data.description} eyebrow={entry.data.domain} meta={[entry.data.status, entry.data.period, entry.data.role]} breadcrumbs={[{label:'Home',href:'/'},{label:'Projects',href:'/projects/'},{label:entry.data.shortTitle}]} tags={entry.data.technologies}>
   <ProjectWorld title={entry.data.title} domain={entry.data.domain} description={entry.data.description} technologies={entry.data.technologies} architecture={entry.data.architecture} evidence={entry.data.evidence} metrics={entry.data.metrics} />
@@ -22,7 +30,22 @@ const { Content } = await render(entry);
     {entry.data.impact && <div><span>IMPACT</span><p>{entry.data.impact}</p></div>}
   </section>}
   {entry.data.outcomes.length > 0 && <div class="outcome-box"><h2>Selected outcomes</h2><ul>{entry.data.outcomes.map((outcome) => <li><Icon name="check" size={19} />{outcome}</li>)}</ul></div>}
+  {relatedProjects.length > 0 && <section class="related-projects" aria-labelledby="related-projects-title">
+    <div class="section-kicker">CONNECTED SYSTEMS</div>
+    <h2 id="related-projects-title">Where this leads</h2>
+    <div class="related-project-grid">
+      {relatedProjects.map((related) => <a class="related-project-card" href={`/projects/${related!.id}/`}>
+        <span>{related!.data.domain}</span>
+        <strong>{related!.data.shortTitle}</strong>
+        <small>{related!.data.description}</small>
+        <em>Explore →</em>
+      </a>)}
+    </div>
+  </section>}
   <Content />
-  <div slot="aside" class="aside-card evidence-card"><strong>Evidence status</strong><p>Public repository, report and demo links are added only after privacy and quality review.</p></div>
+  <div slot="aside" class="aside-card evidence-card">
+    <strong>Evidence status</strong>
+    <p>{evidenceLinks.length > 0 ? 'Verified external evidence is available from the project record.' : 'External evidence links are intentionally withheld until a public repository, demo or report is verified.'}</p>
+  </div>
   <GuruBot pageTitle={entry.data.title} projectTitle={entry.data.shortTitle} projectDomain={entry.data.domain} projectDescription={entry.data.description} />
 </ContentLayout>
