@@ -2058,3 +2058,17 @@ body{
     padding-top: 16px;
   }
 }
+
+
+/* Project relationship layer: keeps exploration connected without adding heavy client code. */
+.related-projects { margin: 3rem 0; padding-top: 2rem; border-top: 1px solid var(--border, rgba(255,255,255,.1)); }
+.related-projects .section-kicker { font-size: .7rem; letter-spacing: .18em; opacity: .62; margin-bottom: .5rem; }
+.related-projects h2 { margin: 0 0 1rem; }
+.related-project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .85rem; }
+.related-project-card { display: grid; gap: .45rem; padding: 1rem; border: 1px solid var(--border, rgba(255,255,255,.1)); border-radius: 14px; text-decoration: none; transition: transform .2s ease, border-color .2s ease; }
+.related-project-card:hover, .related-project-card:focus-visible { transform: translateY(-2px); border-color: currentColor; }
+.related-project-card span, .related-project-card em { font-size: .7rem; letter-spacing: .08em; opacity: .65; font-style: normal; }
+.related-project-card strong { font-size: 1rem; }
+.related-project-card small { line-height: 1.5; opacity: .72; }
+@media (max-width: 680px) { .related-project-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .related-project-card { transition: none; } .related-project-card:hover, .related-project-card:focus-visible { transform: none; } }
